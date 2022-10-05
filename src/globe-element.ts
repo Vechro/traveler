@@ -1,11 +1,18 @@
 import createGlobe from "cobe";
 import { css, html, LitElement } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 import Phenomenon from "phenomenon";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
-  @query("#canvas")
+  constructor() {
+    super();
+  }
+
+  private pointerInteracting: number | null = null;
+  private pointerInteractionMovement = 0.0;
+
+  @query("#canvas", true)
   canvas!: HTMLCanvasElement;
 
   @property({ type: Number })
@@ -41,10 +48,7 @@ export class GlobeElement extends LitElement {
         { location: [40.7128, -74.006], size: 0.1 },
       ],
       onRender: (state) => {
-        // Called on every animation frame.
-        // `state` will be an empty object, return updated params.
         state.phi = this.phi;
-        this.phi += 0.01;
       },
     });
   }
@@ -56,12 +60,31 @@ export class GlobeElement extends LitElement {
     this.canvas.height = this.canvasHeight;
   }
 
+  _pointerDown(e: PointerEvent) {
+    this.pointerInteracting = e.clientX - this.pointerInteractionMovement;
+  }
+  _pointerOut() {
+    this.pointerInteracting = null;
+  }
+  _mouseMove(e: MouseEvent) {
+    if (this.pointerInteracting !== null) {
+      const delta = e.clientX - this.pointerInteracting;
+      this.pointerInteractionMovement = delta;
+      this.phi = delta / 200.0;
+    }
+  }
+
   render() {
     return html`
       <canvas
         id="canvas"
         width=${this.canvasWidth}
         height=${this.canvasHeight}
+        @pointerdown=${this._pointerDown}
+        @pointerout=${this._pointerOut}
+        @pointerup=${this._pointerOut}
+        @mousemove=${this._mouseMove}
+        @pointermove=${this._mouseMove}
       ></canvas>
     `;
   }
