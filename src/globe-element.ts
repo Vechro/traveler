@@ -5,35 +5,26 @@ import Phenomenon from "phenomenon";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
-  constructor() {
-    super();
-  }
-
   private pointerInteracting: number | null = null;
   private pointerInteractionMovement = 0.0;
 
   @query("#canvas", true)
   canvas!: HTMLCanvasElement;
 
-  @property({ type: Number })
-  width: number | undefined;
-
-  @property({ type: Number })
-  height: number | undefined;
   canvasWidth = 400;
   canvasHeight = 400;
 
-  globe!: Phenomenon;
+  globe?: Phenomenon;
   private phi = 0.0;
 
-  firstUpdated() {
-    this.globe = createGlobe(this.canvas, {
+  getGlobe(width: number, height: number): Phenomenon {
+    return createGlobe(this.canvas, {
       devicePixelRatio: 1,
-      width: 400,
-      height: 400,
+      width,
+      height,
       phi: 0,
       theta: 0,
-      dark: 0,
+      dark: 0.0,
       diffuse: 1.2,
       scale: 1,
       mapSamples: 16_000,
@@ -53,11 +44,18 @@ export class GlobeElement extends LitElement {
     });
   }
 
+  async firstUpdated() {
+    window.addEventListener("resize", () => this._updateSize(), false);
+    this._updateSize();
+  }
+
   _updateSize() {
-    this.canvasWidth = this.width || window.innerWidth;
-    this.canvasHeight = this.height || window.innerHeight;
+    this.canvasWidth = window.innerWidth;
+    this.canvasHeight = window.innerHeight;
     this.canvas.width = this.canvasWidth;
     this.canvas.height = this.canvasHeight;
+    this.globe?.destroy();
+    this.globe = this.getGlobe(this.canvasWidth, this.canvasHeight);
   }
 
   _pointerDown(e: PointerEvent) {
@@ -70,7 +68,7 @@ export class GlobeElement extends LitElement {
     if (this.pointerInteracting !== null) {
       const delta = e.clientX - this.pointerInteracting;
       this.pointerInteractionMovement = delta;
-      this.phi = delta / 200.0;
+      this.phi = delta / 400.0;
     }
   }
 
@@ -90,14 +88,10 @@ export class GlobeElement extends LitElement {
   }
 
   static styles = css`
-    :host {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
     canvas {
-      width: 400px;
-      height: 400px;
+      display: block;
+      width: 100%;
+      height: 100%;
     }
   `;
 }
