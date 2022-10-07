@@ -3,5 +3,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:lit/recommended"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off"
+  }
 }

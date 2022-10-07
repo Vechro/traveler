@@ -1,7 +1,8 @@
 import { css, html, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import * as THREE from "three";
-import vertex from "./assets/shaders/vertex.glsl";
+import vertexShader from "./assets/shaders/vertex.glsl";
+import fragmentShader from "./assets/shaders/fragment.glsl";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
@@ -14,9 +15,15 @@ export class GlobeElement extends LitElement {
 
   sphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 50, 50),
-    new THREE.MeshBasicMaterial({
+    new THREE.ShaderMaterial({
       // https://neo.gsfc.nasa.gov/view.php?datasetId=BlueMarbleNG-TB
-      map: new THREE.TextureLoader().load("/earth-uv-map.jpg"),
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        globeTexture: {
+          value: new THREE.TextureLoader().load("/earth-uv-map.jpg")
+        }
+      }
     })
   );
 
