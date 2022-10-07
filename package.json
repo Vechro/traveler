@@ -17,12 +17,12 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "cobe": "^0.6.2",
     "lit": "^2.3.1",
-    "phenomenon": "^1.6.0"
+    "three": "^0.145.0"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.6.4",
+    "@types/three": "^0.144.0",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "eslint": "^8.24.0",
