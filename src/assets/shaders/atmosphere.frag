@@ -1,4 +1,4 @@
-varying vec3 vertexNormal;
+varying lowp vec3 vertexNormal;
 
 void main() {
   float intensity = pow(0.6 - dot(vertexNormal, vec3(0, 0, 1.0)), 2.0);

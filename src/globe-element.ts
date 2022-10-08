@@ -1,12 +1,11 @@
 import { css, html, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import * as THREE from "three";
-import { Vec2, Vector2 } from "three";
-import atmosphereFragmentShader from "./assets/shaders/atmosphereFragment.glsl";
-import atmosphereVertexShader from "./assets/shaders/atmosphereVertex.glsl";
-import fragmentShader from "./assets/shaders/fragment.glsl";
-import vertexShader from "./assets/shaders/vertex.glsl";
-import { vec2 } from "./math/Vec";
+import { Vector2 } from "three";
+import atmosphereFrag from "./assets/shaders/atmosphere.frag";
+import atmosphereVert from "./assets/shaders/atmosphere.vert";
+import sphereFrag from "./assets/shaders/sphere.frag";
+import sphereVert from "./assets/shaders/sphere.vert";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
@@ -20,8 +19,8 @@ export class GlobeElement extends LitElement {
   sphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 50, 50),
     new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader,
+      vertexShader: sphereVert,
+      fragmentShader: sphereFrag,
       uniforms: {
         globeTexture: {
           // https://neo.gsfc.nasa.gov/view.php?datasetId=BlueMarbleNG-TB
@@ -34,8 +33,8 @@ export class GlobeElement extends LitElement {
   atmosphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 50, 50),
     new THREE.ShaderMaterial({
-      vertexShader: atmosphereVertexShader,
-      fragmentShader: atmosphereFragmentShader,
+      vertexShader: atmosphereVert,
+      fragmentShader: atmosphereFrag,
       blending: THREE.AdditiveBlending,
       side: THREE.BackSide,
     })

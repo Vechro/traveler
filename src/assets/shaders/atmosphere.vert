@@ -1,4 +1,4 @@
-varying vec3 vertexNormal;
+varying lowp vec3 vertexNormal;
 
 void main() {
   vertexNormal = normalize(normalMatrix * normal);
