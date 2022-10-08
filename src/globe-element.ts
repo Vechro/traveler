@@ -43,10 +43,8 @@ export class GlobeElement extends LitElement {
 
   group = new THREE.Group();
 
-  mouse: number[] = [0, 0];
-
-  pointerStart: number[] | null = null;
-  pointerDelta: number[] = [0, 0];
+  private pointerStart: number[] | null = null;
+  private pointerDelta: number[] = [0, 0];
 
   firstUpdated() {
     this.renderer = new THREE.WebGLRenderer({
@@ -55,8 +53,8 @@ export class GlobeElement extends LitElement {
       alpha: false,
     });
     window.addEventListener("resize", () => this.onResize(), false);
-    this.renderer.setSize(innerWidth, innerHeight);
-    this.renderer.setPixelRatio(devicePixelRatio);
+    window.addEventListener("wheel", (event) => this.onWheel(event), false);
+    this.onResize();
 
     this.atmosphere.scale.set(1.1, 1.1, 1.1);
     this.scene.add(this.atmosphere);
@@ -96,6 +94,16 @@ export class GlobeElement extends LitElement {
 
   private onGrabEnd() {
     this.pointerStart = null;
+  }
+
+  private onWheel(event: WheelEvent) {
+    const [_, y] = event.normalizedDelta();
+
+    this.camera.position.z = Vec.clamp(
+      this.camera.position.z + y / 50,
+      6.67,
+      15
+    );
   }
 
   render() {
