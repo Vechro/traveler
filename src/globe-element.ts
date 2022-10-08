@@ -71,6 +71,8 @@ export class GlobeElement extends LitElement {
   private onResize() {
     this.renderer?.setSize(innerWidth, innerHeight);
     this.renderer?.setPixelRatio(devicePixelRatio);
+    this.camera.aspect = innerWidth / innerHeight;
+    this.camera.updateProjectionMatrix();
   }
 
   paint() {
