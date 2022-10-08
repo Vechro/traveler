@@ -1,6 +1,7 @@
 import { css, html, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import * as THREE from "three";
+import earthUvMap from "./assets/earth-uv-map.jpg";
 import atmosphereFrag from "./assets/shaders/atmosphere.frag";
 import atmosphereVert from "./assets/shaders/atmosphere.vert";
 import sphereFrag from "./assets/shaders/sphere.frag";
@@ -25,7 +26,7 @@ export class GlobeElement extends LitElement {
       uniforms: {
         globeTexture: {
           // https://neo.gsfc.nasa.gov/view.php?datasetId=BlueMarbleNG-TB
-          value: new THREE.TextureLoader().load("/earth-uv-map.jpg"),
+          value: new THREE.TextureLoader().load(earthUvMap),
         },
       },
     })
@@ -80,6 +81,7 @@ export class GlobeElement extends LitElement {
   }
 
   private onGrabStart(event: PointerEvent) {
+    this.canvas.style.cursor = "grabbing";
     this.pointerStart = Vec.sub(event.normalizedPosition(), this.pointerDelta);
   }
 
@@ -93,6 +95,7 @@ export class GlobeElement extends LitElement {
   }
 
   private onGrabEnd() {
+    this.canvas.style.cursor = "default";
     this.pointerStart = null;
   }
 
