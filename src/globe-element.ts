@@ -3,6 +3,8 @@ import { customElement, query } from "lit/decorators.js";
 import * as THREE from "three";
 import vertexShader from "./assets/shaders/vertex.glsl";
 import fragmentShader from "./assets/shaders/fragment.glsl";
+import atmosphereVertexShader from "./assets/shaders/atmosphereVertex.glsl";
+import atmosphereFragmentShader from "./assets/shaders/atmosphereFragment.glsl";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
@@ -16,14 +18,24 @@ export class GlobeElement extends LitElement {
   sphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 50, 50),
     new THREE.ShaderMaterial({
-      // https://neo.gsfc.nasa.gov/view.php?datasetId=BlueMarbleNG-TB
       vertexShader,
       fragmentShader,
       uniforms: {
         globeTexture: {
-          value: new THREE.TextureLoader().load("/earth-uv-map.jpg")
-        }
-      }
+          // https://neo.gsfc.nasa.gov/view.php?datasetId=BlueMarbleNG-TB
+          value: new THREE.TextureLoader().load("/earth-uv-map.jpg"),
+        },
+      },
+    })
+  );
+
+  atmosphere = new THREE.Mesh(
+    new THREE.SphereGeometry(5, 50, 50),
+    new THREE.ShaderMaterial({
+      vertexShader: atmosphereVertexShader,
+      fragmentShader: atmosphereFragmentShader,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
     })
   );
 
@@ -38,6 +50,9 @@ export class GlobeElement extends LitElement {
     this.renderer.setPixelRatio(devicePixelRatio);
     this.scene.add(this.sphere);
 
+    this.atmosphere.scale.set(1.1, 1.1, 1.1);
+    this.scene.add(this.atmosphere);
+
     this.camera.position.z = 10;
 
     this.paint();
@@ -51,6 +66,7 @@ export class GlobeElement extends LitElement {
   paint() {
     requestAnimationFrame(this.paint.bind(this));
     this.renderer?.render(this.scene, this.camera);
+    this.sphere.rotation.y += 0.001;
   }
 
   render() {
