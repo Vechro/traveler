@@ -1,10 +1,12 @@
 import { css, html, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import * as THREE from "three";
-import vertexShader from "./assets/shaders/vertex.glsl";
-import fragmentShader from "./assets/shaders/fragment.glsl";
-import atmosphereVertexShader from "./assets/shaders/atmosphereVertex.glsl";
+import { Vec2, Vector2 } from "three";
 import atmosphereFragmentShader from "./assets/shaders/atmosphereFragment.glsl";
+import atmosphereVertexShader from "./assets/shaders/atmosphereVertex.glsl";
+import fragmentShader from "./assets/shaders/fragment.glsl";
+import vertexShader from "./assets/shaders/vertex.glsl";
+import { vec2 } from "./math/Vec";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
@@ -39,6 +41,10 @@ export class GlobeElement extends LitElement {
     })
   );
 
+  group = new THREE.Group();
+
+  mouse: Vector2 = new Vector2(undefined, undefined);
+
   firstUpdated() {
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -48,10 +54,12 @@ export class GlobeElement extends LitElement {
     window.addEventListener("resize", () => this.onResize(), false);
     this.renderer.setSize(innerWidth, innerHeight);
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.scene.add(this.sphere);
 
     this.atmosphere.scale.set(1.1, 1.1, 1.1);
     this.scene.add(this.atmosphere);
+
+    this.group.add(this.sphere);
+    this.scene.add(this.group);
 
     this.camera.position.z = 10;
 
@@ -66,11 +74,24 @@ export class GlobeElement extends LitElement {
   paint() {
     requestAnimationFrame(this.paint.bind(this));
     this.renderer?.render(this.scene, this.camera);
-    this.sphere.rotation.y += 0.001;
+    this.group.rotation.x = -this.mouse.y;
+    this.group.rotation.y = this.mouse.x;
+  }
+
+  private onMouseMove(event: MouseEvent) {
+    this.mouse.x = (event.clientX / innerWidth) * 2 - 1;
+    this.mouse.y = -(event.clientY / innerHeight) * 2 + 1;
   }
 
   render() {
-    return html` <canvas id="canvas" width="400" height="400"></canvas> `;
+    return html`
+      <canvas
+        id="canvas"
+        width="400"
+        height="400"
+        @mousemove=${this.onMouseMove}
+      ></canvas>
+    `;
   }
 
   static styles = css`
