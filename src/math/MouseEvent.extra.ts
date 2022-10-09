@@ -1,6 +1,24 @@
-Object.defineProperty(MouseEvent.prototype, "position", {
-  get: function position() {
+Object.defineProperty(MouseEvent.prototype, "clientPosition", {
+  get: function () {
     return [this.clientX, this.clientY];
+  },
+});
+
+Object.defineProperty(MouseEvent.prototype, "offsetPosition", {
+  get: function () {
+    return [this.offsetX, this.offsetY];
+  },
+});
+
+Object.defineProperty(MouseEvent.prototype, "pagePosition", {
+  get: function () {
+    return [this.pageX, this.pageY];
+  },
+});
+
+Object.defineProperty(MouseEvent.prototype, "screenPosition", {
+  get: function () {
+    return [this.screenX, this.screenY];
   },
 });
 
@@ -16,7 +34,19 @@ declare global {
     /**
      * @returns [clientX, clientY]
      */
-    position: [number, number];
+    clientPosition: [number, number];
+    /**
+     * @returns [offsetX, offsetY]
+     */
+    offsetPosition: [number, number];
+    /**
+     * @returns [pageX, pageY]
+     */
+    pagePosition: [number, number];
+    /**
+     * @returns [screenX, screenY]
+     */
+    screenPosition: [number, number];
     /**
      * @returns [clientX, clientY] normalized to -1..1 where top-left corner is [-1, 1].
      */

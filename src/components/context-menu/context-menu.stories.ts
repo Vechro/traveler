@@ -10,4 +10,18 @@ export default {
 } as Meta;
 
 export const Template: Story<ContextMenu> = (args) =>
-  html`<context-menu></context-menu>`;
+  html` <style>
+      .container {
+        width: 300px;
+        height: 200px;
+        background: #eee;
+      }
+    </style>
+    <section class="container">
+      <p>Open context menu here</p>
+      <context-menu>
+        <div>
+          Content
+        </div>
+      </context-menu>
+    </section>`;
