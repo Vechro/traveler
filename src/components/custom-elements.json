@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/context-menu/context-menu.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContextMenu",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "context-menu",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContextMenu",
+          "declaration": {
+            "name": "ContextMenu",
+            "module": "src/components/context-menu/context-menu.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "context-menu",
+          "declaration": {
+            "name": "ContextMenu",
+            "module": "src/components/context-menu/context-menu.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

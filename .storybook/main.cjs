@@ -6,7 +6,9 @@ const config = {
     builder: "@storybook/builder-vite",
   },
   features: {
+    babelModeV7: true,
     storyStoreV7: true,
+    disableTelemetry: true,
   },
   async viteFinal(config) {
     return config;
