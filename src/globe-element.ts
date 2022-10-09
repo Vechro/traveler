@@ -1,7 +1,9 @@
 import { css, html, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import * as THREE from "three";
+import { Vector2 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import earthUvMap from "./assets/earth-uv-map.jpg";
 import atmosphereFrag from "./assets/shaders/atmosphere.frag";
 import atmosphereVert from "./assets/shaders/atmosphere.vert";
@@ -20,13 +22,12 @@ export class GlobeElement extends LitElement {
   controls?: OrbitControls;
 
   sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(5, 50, 50),
+    new THREE.SphereGeometry(5, 64, 64),
     new THREE.ShaderMaterial({
       vertexShader: sphereVert,
       fragmentShader: sphereFrag,
       uniforms: {
         globeTexture: {
-          // https://neo.gsfc.nasa.gov/view.php?datasetId=BlueMarbleNG-TB
           value: new THREE.TextureLoader().load(earthUvMap),
         },
       },
@@ -44,6 +45,9 @@ export class GlobeElement extends LitElement {
   );
 
   group = new THREE.Group();
+
+  pointer = new THREE.Vector2();
+  raycaster = new THREE.Raycaster();
 
   firstUpdated() {
     this.renderer = new THREE.WebGLRenderer({
@@ -65,7 +69,7 @@ export class GlobeElement extends LitElement {
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
     this.controls.enablePan = false;
-    this.controls.minDistance = 6.67;
+    this.controls.minDistance = 6;
     this.controls.maxDistance = 15;
     this.controls.rotateSpeed = 0.5;
 
@@ -86,11 +90,27 @@ export class GlobeElement extends LitElement {
     this.controls?.update();
   }
 
-  private onGrabStart() {
+  private onGrabStart(event: PointerEvent) {
+    this.pointer = new Vector2(...event.normalizedPosition());
     this.canvas.style.cursor = "grabbing";
   }
 
-  private onGrabEnd() {
+  private onGrabEnd(event: PointerEvent) {
+    const endPoint = new Vector2(...event.normalizedPosition());
+    if (this.pointer.distanceTo(endPoint) < 0.01) {
+      this.raycaster.setFromCamera(this.pointer, this.camera);
+      const intersects = this.raycaster.intersectObjects([this.sphere], false);
+      const point = intersects.shift()?.point;
+      if (!point) {
+        return;
+      }
+      const dot = new THREE.Mesh(
+        new THREE.SphereGeometry(0.05, 8, 8),
+        new THREE.MeshBasicMaterial({ color: 0xff7000 })
+      );
+      dot.position.copy(point);
+      this.scene.add(dot);
+    }
     this.canvas.style.cursor = "default";
   }
 

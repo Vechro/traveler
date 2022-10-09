@@ -7,7 +7,7 @@ Object.defineProperty(MouseEvent.prototype, "position", {
 MouseEvent.prototype.normalizedPosition = function () {
   return [
     (this.clientX / innerWidth) * 2 - 1,
-    -(-(this.clientY / innerHeight) * 2 + 1),
+    -(this.clientY / innerHeight) * 2 + 1,
   ];
 };
 
@@ -18,7 +18,7 @@ declare global {
      */
     position: [number, number];
     /**
-     * @returns [clientX, clientY] normalized to -1..1 where top-left corner is [-1, -1].
+     * @returns [clientX, clientY] normalized to -1..1 where top-left corner is [-1, 1].
      */
     normalizedPosition(): [number, number];
   }

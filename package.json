@@ -18,7 +18,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tldraw/vec": "^1.8.0",
     "lit": "^2.4.0",
     "three": "^0.145.0"
   },

@@ -23,3 +23,5 @@ types/
 *.njsproj
 *.sln
 *.sw?
+
+**/assets/**/*-max.jpg

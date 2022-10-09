@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@custom-elements-manifest/analyzer': ^0.6.4
-  '@tldraw/vec': ^1.8.0
   '@types/three': ^0.144.0
   '@typescript-eslint/eslint-plugin': ^5.39.0
   '@typescript-eslint/parser': ^5.39.0
@@ -15,7 +14,6 @@ specifiers:
   vite-plugin-string: 1.1.2
 
 dependencies:
-  '@tldraw/vec': 1.8.0
   lit: 2.4.0
   three: 0.145.0
 
@@ -140,10 +138,6 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
-
-  /@tldraw/vec/1.8.0:
-    resolution: {integrity: sha512-GiS5Df3CzXY/fPBFcM0CKFERZfI4Cg1X33VPZX+NLo7Fwm/h9zu/aU24N1mG75Q9LuMnwKm7woxKr8BiUXGYCg==}
-    dev: false
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
