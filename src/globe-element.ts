@@ -118,8 +118,6 @@ export class GlobeElement extends LitElement {
     return html`
       <canvas
         id="canvas"
-        width="400"
-        height="400"
         @pointerdown=${this.onGrabStart}
         @pointerup=${this.onGrabEnd}
         @pointerout=${this.onGrabEnd}
