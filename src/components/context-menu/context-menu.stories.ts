@@ -9,19 +9,20 @@ export default {
   component: "context-menu",
 } as Meta;
 
-export const Template: Story<ContextMenu> = (args) =>
+export const Template: Story<ContextMenu> = () =>
   html` <style>
       .container {
         width: 300px;
         height: 200px;
-        background: #eee;
+        border: 1px solid black;
+        padding-inline: .5rem;
       }
     </style>
     <section class="container">
-      <p>Open context menu here</p>
+      <p>Open context menu in here</p>
       <context-menu>
-        <div>
-          Content
-        </div>
+        <button>Foo</button>
+        <button>Bar</button>
+        <button>Baz</button>
       </context-menu>
     </section>`;

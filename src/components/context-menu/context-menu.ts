@@ -1,5 +1,5 @@
 import { css, html, LitElement, nothing } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import "../../math";
 
 @customElement("context-menu")
@@ -7,10 +7,7 @@ export class ContextMenu extends LitElement {
   @property({ type: Boolean })
   open = false;
 
-  @query("#menu")
-  menu!: HTMLDivElement;
-
-  location?: number[];
+  private location?: number[];
 
   firstUpdated() {
     window.addEventListener("contextmenu", (event) => {
@@ -27,29 +24,39 @@ export class ContextMenu extends LitElement {
           top: ${this.location?.[1]}px;
         }
       </style>
-      ${this.open
-        ? html`<div id="menu">
-            <slot></slot>
-          </div>`
-        : nothing}`;
+      ${this.open ? html`<slot></slot>` : nothing}`;
   }
 
   static styles = css`
     :host {
-      z-index: 1;
-      position: absolute;
-    }
-    ::slotted(*) {
       display: flex;
+      position: absolute;
+      z-index: 1;
+      flex-direction: column;
       margin: 0;
-      padding: 0.5rem;
       background: #fff;
-      border-radius: 0.25rem;
+      border-radius: 0.5rem;
       min-width: 8rem;
       box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.05),
         0px 0px 16px -8px rgba(0, 0, 0, 0.05),
         0px 0px 16px -12px rgba(0, 0, 0, 0.12),
         0px 0px 2px 0px rgba(0, 0, 0, 0.08);
+    }
+    ::slotted(button) {
+      background-color: transparent;
+      border: none;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      text-align: start;
+    }
+    ::slotted(button:hover) {
+      background-color: #ececec;
+    }
+    ::slotted(button:first-child) {
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+    ::slotted(button:last-child) {
+      border-radius: 0 0 0.5rem 0.5rem;
     }
   `;
 }

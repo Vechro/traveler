@@ -17,7 +17,7 @@ export class GlobeElement extends LitElement {
   canvas!: HTMLCanvasElement;
 
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
   renderer?: THREE.WebGLRenderer;
   controls?: OrbitControls;
 
@@ -68,6 +68,7 @@ export class GlobeElement extends LitElement {
 
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.1;
     this.controls.enablePan = false;
     this.controls.minDistance = 6;
     this.controls.maxDistance = 15;
@@ -81,7 +82,6 @@ export class GlobeElement extends LitElement {
     this.renderer?.setPixelRatio(devicePixelRatio);
     this.camera.aspect = innerWidth / innerHeight;
     this.camera.updateProjectionMatrix();
-    this.controls?.update();
   }
 
   paint() {
@@ -94,6 +94,10 @@ export class GlobeElement extends LitElement {
     if (event.button === 0) {
       this.pointer = new Vector2(...event.normalizedPosition());
       this.canvas.style.cursor = "grabbing";
+    } else if (event.button === 2 && this.controls) {
+      this.controls.dampingFactor = 0.9;
+      this.controls.update()
+      this.controls.dampingFactor = 0.1;
     }
   }
 
