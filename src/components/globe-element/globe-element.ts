@@ -4,12 +4,12 @@ import * as THREE from "three";
 import { Vector2 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
-import earthUvMap from "./assets/earth-uv-map.jpg";
-import atmosphereFrag from "./assets/shaders/atmosphere.frag";
-import atmosphereVert from "./assets/shaders/atmosphere.vert";
-import sphereFrag from "./assets/shaders/sphere.frag";
-import sphereVert from "./assets/shaders/sphere.vert";
-import "./math";
+import earthUvMap from "../../assets/earth-uv-map.jpg";
+import atmosphereFrag from "./shaders/atmosphere.frag";
+import atmosphereVert from "./shaders/atmosphere.vert";
+import sphereFrag from "./shaders/sphere.frag";
+import sphereVert from "./shaders/sphere.vert";
+import "../../math";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
@@ -91,8 +91,10 @@ export class GlobeElement extends LitElement {
   }
 
   private onGrabStart(event: PointerEvent) {
-    this.pointer = new Vector2(...event.normalizedPosition());
-    this.canvas.style.cursor = "grabbing";
+    if (event.button === 0) {
+      this.pointer = new Vector2(...event.normalizedPosition());
+      this.canvas.style.cursor = "grabbing";
+    }
   }
 
   private onGrabEnd(event: PointerEvent) {

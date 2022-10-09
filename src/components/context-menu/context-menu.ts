@@ -36,6 +36,7 @@ export class ContextMenu extends LitElement {
 
   static styles = css`
     :host {
+      z-index: 1;
       position: absolute;
     }
     ::slotted(*) {
