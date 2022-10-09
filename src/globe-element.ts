@@ -1,12 +1,12 @@
 import { css, html, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import earthUvMap from "./assets/earth-uv-map.jpg";
 import atmosphereFrag from "./assets/shaders/atmosphere.frag";
 import atmosphereVert from "./assets/shaders/atmosphere.vert";
 import sphereFrag from "./assets/shaders/sphere.frag";
 import sphereVert from "./assets/shaders/sphere.vert";
-import { Vec } from "@tldraw/vec";
 import "./math";
 
 @customElement("globe-element")
@@ -17,6 +17,7 @@ export class GlobeElement extends LitElement {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
   renderer?: THREE.WebGLRenderer;
+  controls?: OrbitControls;
 
   sphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 50, 50),
@@ -44,9 +45,6 @@ export class GlobeElement extends LitElement {
 
   group = new THREE.Group();
 
-  private pointerStart: number[] | null = null;
-  private pointerDelta: number[] = [0, 0];
-
   firstUpdated() {
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -54,7 +52,6 @@ export class GlobeElement extends LitElement {
       alpha: false,
     });
     window.addEventListener("resize", () => this.onResize(), false);
-    window.addEventListener("wheel", (event) => this.onWheel(event), false);
     this.onResize();
 
     this.atmosphere.scale.set(1.1, 1.1, 1.1);
@@ -65,6 +62,13 @@ export class GlobeElement extends LitElement {
 
     this.camera.position.z = 10;
 
+    this.controls = new OrbitControls(this.camera, this.canvas);
+    this.controls.enableDamping = true;
+    this.controls.enablePan = false;
+    this.controls.minDistance = 6.67;
+    this.controls.maxDistance = 15;
+    this.controls.rotateSpeed = 0.5;
+
     this.paint();
   }
 
@@ -73,42 +77,21 @@ export class GlobeElement extends LitElement {
     this.renderer?.setPixelRatio(devicePixelRatio);
     this.camera.aspect = innerWidth / innerHeight;
     this.camera.updateProjectionMatrix();
+    this.controls?.update();
   }
 
   paint() {
     requestAnimationFrame(this.paint.bind(this));
     this.renderer?.render(this.scene, this.camera);
-    this.group.rotation.x = this.pointerDelta[1];
-    this.group.rotation.y = this.pointerDelta[0];
+    this.controls?.update();
   }
 
-  private onGrabStart(event: PointerEvent) {
+  private onGrabStart() {
     this.canvas.style.cursor = "grabbing";
-    this.pointerStart = Vec.sub(event.normalizedPosition(), this.pointerDelta);
-  }
-
-  private onGrabMove(event: MouseEvent) {
-    if (this.pointerStart) {
-      this.pointerDelta = Vec.sub(
-        event.normalizedPosition(),
-        this.pointerStart
-      );
-    }
   }
 
   private onGrabEnd() {
     this.canvas.style.cursor = "default";
-    this.pointerStart = null;
-  }
-
-  private onWheel(event: WheelEvent) {
-    const [_, y] = event.normalizedDelta();
-
-    this.camera.position.z = Vec.clamp(
-      this.camera.position.z + y / 50,
-      6.67,
-      15
-    );
   }
 
   render() {
@@ -118,7 +101,6 @@ export class GlobeElement extends LitElement {
         width="400"
         height="400"
         @pointerdown=${this.onGrabStart}
-        @mousemove=${this.onGrabMove}
         @pointerup=${this.onGrabEnd}
         @pointerout=${this.onGrabEnd}
       ></canvas>
