@@ -1,64 +1,61 @@
-import { css, html, LitElement, nothing } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { html, LitElement, nothing } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
 import "../../math";
+import { styles } from "./context-menu.styles";
 
 @customElement("context-menu")
 export class ContextMenu extends LitElement {
+  static styles = styles;
+
   @property({ type: Boolean })
   open = false;
 
-  private location?: number[];
+  @query("slot")
+  defaultSlot!: HTMLSlotElement;
 
-  firstUpdated() {
-    window.addEventListener("contextmenu", (event) => {
-      this.open = !this.open;
-      this.location = event.pagePosition;
-      event.preventDefault();
-    });
+  private location?: [number, number];
+
+  private handleContextMenu = (event: MouseEvent) => {
+    this.open = !this.open;
+    this.location = event.pagePosition;
+    event.preventDefault();
+  };
+
+  private handleDismiss = (event: MouseEvent | KeyboardEvent) => {
+    // It does work
+    if (event.composedPath().includes(this.defaultSlot)) {
+      return;
+    }
+    if (event instanceof KeyboardEvent && event.key !== "Escape") {
+      return;
+    }
+    this.open = false;
+    event.preventDefault();
+  };
+
+  connectedCallback() {
+    super.connectedCallback();
+    addEventListener("contextmenu", this.handleContextMenu);
+    addEventListener("pointerdown", this.handleDismiss);
+    addEventListener("keydown", this.handleDismiss);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    removeEventListener("contextmenu", this.handleContextMenu);
+    removeEventListener("pointerdown", this.handleDismiss);
+    removeEventListener("keydown", this.handleDismiss);
   }
 
   render() {
     return html` <style>
         :host {
-          left: ${this.location?.[0]}px;
-          top: ${this.location?.[1]}px;
+          left: ${this.location?.[0] ?? 0}px;
+          top: ${this.location?.[1] ?? 0}px;
         }
       </style>
       ${this.open ? html`<slot></slot>` : nothing}`;
   }
-
-  static styles = css`
-    :host {
-      display: flex;
-      position: absolute;
-      z-index: 1;
-      flex-direction: column;
-      margin: 0;
-      background: #fff;
-      border-radius: 0.5rem;
-      min-width: 8rem;
-      box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.05),
-        0px 0px 16px -8px rgba(0, 0, 0, 0.05),
-        0px 0px 16px -12px rgba(0, 0, 0, 0.12),
-        0px 0px 2px 0px rgba(0, 0, 0, 0.08);
-    }
-    ::slotted(button) {
-      background-color: transparent;
-      border: none;
-      padding: 0.75rem 1rem;
-      cursor: pointer;
-      text-align: start;
-    }
-    ::slotted(button:hover) {
-      background-color: #ececec;
-    }
-    ::slotted(button:first-child) {
-      border-radius: 0.5rem 0.5rem 0 0;
-    }
-    ::slotted(button:last-child) {
-      border-radius: 0 0 0.5rem 0.5rem;
-    }
-  `;
 }
 
 declare global {

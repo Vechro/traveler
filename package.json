@@ -16,7 +16,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "storybook": "start-storybook -p 22117 -s public",
+    "storybook": "start-storybook -p 22117",
     "generate-elements-manifest": "custom-elements-manifest analyze"
   },
   "dependencies": {
@@ -33,8 +33,8 @@
     "@storybook/cli": "^6.5.12",
     "@storybook/web-components": "^6.5.12",
     "@types/three": "^0.144.0",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "eslint": "^8.25.0",
     "eslint-plugin-lit": "^1.6.1",
     "lit-html": "^2.4.0",
@@ -42,7 +42,7 @@
     "react-dom": "^17.0.0",
     "storybook": "^6.5.12",
     "typescript": "^4.8.4",
-    "vite": "^3.1.6",
+    "vite": "^3.1.7",
     "vite-plugin-string": "1.1.2",
     "webpack": ">=5.0.0"
   },

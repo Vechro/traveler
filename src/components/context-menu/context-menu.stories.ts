@@ -9,7 +9,7 @@ export default {
   component: "context-menu",
 } as Meta;
 
-export const Template: Story<ContextMenu> = () =>
+export const Default: Story<ContextMenu> = () =>
   html` <style>
       .container {
         width: 300px;

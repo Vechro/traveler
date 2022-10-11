@@ -22,10 +22,27 @@
             },
             {
               "kind": "field",
+              "name": "defaultSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              }
+            },
+            {
+              "kind": "field",
               "name": "location",
               "type": {
-                "text": "number[] | undefined"
+                "text": "[number, number] | undefined"
               },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleContextMenu",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleDismiss",
               "privacy": "private"
             }
           ],

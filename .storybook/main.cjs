@@ -10,6 +10,7 @@ const config = {
     storyStoreV7: true,
     disableTelemetry: true,
   },
+  staticDirs: ["../public"],
   async viteFinal(config) {
     return config;
   },
