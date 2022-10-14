@@ -121,18 +121,25 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/globe-element/globe-element.ts",
+      "path": "src/components/globe-viewer/globe-viewer.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "GlobeElement",
+          "name": "GlobeViewer",
           "members": [
             {
               "kind": "field",
               "name": "canvas",
               "type": {
                 "text": "HTMLCanvasElement"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pointListMenu",
+              "type": {
+                "text": "MenuList"
               }
             },
             {
@@ -191,6 +198,15 @@
             },
             {
               "kind": "field",
+              "name": "pointsList",
+              "type": {
+                "text": "Point[]"
+              },
+              "default": "[]",
+              "attribute": "pointsList"
+            },
+            {
+              "kind": "field",
               "name": "onResize",
               "privacy": "private"
             },
@@ -222,31 +238,86 @@
               "kind": "field",
               "name": "resetClickPointer",
               "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "orientPointTowardCamera",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "pointListElements"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "pointsList",
+              "type": {
+                "text": "Point[]"
+              },
+              "default": "[]",
+              "fieldName": "pointsList"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "globe-element",
+          "tagName": "globe-viewer",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "GlobeElement",
+          "name": "GlobeViewer",
           "declaration": {
-            "name": "GlobeElement",
-            "module": "src/components/globe-element/globe-element.ts"
+            "name": "GlobeViewer",
+            "module": "src/components/globe-viewer/globe-viewer.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "globe-element",
+          "name": "globe-viewer",
           "declaration": {
-            "name": "GlobeElement",
-            "module": "src/components/globe-element/globe-element.ts"
+            "name": "GlobeViewer",
+            "module": "src/components/globe-viewer/globe-viewer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-list/menu-list.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuList",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-list",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuList",
+          "declaration": {
+            "name": "MenuList",
+            "module": "src/components/menu-list/menu-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-list",
+          "declaration": {
+            "name": "MenuList",
+            "module": "src/components/menu-list/menu-list.ts"
           }
         }
       ]

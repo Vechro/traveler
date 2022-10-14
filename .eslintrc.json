@@ -11,6 +11,7 @@
       {
         "destructuredArrayIgnorePattern": "^_"
       }
-    ]
+    ],
+    "no-console": "warn"
   }
 }

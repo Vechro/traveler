@@ -1,20 +1,33 @@
-import { css, html, LitElement } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import { html, LitElement } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
 import * as THREE from "three";
-import { Vector2 } from "three";
+import { Spherical, Vector2 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import earthUvMap from "../../assets/earth-uv-map.jpg";
 import "../../extension";
+import { MenuList } from "../menu-list";
+import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag";
 import atmosphereVert from "./shaders/atmosphere.vert";
 import sphereFrag from "./shaders/sphere.frag";
 import sphereVert from "./shaders/sphere.vert";
 
-@customElement("globe-element")
-export class GlobeElement extends LitElement {
+type Point = {
+  id: number;
+  name: string;
+  mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+};
+
+@customElement("globe-viewer")
+export class GlobeViewer extends LitElement {
+  static styles = styles;
+
   @query("canvas", true)
   canvas!: HTMLCanvasElement;
+
+  @query(".point-list-menu", true)
+  pointListMenu!: MenuList;
 
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
@@ -49,6 +62,9 @@ export class GlobeElement extends LitElement {
   clickPointer = new THREE.Vector2();
   grabPointer = new THREE.Vector2();
   raycaster = new THREE.Raycaster();
+
+  @property()
+  pointsList: Point[] = [];
 
   firstUpdated() {
     this.renderer = new THREE.WebGLRenderer({
@@ -93,12 +109,7 @@ export class GlobeElement extends LitElement {
 
   private onGrabStart = (event: PointerEvent) => {
     if (event.button === 0) {
-      this.grabPointer = new Vector2(...event.normalizedPosition());
       this.canvas.style.cursor = "grabbing";
-    } else if (event.button === 2 && this.controls) {
-      this.controls.dampingFactor = 0.9;
-      this.controls.update();
-      this.controls.dampingFactor = 0.1;
     }
   };
 
@@ -107,7 +118,6 @@ export class GlobeElement extends LitElement {
   };
 
   private addPoint = () => {
-    console.log(this.clickPointer);
     this.raycaster.setFromCamera(this.clickPointer, this.camera);
     const intersects = this.raycaster.intersectObjects([this.sphere], false);
     const point = intersects.shift()?.point;
@@ -120,6 +130,14 @@ export class GlobeElement extends LitElement {
     );
     dot.position.copy(point);
     this.scene.add(dot);
+    this.pointsList = [
+      ...this.pointsList,
+      {
+        id: this.pointsList.length,
+        name: `Point #${this.pointsList.length}`,
+        mesh: dot,
+      },
+    ];
   };
 
   private handleClickPointer = (event: MouseEvent) => {
@@ -129,6 +147,28 @@ export class GlobeElement extends LitElement {
   private resetClickPointer = () => {
     this.clickPointer = new Vector2();
   };
+
+  private orientPointTowardCamera = (point: Point) => {
+    const spherical = new Spherical().setFromVector3(point.mesh.position);
+    this.controls?.object.position.setFromSphericalCoords(
+      this.controls.getDistance(),
+      spherical.phi,
+      spherical.theta
+    );
+  };
+
+  pointListElements() {
+    return html`
+      ${this.pointsList.map(
+        (point) =>
+          html`
+            <div @pointerup=${() => this.orientPointTowardCamera(point)}>
+              ${point.name}
+            </div>
+          `
+      )}
+    `;
+  }
 
   render() {
     return html`
@@ -146,22 +186,16 @@ export class GlobeElement extends LitElement {
           @pointerup=${this.onGrabEnd}
           @pointerout=${this.onGrabEnd}
         ></canvas>
+        <menu-list class="point-list-menu">
+          ${this.pointListElements()}
+        </menu-list>
       </context-menu>
     `;
   }
-
-  static styles = css`
-    canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-      contain: size layout paint;
-    }
-  `;
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "globe-element": GlobeElement;
+    "globe-viewer": GlobeViewer;
   }
 }
