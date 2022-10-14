@@ -22,7 +22,7 @@
             },
             {
               "kind": "field",
-              "name": "defaultSlot",
+              "name": "containerSlot",
               "type": {
                 "text": "HTMLSlotElement"
               }
@@ -85,6 +85,42 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/context-menu-item/context-menu-item.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContextMenuItem",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "context-menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContextMenuItem",
+          "declaration": {
+            "name": "ContextMenuItem",
+            "module": "src/components/context-menu-item/context-menu-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "context-menu-item",
+          "declaration": {
+            "name": "ContextMenuItem",
+            "module": "src/components/context-menu-item/context-menu-item.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/globe-element/globe-element.ts",
       "declarations": [
         {
@@ -140,7 +176,12 @@
             },
             {
               "kind": "field",
-              "name": "pointer",
+              "name": "clickPointer",
+              "default": "new THREE.Vector2()"
+            },
+            {
+              "kind": "field",
+              "name": "grabPointer",
               "default": "new THREE.Vector2()"
             },
             {
@@ -149,7 +190,7 @@
               "default": "new THREE.Raycaster()"
             },
             {
-              "kind": "method",
+              "kind": "field",
               "name": "onResize",
               "privacy": "private"
             },
@@ -158,30 +199,29 @@
               "name": "paint"
             },
             {
-              "kind": "method",
+              "kind": "field",
               "name": "onGrabStart",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
+              "privacy": "private"
             },
             {
-              "kind": "method",
+              "kind": "field",
               "name": "onGrabEnd",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "addPoint",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleClickPointer",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "resetClickPointer",
+              "privacy": "private"
             }
           ],
           "superclass": {
