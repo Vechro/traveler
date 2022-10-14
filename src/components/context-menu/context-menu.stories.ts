@@ -1,21 +1,20 @@
-import { Meta, Story } from "@storybook/web-components";
+import { StoryObj } from "@storybook/web-components-vite";
 import { html } from "lit";
 
 import "./context-menu";
-import type { ContextMenu } from "./context-menu";
 
 export default {
-  title: "Context Menu",
   component: "context-menu",
-} as Meta;
+};
 
-export const Default: Story<ContextMenu> = () =>
-  html` <style>
+export const Default: StoryObj = {
+  render: () => html`
+    <style>
       .container {
         width: 300px;
         height: 200px;
         border: 1px solid black;
-        padding-inline: .5rem;
+        padding-inline: 0.5rem;
       }
     </style>
     <section class="container">
@@ -25,4 +24,6 @@ export const Default: Story<ContextMenu> = () =>
         <button>Bar</button>
         <button>Baz</button>
       </context-menu>
-    </section>`;
+    </section>
+  `,
+};

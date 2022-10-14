@@ -15,8 +15,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "storybook": "start-storybook -p 22117",
+    "preview": "tsc && vite preview",
+    "storybook": "storybook dev -p 22117",
     "generate-elements-manifest": "custom-elements-manifest analyze"
   },
   "dependencies": {
@@ -27,32 +27,36 @@
     "@babel/core": ">=7.13.0 <8.0.0",
     "@babel/preset-typescript": "^7.18.6",
     "@custom-elements-manifest/analyzer": "^0.6.4",
-    "@storybook/addon-actions": "^6.5.12",
-    "@storybook/addon-controls": "^6.5.12",
-    "@storybook/builder-vite": "^0.2.4",
-    "@storybook/cli": "^6.5.12",
-    "@storybook/web-components": "^6.5.12",
+    "@storybook/addon-actions": "^7.0.0-alpha.37",
+    "@storybook/web-components": "^7.0.0-alpha.37",
+    "@storybook/web-components-vite": "^7.0.0-alpha.37",
     "@types/three": "^0.144.0",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "eslint": "^8.25.0",
     "eslint-plugin-lit": "^1.6.1",
+    "eslint-plugin-storybook": "^0.6.6",
     "lit-html": "^2.4.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "storybook": "^6.5.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.0.0-alpha.37",
     "typescript": "^4.8.4",
     "vite": "^3.1.7",
     "vite-plugin-string": "1.1.2",
+    "vue": "^3.2.25",
     "webpack": ">=5.0.0"
   },
   "peerDependencies": {
     "@babel/core": ">=7.13.0 <8.0.0",
     "@typescript-eslint/parser": "^5.39.0",
     "lit-html": "^2.4.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": ">=16.8.0 <17.0.0 || >=17.0.0 <18.0.0 || >=18.0.0 <19.0.0",
+    "react-dom": ">=16.8.0 <17.0.0 || >=17.0.0 <18.0.0 || >=18.0.0 <19.0.0",
+    "vue": "^3.2.25",
     "webpack": ">=5.0.0"
   },
-  "customElements": "src/components/custom-elements.json"
+  "customElements": "src/components/custom-elements.json",
+  "prettier": {
+    "htmlWhitespaceSensitivity": "ignore"
+  }
 }
