@@ -1445,18 +1445,8 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@emotion/use-insertion-effect-with-fallbacks/1.0.0_react@16.14.0:
+  /@emotion/use-insertion-effect-with-fallbacks/1.0.0:
     resolution: {integrity: sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==}
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: 16.14.0
-    dev: true
-
-  /@emotion/use-insertion-effect-with-fallbacks/1.0.0_react@18.2.0:
-    resolution: {integrity: sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==}
-    peerDependencies:
-      react: '>=16.8.0'
     dependencies:
       react: 18.2.0
     dev: true
@@ -2412,7 +2402,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.0_react@18.2.0
+      '@emotion/use-insertion-effect-with-fallbacks': 1.0.0
       '@storybook/client-logger': 7.0.0-alpha.37
       memoizerific: 1.11.3
       react: 18.2.0
@@ -2425,7 +2415,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.0_react@16.14.0
+      '@emotion/use-insertion-effect-with-fallbacks': 1.0.0
       '@storybook/client-logger': 7.0.0-alpha.37
       memoizerific: 1.11.3
       react: 16.14.0
@@ -3201,7 +3191,6 @@ packages:
   /ansi-to-html/0.6.15:
     resolution: {integrity: sha512-28ijx2aHJGdzbs+O5SNQF65r6rrKYnkuwTYm8lZlChuoJ9P1vVzIpWO20sQTqTPDXYp6NFwk326vApTtLVFXpQ==}
     engines: {node: '>=8.0.0'}
-    hasBin: true
     dependencies:
       entities: 2.2.0
     dev: true
@@ -6118,7 +6107,6 @@ packages:
 
   /jscodeshift/0.13.1_@babel+preset-env@7.19.4:
     resolution: {integrity: sha512-lGyiEbGOvmMRKgWk4vf+lUrCWO/8YR8sUR3FKF1Cq5fovjZDlIcw3Hu5ppLHAnEXshVffvaM0eyuY/AbOeYpnQ==}
-    hasBin: true
     peerDependencies:
       '@babel/preset-env': ^7.1.6
     dependencies:
@@ -6341,7 +6329,6 @@ packages:
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
-    hasBin: true
     dependencies:
       js-tokens: 4.0.0
     dev: true
@@ -7975,7 +7962,6 @@ packages:
 
   /semver/5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
-    hasBin: true
     dev: true
 
   /semver/6.3.0:
@@ -7985,7 +7971,6 @@ packages:
   /semver/7.3.8:
     resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==}
     engines: {node: '>=10'}
-    hasBin: true
     dependencies:
       lru-cache: 6.0.0
     dev: true
@@ -8563,13 +8548,11 @@ packages:
   /typescript/4.3.5:
     resolution: {integrity: sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==}
     engines: {node: '>=4.2.0'}
-    hasBin: true
     dev: true
 
   /typescript/4.8.4:
     resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
     engines: {node: '>=4.2.0'}
-    hasBin: true
     dev: true
 
   /typical/4.0.0:
@@ -8796,7 +8779,6 @@ packages:
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
-    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -8945,7 +8927,6 @@ packages:
   /vite/3.1.8:
     resolution: {integrity: sha512-m7jJe3nufUbuOfotkntGFupinL/fmuTNuQmiVE7cH2IZMuf4UbfbGYMUT3jVWgGYuRVLY9j8NnrRqgw5rr5QTg==}
     engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
     peerDependencies:
       less: '*'
       sass: '*'
@@ -9003,7 +8984,6 @@ packages:
   /webpack/5.74.0:
     resolution: {integrity: sha512-A2InDwnhhGN4LYctJj6M1JEaGL7Luj6LOmyBHjcI8529cm5p6VXiTIW2sn6ffvEAKmveLzvu4jrihwXtPojlAA==}
     engines: {node: '>=10.13.0'}
-    hasBin: true
     peerDependencies:
       webpack-cli: '*'
     peerDependenciesMeta:

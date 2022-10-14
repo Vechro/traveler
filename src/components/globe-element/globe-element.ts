@@ -5,11 +5,11 @@ import { Vector2 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import earthUvMap from "../../assets/earth-uv-map.jpg";
+import "../../extension";
 import atmosphereFrag from "./shaders/atmosphere.frag";
 import atmosphereVert from "./shaders/atmosphere.vert";
 import sphereFrag from "./shaders/sphere.frag";
 import sphereVert from "./shaders/sphere.vert";
-import "../../math";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
