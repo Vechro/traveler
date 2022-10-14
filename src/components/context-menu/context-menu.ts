@@ -16,29 +16,30 @@ export class ContextMenu extends LitElement {
   private location?: [number, number];
 
   private handleContextMenu = (event: MouseEvent) => {
+    event.preventDefault();
     this.open = !this.open;
     this.location = event.pagePosition;
-    event.preventDefault();
+    this.dispatchEvent(new MouseEvent("open", event));
   };
 
   private handleDismiss = (event: MouseEvent | KeyboardEvent) => {
-    // It does work
     if (event instanceof KeyboardEvent && event.key !== "Escape") {
       return;
     }
-    this.open = false;
     event.preventDefault();
+    this.open = false;
+    this.dispatchEvent(new UIEvent("close", event));
   };
 
   connectedCallback() {
     super.connectedCallback();
-    addEventListener("pointerup", this.handleDismiss);
+    addEventListener("pointerdown", this.handleDismiss);
     addEventListener("keydown", this.handleDismiss);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    removeEventListener("pointerup", this.handleDismiss);
+    removeEventListener("pointerdown", this.handleDismiss);
     removeEventListener("keydown", this.handleDismiss);
   }
 

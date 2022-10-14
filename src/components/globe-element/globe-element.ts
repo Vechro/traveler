@@ -13,7 +13,7 @@ import sphereVert from "./shaders/sphere.vert";
 
 @customElement("globe-element")
 export class GlobeElement extends LitElement {
-  @query("#canvas", true)
+  @query("canvas", true)
   canvas!: HTMLCanvasElement;
 
   scene = new THREE.Scene();
@@ -46,7 +46,8 @@ export class GlobeElement extends LitElement {
 
   group = new THREE.Group();
 
-  pointer = new THREE.Vector2();
+  clickPointer = new THREE.Vector2();
+  grabPointer = new THREE.Vector2();
   raycaster = new THREE.Raycaster();
 
   firstUpdated() {
@@ -55,7 +56,7 @@ export class GlobeElement extends LitElement {
       canvas: this.canvas,
       alpha: false,
     });
-    window.addEventListener("resize", () => this.onResize(), false);
+    addEventListener("resize", this.onResize, false);
     this.onResize();
 
     this.atmosphere.scale.set(1.1, 1.1, 1.1);
@@ -77,12 +78,12 @@ export class GlobeElement extends LitElement {
     this.paint();
   }
 
-  private onResize() {
+  private onResize = () => {
     this.renderer?.setSize(innerWidth, innerHeight);
     this.renderer?.setPixelRatio(devicePixelRatio);
     this.camera.aspect = innerWidth / innerHeight;
     this.camera.updateProjectionMatrix();
-  }
+  };
 
   paint() {
     requestAnimationFrame(this.paint.bind(this));
@@ -90,44 +91,62 @@ export class GlobeElement extends LitElement {
     this.controls?.update();
   }
 
-  private onGrabStart(event: PointerEvent) {
+  private onGrabStart = (event: PointerEvent) => {
     if (event.button === 0) {
-      this.pointer = new Vector2(...event.normalizedPosition());
+      this.grabPointer = new Vector2(...event.normalizedPosition());
       this.canvas.style.cursor = "grabbing";
     } else if (event.button === 2 && this.controls) {
       this.controls.dampingFactor = 0.9;
-      this.controls.update()
+      this.controls.update();
       this.controls.dampingFactor = 0.1;
     }
-  }
+  };
 
-  private onGrabEnd(event: PointerEvent) {
-    const endPoint = new Vector2(...event.normalizedPosition());
-    if (this.pointer.distanceTo(endPoint) < 0.01) {
-      this.raycaster.setFromCamera(this.pointer, this.camera);
-      const intersects = this.raycaster.intersectObjects([this.sphere], false);
-      const point = intersects.shift()?.point;
-      if (!point) {
-        return;
-      }
-      const dot = new THREE.Mesh(
-        new THREE.SphereGeometry(0.05, 8, 8),
-        new THREE.MeshBasicMaterial({ color: 0xff7000 })
-      );
-      dot.position.copy(point);
-      this.scene.add(dot);
-    }
+  private onGrabEnd = () => {
     this.canvas.style.cursor = "default";
-  }
+  };
+
+  private addPoint = () => {
+    console.log(this.clickPointer);
+    this.raycaster.setFromCamera(this.clickPointer, this.camera);
+    const intersects = this.raycaster.intersectObjects([this.sphere], false);
+    const point = intersects.shift()?.point;
+    if (!point) {
+      return;
+    }
+    const dot = new THREE.Mesh(
+      new THREE.SphereGeometry(0.05, 8, 8),
+      new THREE.MeshBasicMaterial({ color: 0xff7000 })
+    );
+    dot.position.copy(point);
+    this.scene.add(dot);
+  };
+
+  private handleClickPointer = (event: MouseEvent) => {
+    this.clickPointer = new Vector2(...event.normalizedPosition());
+  };
+
+  private resetClickPointer = () => {
+    this.clickPointer = new Vector2();
+  };
 
   render() {
     return html`
-      <canvas
-        id="canvas"
-        @pointerdown=${this.onGrabStart}
-        @pointerup=${this.onGrabEnd}
-        @pointerout=${this.onGrabEnd}
-      ></canvas>
+      <context-menu
+        @open=${this.handleClickPointer}
+        @close=${this.resetClickPointer}
+      >
+        <div slot="menu-items">
+          <context-menu-item @pointerdown=${this.addPoint}>
+            Add point
+          </context-menu-item>
+        </div>
+        <canvas
+          @pointerdown=${this.onGrabStart}
+          @pointerup=${this.onGrabEnd}
+          @pointerout=${this.onGrabEnd}
+        ></canvas>
+      </context-menu>
     `;
   }
 
