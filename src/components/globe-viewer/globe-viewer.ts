@@ -61,11 +61,11 @@ export class GlobeViewer extends LitElement {
   @query(".points-menu", true)
   pointsMenu!: MenuList;
 
-  clock = new THREE.Clock();
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
-  controls?: CameraControls;
-  renderer?: THREE.WebGLRenderer;
+  private clock = new THREE.Clock();
+  private scene = new THREE.Scene();
+  private camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
+  private controls?: CameraControls;
+  private renderer?: THREE.WebGLRenderer;
 
   sphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 64, 64),

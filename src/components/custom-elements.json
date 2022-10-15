@@ -108,27 +108,37 @@
             },
             {
               "kind": "field",
+              "name": "clock",
+              "privacy": "private",
+              "default": "new THREE.Clock()"
+            },
+            {
+              "kind": "field",
               "name": "scene",
+              "privacy": "private",
               "default": "new THREE.Scene()"
             },
             {
               "kind": "field",
               "name": "camera",
+              "privacy": "private",
               "default": "new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000)"
+            },
+            {
+              "kind": "field",
+              "name": "controls",
+              "type": {
+                "text": "CameraControls | undefined"
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "renderer",
               "type": {
                 "text": "THREE.WebGLRenderer | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "controls",
-              "type": {
-                "text": "OrbitControls | undefined"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -148,12 +158,12 @@
             {
               "kind": "field",
               "name": "clickPointer",
-              "default": "new THREE.Vector2()"
+              "default": "new Vector2()"
             },
             {
               "kind": "field",
               "name": "grabPointer",
-              "default": "new THREE.Vector2()"
+              "default": "new Vector2()"
             },
             {
               "kind": "field",
