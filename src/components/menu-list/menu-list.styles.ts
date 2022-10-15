@@ -7,11 +7,8 @@ export const styles = [
     :host {
       display: flex;
       flex-direction: column;
-      background-color: #fff;
-      margin: 0;
-      border-radius: 0.5rem;
-      box-shadow: var(--panel-shadow);
       overflow-y: auto;
+      border-radius: var(--border-radius);
     }
   `,
 ];

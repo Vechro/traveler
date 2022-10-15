@@ -8,13 +8,13 @@ export const styles = [
       padding: 0.75rem 1rem;
       cursor: pointer;
       transition: var(--background-color-transition);
-      border-top: 1px solid #ececec;
-      border-bottom: 1px solid #ececec;
+      border-top: var(--divider-border);
+      border-bottom: var(--divider-border);
     }
     :host(:hover) {
-      background-color: #ececec7f;
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
+      background-color: #ececfc5f;
+      border-top: var(--divider-border-hover);
+      border-bottom: var(--divider-border-hover);
     }
     :host(:first-child) {
       border-top-color: transparent;

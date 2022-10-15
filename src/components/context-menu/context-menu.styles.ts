@@ -7,8 +7,8 @@ export const styles = [
     ::slotted([slot="menu-list"]) {
       position: absolute;
       z-index: 3;
-      border-radius: 0 0.5rem 0.5rem 0.5rem;
       min-width: 10rem;
+      background: var(--background-color);
       box-shadow: var(--panel-shadow);
     }
   `,

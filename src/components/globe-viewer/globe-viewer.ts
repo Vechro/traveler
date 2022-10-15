@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import * as THREE from "three";
 import { Spherical, Vector2 } from "three";
@@ -70,7 +70,7 @@ export class GlobeViewer extends LitElement {
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       canvas: this.canvas,
-      alpha: false,
+      alpha: true,
     });
     addEventListener("resize", this.onResize, false);
     this.onResize();

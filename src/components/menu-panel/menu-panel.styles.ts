@@ -7,24 +7,20 @@ export const styles = [
     :host {
       display: flex;
       flex-direction: column;
-      background-color: #fff;
-      border-radius: 0.5rem;
+      background: var(--background-color);
       box-shadow: var(--panel-shadow);
+      border-radius: var(--border-radius);
     }
     ::slotted(menu-list) {
-      box-shadow: none;
+      min-height: 8rem;
     }
     ::slotted([slot="header"]) {
-      border-radius: 0.5rem 0.5rem 0 0;
-      background-color: #f5f6f9;
       padding: 1rem;
-      border-bottom: 2px solid #ddd;
+      border-bottom: var(--outline-border);
     }
     ::slotted([slot="footer"]) {
-      border-radius: 0 0 0.5rem 0.5rem;
-      background-color: #f5f6f9;
       padding: 1rem;
-      border-top: 2px solid #ddd;
+      border-top: var(--outline-border);
     }
   `,
 ];
