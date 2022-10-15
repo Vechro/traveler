@@ -8,7 +8,6 @@ export const styles = [
       display: flex;
       flex-direction: column;
       margin: 0;
-      background: #fff;
       border-radius: 0.5rem;
       box-shadow: var(--panel-shadow);
     }
@@ -16,34 +15,25 @@ export const styles = [
       padding: 1rem;
       transition: var(--background-color-transition);
       cursor: pointer;
-      border-radius: 0.5rem;
+      border-top: 1px solid #ececec;
       border-bottom: 1px solid #ececec;
     }
     ::slotted(div:hover) {
       background-color: #ececec7f;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
     }
-    ::slotted(div:not(:last-child))::after,
-    ::slotted(div:not(:first-child))::before {
-      content: "";
-      display: block;
-      height: 1px;
-      position: relative;
-      width: 100%;
+    ::slotted(div:first-child) {
+      border-top: none;
+      border-radius: 0.5rem 0.5rem 0 0;
     }
-    ::slotted(div:not(:last-child):hover)::after,
-    ::slotted(div:not(:first-child):hover)::before {
-      background: linear-gradient(
-        to right,
-        transparent 4%,
-        #ddd 50%,
-        transparent 96%
-      );
+    ::slotted(div:last-child) {
+      border-bottom: none;
+      border-radius: 0 0 0.5rem 0.5rem;
     }
-    ::slotted(div:not(:last-child))::after {
-      top: 1rem;
-    }
-    ::slotted(div:not(:first-child))::before {
-      bottom: 1rem;
+    ::slotted(div:only-child) {
+      border: none;
+      border-radius: 0.5rem;
     }
   `,
 ];
