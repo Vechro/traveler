@@ -8,9 +8,9 @@ export class MenuPanel extends LitElement {
 
   render() {
     return html`
-      <slot name="header" part="header"></slot>
+      <slot name="header"></slot>
       <slot></slot>
-      <slot name="footer" part="footer"></slot>
+      <slot name="footer"></slot>
     `;
   }
 }

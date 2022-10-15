@@ -185,7 +185,7 @@ export class GlobeViewer extends LitElement {
           @pointerout=${this.onGrabEnd}
         ></canvas>
         <menu-panel class="points-menu">
-          <div slot="header">Points</div>
+          <h3 slot="header">Points</h3>
           <menu-list>${this.pointListElements()}</menu-list>
         </menu-panel>
       </context-menu>

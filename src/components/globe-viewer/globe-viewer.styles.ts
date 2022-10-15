@@ -10,6 +10,9 @@ export const styles = [
       height: 100%;
       contain: size layout paint;
     }
+    h3 {
+      margin: 0;
+    }
     .points-menu {
       position: absolute;
       top: 2rem;
