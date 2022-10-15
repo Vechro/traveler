@@ -27,7 +27,7 @@ specifiers:
   webpack: '>=5.0.0'
 
 dependencies:
-  camera-controls: 1.37.3_three@0.145.0
+  camera-controls: 1.37.3
   lit: 2.4.0
   three: 0.145.0
 
@@ -3585,10 +3585,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /camera-controls/1.37.3_three@0.145.0:
+  /camera-controls/1.37.3:
     resolution: {integrity: sha512-6r9SRuIVWD48G3ppHHsP2M5Tfjz1yvmq1/jpTpd9qdqExp5ecwmHY9iQrCEXU5CdBuPPeVt0QMHYi2GKPVIHkQ==}
-    peerDependencies:
-      three: '>=0.126.1'
     dependencies:
       three: 0.145.0
     dev: false
@@ -6117,7 +6115,6 @@ packages:
 
   /jscodeshift/0.13.1_@babel+preset-env@7.19.4:
     resolution: {integrity: sha512-lGyiEbGOvmMRKgWk4vf+lUrCWO/8YR8sUR3FKF1Cq5fovjZDlIcw3Hu5ppLHAnEXshVffvaM0eyuY/AbOeYpnQ==}
-    hasBin: true
     peerDependencies:
       '@babel/preset-env': ^7.1.6
     dependencies:
@@ -8790,7 +8787,6 @@ packages:
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
-    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -8939,7 +8935,6 @@ packages:
   /vite/3.1.8:
     resolution: {integrity: sha512-m7jJe3nufUbuOfotkntGFupinL/fmuTNuQmiVE7cH2IZMuf4UbfbGYMUT3jVWgGYuRVLY9j8NnrRqgw5rr5QTg==}
     engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
     peerDependencies:
       less: '*'
       sass: '*'
@@ -8997,7 +8992,6 @@ packages:
   /webpack/5.74.0:
     resolution: {integrity: sha512-A2InDwnhhGN4LYctJj6M1JEaGL7Luj6LOmyBHjcI8529cm5p6VXiTIW2sn6ffvEAKmveLzvu4jrihwXtPojlAA==}
     engines: {node: '>=10.13.0'}
-    hasBin: true
     peerDependencies:
       webpack-cli: '*'
     peerDependenciesMeta:

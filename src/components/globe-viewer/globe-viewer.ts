@@ -1,7 +1,18 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import * as THREE from "three";
-import { Group, Mesh, Scene, Spherical, Vector2 } from "three";
+import {
+  Box3,
+  MathUtils,
+  Matrix4,
+  Quaternion,
+  Raycaster,
+  Sphere,
+  Spherical,
+  Vector2,
+  Vector3,
+  Vector4,
+} from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import CameraControls from "camera-controls";
 import earthUvMap from "../../assets/earth-uv-map.jpg";
@@ -16,7 +27,7 @@ import sphereVert from "./shaders/sphere.vert";
 type Point = {
   id: number;
   name: string;
-  mesh: Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+  mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
 };
 
 @customElement("globe-viewer")
@@ -25,7 +36,23 @@ export class GlobeViewer extends LitElement {
 
   constructor() {
     super();
-    CameraControls.install({ THREE });
+    CameraControls.install({
+      THREE: {
+        Vector2: Vector2,
+        Vector3: Vector3,
+        Vector4: Vector4,
+        Quaternion: Quaternion,
+        Matrix4: Matrix4,
+        Spherical: Spherical,
+        Box3: Box3,
+        Sphere: Sphere,
+        Raycaster: Raycaster,
+        MathUtils: {
+          DEG2RAD: MathUtils.DEG2RAD,
+          clamp: MathUtils.clamp,
+        },
+      },
+    });
   }
 
   @query("canvas", true)
@@ -35,12 +62,12 @@ export class GlobeViewer extends LitElement {
   pointsMenu!: MenuList;
 
   clock = new THREE.Clock();
-  scene = new Scene();
+  scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
   controls?: CameraControls;
   renderer?: THREE.WebGLRenderer;
 
-  sphere = new Mesh(
+  sphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 64, 64),
     new THREE.ShaderMaterial({
       vertexShader: sphereVert,
@@ -53,7 +80,7 @@ export class GlobeViewer extends LitElement {
     })
   );
 
-  atmosphere = new Mesh(
+  atmosphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 50, 50),
     new THREE.ShaderMaterial({
       vertexShader: atmosphereVert,
@@ -63,7 +90,7 @@ export class GlobeViewer extends LitElement {
     })
   );
 
-  group = new Group();
+  group = new THREE.Group();
 
   clickPointer = new Vector2();
   grabPointer = new Vector2();
@@ -135,7 +162,7 @@ export class GlobeViewer extends LitElement {
     if (!point) {
       return;
     }
-    const dot = new Mesh(
+    const dot = new THREE.Mesh(
       new THREE.SphereGeometry(0.03, 12, 12),
       new THREE.MeshBasicMaterial({ color: 0xff5000 })
     );
