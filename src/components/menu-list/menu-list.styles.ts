@@ -15,6 +15,8 @@ export const styles = [
     ::slotted(div) {
       padding: 1rem;
       transition: var(--background-color-transition);
+      cursor: pointer;
+      border-radius: 0.5rem;
     }
     ::slotted(div:hover) {
       background-color: #ececec7f;
@@ -27,7 +29,6 @@ export const styles = [
       position: relative;
       width: 100%;
     }
-
     ::slotted(div:not(:last-child):hover)::after,
     ::slotted(div:not(:first-child):hover)::before {
       background: linear-gradient(

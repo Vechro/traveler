@@ -125,8 +125,8 @@ export class GlobeViewer extends LitElement {
       return;
     }
     const dot = new THREE.Mesh(
-      new THREE.SphereGeometry(0.05, 8, 8),
-      new THREE.MeshBasicMaterial({ color: 0xff7000 })
+      new THREE.SphereGeometry(0.03, 12, 12),
+      new THREE.MeshBasicMaterial({ color: 0xff5000 })
     );
     dot.position.copy(point);
     this.scene.add(dot);
