@@ -10,8 +10,8 @@ export class ContextMenu extends LitElement {
   @property({ type: Boolean })
   open = false;
 
-  @query("slot[name='menu-items']", true)
-  containerSlot!: HTMLSlotElement;
+  @query("slot[name='menu-list']", true)
+  menuListSlot!: HTMLSlotElement;
 
   private location?: [number, number];
 
@@ -46,14 +46,14 @@ export class ContextMenu extends LitElement {
   render() {
     return html`
       <style>
-        ::slotted([slot="menu-items"]) {
+        ::slotted([slot="menu-list"]) {
           left: ${this.location?.[0] ?? 0}px;
           top: ${this.location?.[1] ?? 0}px;
         }
       </style>
       ${this.open
         ? html`
-            <slot name="menu-items"></slot>
+            <slot name="menu-list"></slot>
           `
         : nothing}
       <slot id="container" @contextmenu=${this.handleContextMenu}></slot>

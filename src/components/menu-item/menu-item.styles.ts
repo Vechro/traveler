@@ -18,7 +18,7 @@ export const styles = [
     }
     :host(:first-child) {
       border-top-color: transparent;
-      border-radius: 0 0.5rem 0 0;
+      border-radius: 0.5rem 0.5rem 0 0;
     }
     :host(:last-child) {
       border-bottom-color: transparent;
@@ -26,7 +26,7 @@ export const styles = [
     }
     :host(:only-child) {
       border-color: transparent;
-      border-radius: 0 0.5rem 0.5rem 0.5rem;
+      border-radius: 0.5rem;
     }
   `,
 ];

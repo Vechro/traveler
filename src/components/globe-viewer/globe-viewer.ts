@@ -26,8 +26,8 @@ export class GlobeViewer extends LitElement {
   @query("canvas", true)
   canvas!: HTMLCanvasElement;
 
-  @query(".point-list-menu", true)
-  pointListMenu!: MenuList;
+  @query(".points-menu", true)
+  pointsMenu!: MenuList;
 
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
@@ -162,9 +162,7 @@ export class GlobeViewer extends LitElement {
       ${this.pointsList.map(
         (point) =>
           html`
-            <menu-item
-              @pointerup=${() => this.orientPointTowardCamera(point)}
-            >
+            <menu-item @pointerup=${() => this.orientPointTowardCamera(point)}>
               ${point.name}
             </menu-item>
           `
@@ -178,19 +176,15 @@ export class GlobeViewer extends LitElement {
         @open=${this.handleClickPointer}
         @close=${this.resetClickPointer}
       >
-        <div slot="menu-items">
-          <menu-item @pointerdown=${this.addPoint}>
-            Add point
-          </menu-item>
-        </div>
+        <menu-list slot="menu-list">
+          <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
+        </menu-list>
         <canvas
           @pointerdown=${this.onGrabStart}
           @pointerup=${this.onGrabEnd}
           @pointerout=${this.onGrabEnd}
         ></canvas>
-        <menu-list class="point-list-menu">
-          ${this.pointListElements()}
-        </menu-list>
+        <menu-list class="points-menu">${this.pointListElements()}</menu-list>
       </context-menu>
     `;
   }

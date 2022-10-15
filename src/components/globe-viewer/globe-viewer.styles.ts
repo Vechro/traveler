@@ -10,7 +10,7 @@ export const styles = [
       height: 100%;
       contain: size layout paint;
     }
-    menu-list {
+    .points-menu {
       position: absolute;
       top: 2rem;
       left: 2rem;
@@ -18,7 +18,7 @@ export const styles = [
       max-height: 12rem;
       overflow-y: auto;
     }
-    menu-list > menu-item {
+    .points-menu > menu-item {
       padding: 1rem;
     }
   `,
