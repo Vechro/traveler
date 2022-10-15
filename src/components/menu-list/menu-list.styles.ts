@@ -11,6 +11,7 @@ export const styles = [
       margin: 0;
       border-radius: 0.5rem;
       box-shadow: var(--panel-shadow);
+      overflow-y: auto;
     }
   `,
 ];

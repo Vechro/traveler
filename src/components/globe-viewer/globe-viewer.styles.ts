@@ -15,10 +15,11 @@ export const styles = [
       top: 2rem;
       left: 2rem;
       width: 15rem;
-      max-height: 12rem;
-      overflow-y: auto;
     }
-    .points-menu > menu-item {
+    .points-menu menu-list {
+      max-height: 12rem;
+    }
+    .points-menu menu-item {
       padding: 1rem;
     }
   `,

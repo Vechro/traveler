@@ -22,7 +22,7 @@
             },
             {
               "kind": "field",
-              "name": "containerSlot",
+              "name": "menuListSlot",
               "type": {
                 "text": "HTMLSlotElement"
               }
@@ -101,7 +101,7 @@
             },
             {
               "kind": "field",
-              "name": "pointListMenu",
+              "name": "pointsMenu",
               "type": {
                 "text": "MenuList"
               }
@@ -318,6 +318,42 @@
           "declaration": {
             "name": "MenuList",
             "module": "src/components/menu-list/menu-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-panel/menu-panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuPanel",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuPanel",
+          "declaration": {
+            "name": "MenuPanel",
+            "module": "src/components/menu-panel/menu-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-panel",
+          "declaration": {
+            "name": "MenuPanel",
+            "module": "src/components/menu-panel/menu-panel.ts"
           }
         }
       ]
