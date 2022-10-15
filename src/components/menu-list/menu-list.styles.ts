@@ -7,6 +7,7 @@ export const styles = [
     :host {
       display: flex;
       flex-direction: column;
+      background-color: #fff;
       margin: 0;
       border-radius: 0.5rem;
       box-shadow: var(--panel-shadow);
@@ -24,15 +25,15 @@ export const styles = [
       border-bottom: 1px solid #ddd;
     }
     ::slotted(div:first-child) {
-      border-top: none;
+      border-top-color: transparent;
       border-radius: 0.5rem 0.5rem 0 0;
     }
     ::slotted(div:last-child) {
-      border-bottom: none;
+      border-bottom-color: transparent;
       border-radius: 0 0 0.5rem 0.5rem;
     }
     ::slotted(div:only-child) {
-      border: none;
+      border-color: transparent;
       border-radius: 0.5rem;
     }
   `,

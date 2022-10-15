@@ -4,6 +4,10 @@
   background-color: #141414;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   color: #646cff;
 }

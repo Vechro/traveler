@@ -162,9 +162,11 @@ export class GlobeViewer extends LitElement {
       ${this.pointsList.map(
         (point) =>
           html`
-            <div @pointerup=${() => this.orientPointTowardCamera(point)}>
+            <context-menu-item
+              @pointerup=${() => this.orientPointTowardCamera(point)}
+            >
               ${point.name}
-            </div>
+            </context-menu-item>
           `
       )}
     `;

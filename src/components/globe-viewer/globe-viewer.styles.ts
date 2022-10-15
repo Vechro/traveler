@@ -10,14 +10,16 @@ export const styles = [
       height: 100%;
       contain: size layout paint;
     }
-
-    .point-list-menu {
+    menu-list {
       position: absolute;
       top: 2rem;
       left: 2rem;
       width: 15rem;
       max-height: 12rem;
       overflow-y: auto;
+    }
+    menu-list > context-menu-item {
+      padding: 1rem;
     }
   `,
 ];

@@ -5,10 +5,10 @@ export const styles = [
   globalStyles,
   css`
     :host {
-      font-size: 0.9rem;
       padding: 0.75rem 1rem;
       cursor: pointer;
       transition: var(--background-color-transition);
+      border-top: 1px solid #ececec;
       border-bottom: 1px solid #ececec;
     }
     :host(:hover) {
@@ -17,15 +17,15 @@ export const styles = [
       border-bottom: 1px solid #ddd;
     }
     :host(:first-child) {
-      border-top: none;
+      border-top-color: transparent;
       border-radius: 0 0.5rem 0 0;
     }
     :host(:last-child) {
-      border-bottom: none;
+      border-bottom-color: transparent;
       border-radius: 0 0 0.5rem 0.5rem;
     }
     :host(:only-child) {
-      border: none;
+      border-color: transparent;
       border-radius: 0 0.5rem 0.5rem 0.5rem;
     }
   `,

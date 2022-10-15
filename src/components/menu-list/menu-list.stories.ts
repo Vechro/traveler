@@ -2,6 +2,7 @@ import { StoryObj } from "@storybook/web-components-vite";
 import { html } from "lit";
 
 import "./menu-list";
+import "../context-menu-item";
 export default {
   component: "menu-list",
 };
@@ -13,14 +14,13 @@ export const Default: StoryObj = {
         margin: 0;
         width: 300px;
         height: 200px;
-        padding: 0.5rem;
       }
     </style>
     <section class="container">
       <menu-list>
-        <div>Item #1</div>
-        <div>Item #2</div>
-        <div>Item #3</div>
+        <context-menu-item>Item #1</context-menu-item>
+        <context-menu-item>Item #2</context-menu-item>
+        <context-menu-item>Item #3</context-menu-item>
       </menu-list>
     </section>
   `,
