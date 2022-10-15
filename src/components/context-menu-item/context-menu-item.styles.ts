@@ -4,22 +4,24 @@ import { globalStyles } from "../global.styles";
 export const styles = [
   globalStyles,
   css`
-    button {
-      background-color: transparent;
-      border: none;
+    :host {
+      font-size: 0.9rem;
       padding: 0.75rem 1rem;
       cursor: pointer;
-      text-align: start;
-      border-radius: 0.5rem;
       transition: var(--background-color-transition);
+      border-bottom: 1px solid #ececec;
     }
-    button:hover {
+    :host(:hover) {
       background-color: #ececec;
     }
-    /* We're targeting text nodes out here */
-    :only-child {
-      display: block;
-      width: 100%;
+    :host(:first-child) {
+      border-radius: 0 0.5rem 0 0;
+    }
+    :host(:last-child) {
+      border-radius: 0 0 0.5rem 0.5rem;
+    }
+    :host(:only-child) {
+      border-radius: 0 0.5rem 0.5rem 0.5rem;
     }
   `,
 ];

@@ -1,13 +1,7 @@
 :root {
   color-scheme: light dark;
   color: #213547;
-  background-color: #242424;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    background-color: #e3e4e7;
-  }
+  background-color: #141414;
 }
 
 a {

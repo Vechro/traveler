@@ -17,6 +17,7 @@ export const styles = [
       transition: var(--background-color-transition);
       cursor: pointer;
       border-radius: 0.5rem;
+      border-bottom: 1px solid #ececec;
     }
     ::slotted(div:hover) {
       background-color: #ececec7f;
@@ -25,7 +26,7 @@ export const styles = [
     ::slotted(div:not(:first-child))::before {
       content: "";
       display: block;
-      height: 2px;
+      height: 1px;
       position: relative;
       width: 100%;
     }

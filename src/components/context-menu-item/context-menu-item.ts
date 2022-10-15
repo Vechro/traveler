@@ -8,7 +8,7 @@ export class ContextMenuItem extends LitElement {
 
   render() {
     return html`
-      <button><slot></slot></button>
+      <slot></slot>
     `;
   }
 }
