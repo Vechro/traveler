@@ -1,9 +1,9 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import * as THREE from "three";
-import { Spherical, Vector2 } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { Group, Mesh, Scene, Spherical, Vector2 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
+import CameraControls from "camera-controls";
 import earthUvMap from "../../assets/earth-uv-map.jpg";
 import "../../extension";
 import { MenuList } from "../menu-list";
@@ -16,12 +16,17 @@ import sphereVert from "./shaders/sphere.vert";
 type Point = {
   id: number;
   name: string;
-  mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+  mesh: Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
 };
 
 @customElement("globe-viewer")
 export class GlobeViewer extends LitElement {
   static styles = styles;
+
+  constructor() {
+    super();
+    CameraControls.install({ THREE });
+  }
 
   @query("canvas", true)
   canvas!: HTMLCanvasElement;
@@ -29,12 +34,13 @@ export class GlobeViewer extends LitElement {
   @query(".points-menu", true)
   pointsMenu!: MenuList;
 
-  scene = new THREE.Scene();
+  clock = new THREE.Clock();
+  scene = new Scene();
   camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
+  controls?: CameraControls;
   renderer?: THREE.WebGLRenderer;
-  controls?: OrbitControls;
 
-  sphere = new THREE.Mesh(
+  sphere = new Mesh(
     new THREE.SphereGeometry(5, 64, 64),
     new THREE.ShaderMaterial({
       vertexShader: sphereVert,
@@ -47,7 +53,7 @@ export class GlobeViewer extends LitElement {
     })
   );
 
-  atmosphere = new THREE.Mesh(
+  atmosphere = new Mesh(
     new THREE.SphereGeometry(5, 50, 50),
     new THREE.ShaderMaterial({
       vertexShader: atmosphereVert,
@@ -57,10 +63,10 @@ export class GlobeViewer extends LitElement {
     })
   );
 
-  group = new THREE.Group();
+  group = new Group();
 
-  clickPointer = new THREE.Vector2();
-  grabPointer = new THREE.Vector2();
+  clickPointer = new Vector2();
+  grabPointer = new Vector2();
   raycaster = new THREE.Raycaster();
 
   @property()
@@ -83,13 +89,15 @@ export class GlobeViewer extends LitElement {
 
     this.camera.position.z = 10;
 
-    this.controls = new OrbitControls(this.camera, this.canvas);
-    this.controls.enableDamping = true;
+    this.controls = new CameraControls(this.camera, this.canvas);
+    // this.controls = new OrbitControls(this.camera, this.canvas);
+    // this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.1;
-    this.controls.enablePan = false;
+    this.controls.draggingDampingFactor = 0.1;
+    this.controls.mouseButtons.right = CameraControls.ACTION.NONE;
+    this.controls.touches.three = CameraControls.ACTION.NONE;
     this.controls.minDistance = 6;
     this.controls.maxDistance = 15;
-    this.controls.rotateSpeed = 0.5;
 
     this.paint();
   }
@@ -103,8 +111,11 @@ export class GlobeViewer extends LitElement {
 
   paint() {
     requestAnimationFrame(this.paint.bind(this));
+    const delta = this.clock.getDelta();
+    this.controls?.update(delta);
     this.renderer?.render(this.scene, this.camera);
-    this.controls?.update();
+    // this.controls?.update();
+    // TWEEN.update();
   }
 
   private onGrabStart = (event: PointerEvent) => {
@@ -124,7 +135,7 @@ export class GlobeViewer extends LitElement {
     if (!point) {
       return;
     }
-    const dot = new THREE.Mesh(
+    const dot = new Mesh(
       new THREE.SphereGeometry(0.03, 12, 12),
       new THREE.MeshBasicMaterial({ color: 0xff5000 })
     );
@@ -150,11 +161,7 @@ export class GlobeViewer extends LitElement {
 
   private orientPointTowardCamera = (point: Point) => {
     const spherical = new Spherical().setFromVector3(point.mesh.position);
-    this.controls?.object.position.setFromSphericalCoords(
-      this.controls.getDistance(),
-      spherical.phi,
-      spherical.theta
-    );
+    this.controls?.rotateTo(spherical.theta, spherical.phi, true);
   };
 
   pointListElements() {

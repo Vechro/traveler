@@ -20,6 +20,7 @@
     "generate-elements-manifest": "custom-elements-manifest analyze"
   },
   "dependencies": {
+    "camera-controls": "^1.37.3",
     "lit": "^2.4.0",
     "three": "^0.145.0"
   },
