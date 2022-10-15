@@ -162,11 +162,11 @@ export class GlobeViewer extends LitElement {
       ${this.pointsList.map(
         (point) =>
           html`
-            <context-menu-item
+            <menu-item
               @pointerup=${() => this.orientPointTowardCamera(point)}
             >
               ${point.name}
-            </context-menu-item>
+            </menu-item>
           `
       )}
     `;
@@ -179,9 +179,9 @@ export class GlobeViewer extends LitElement {
         @close=${this.resetClickPointer}
       >
         <div slot="menu-items">
-          <context-menu-item @pointerdown=${this.addPoint}>
+          <menu-item @pointerdown=${this.addPoint}>
             Add point
-          </context-menu-item>
+          </menu-item>
         </div>
         <canvas
           @pointerdown=${this.onGrabStart}

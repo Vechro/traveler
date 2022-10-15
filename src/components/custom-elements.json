@@ -85,42 +85,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/context-menu-item/context-menu-item.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContextMenuItem",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "context-menu-item",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContextMenuItem",
-          "declaration": {
-            "name": "ContextMenuItem",
-            "module": "src/components/context-menu-item/context-menu-item.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "context-menu-item",
-          "declaration": {
-            "name": "ContextMenuItem",
-            "module": "src/components/context-menu-item/context-menu-item.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/globe-viewer/globe-viewer.ts",
       "declarations": [
         {
@@ -282,6 +246,42 @@
           "declaration": {
             "name": "GlobeViewer",
             "module": "src/components/globe-viewer/globe-viewer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-item/menu-item.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuItem",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuItem",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-item",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
           }
         }
       ]

@@ -1,1 +1,1 @@
-export * from "./globe-viewer"
+export * from "./globe-viewer";

@@ -2,7 +2,7 @@ import { StoryObj } from "@storybook/web-components-vite";
 import { html } from "lit";
 
 import "./context-menu";
-import "../context-menu-item";
+import "../menu-item";
 
 export default {
   component: "context-menu",
@@ -15,14 +15,14 @@ export const Default: StoryObj = {
         width: 300px;
         height: 200px;
         border: 1px solid black;
-        padding-inline: 0.5rem;
+        padding: 1rem;
       }
     </style>
     <context-menu>
       <div slot="menu-items">
-        <context-menu-item>Foo</context-menu-item>
-        <context-menu-item>Bar</context-menu-item>
-        <context-menu-item>Baz</context-menu-item>
+        <menu-item>Foo</menu-item>
+        <menu-item>Bar</menu-item>
+        <menu-item>Baz</menu-item>
       </div>
       <section class="container">
         <p>Open context menu in here</p>

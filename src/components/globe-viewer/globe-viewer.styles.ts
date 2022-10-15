@@ -18,7 +18,7 @@ export const styles = [
       max-height: 12rem;
       overflow-y: auto;
     }
-    menu-list > context-menu-item {
+    menu-list > menu-item {
       padding: 1rem;
     }
   `,

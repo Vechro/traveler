@@ -1,9 +1,9 @@
 import { html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { styles } from "./context-menu-item.styles";
+import { styles } from "./menu-item.styles";
 
-@customElement("context-menu-item")
-export class ContextMenuItem extends LitElement {
+@customElement("menu-item")
+export class MenuItem extends LitElement {
   static styles = styles;
 
   render() {
@@ -15,6 +15,6 @@ export class ContextMenuItem extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "context-menu-item": ContextMenuItem;
+    "menu-item": MenuItem;
   }
 }
