@@ -1,10 +1,15 @@
-import type { UserConfig } from "vite";
+import minifyHTML from "rollup-plugin-html-literals";
+import { defineConfig } from "vite";
+
 // https://vitejs.dev/config/
-export default <UserConfig>{
-  build: {
-    rollupOptions: {
-      input: "./index.html",
+export default defineConfig(({ command }) => {
+  return {
+    build: {
+      rollupOptions: {
+        input: "./index.html",
+      },
     },
-  },
-  base: "/globe/"
-};
+    base: "/globe/",
+    plugins: command === "build" ? [minifyHTML()] : [],
+  };
+});
