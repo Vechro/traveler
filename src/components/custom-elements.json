@@ -85,6 +85,65 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/editor-panel/editor-panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "EditorPanel",
+          "members": [
+            {
+              "kind": "field",
+              "name": "headerElements",
+              "type": {
+                "text": "HTMLElement[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "contentElements",
+              "type": {
+                "text": "HTMLElement[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleTitleInput"
+            },
+            {
+              "kind": "field",
+              "name": "handleContentInput"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "editor-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "EditorPanel",
+          "declaration": {
+            "name": "EditorPanel",
+            "module": "src/components/editor-panel/editor-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "editor-panel",
+          "declaration": {
+            "name": "EditorPanel",
+            "module": "src/components/editor-panel/editor-panel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/globe-viewer/globe-viewer.ts",
       "declarations": [
         {
@@ -339,42 +398,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/menu-list/menu-list.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MenuList",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "menu-list",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MenuList",
-          "declaration": {
-            "name": "MenuList",
-            "module": "src/components/menu-list/menu-list.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "menu-list",
-          "declaration": {
-            "name": "MenuList",
-            "module": "src/components/menu-list/menu-list.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/menu-panel/menu-panel.ts",
       "declarations": [
         {
@@ -405,6 +428,42 @@
           "declaration": {
             "name": "MenuPanel",
             "module": "src/components/menu-panel/menu-panel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-list/menu-list.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuList",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-list",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuList",
+          "declaration": {
+            "name": "MenuList",
+            "module": "src/components/menu-list/menu-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-list",
+          "declaration": {
+            "name": "MenuList",
+            "module": "src/components/menu-list/menu-list.ts"
           }
         }
       ]
