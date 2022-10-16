@@ -110,7 +110,7 @@ export class GlobeViewer extends LitElement {
       canvas: this.canvas,
       alpha: true,
     });
-    addEventListener("resize", this.onResize, false);
+    addEventListener("resize", this.onResize);
     this.onResize();
 
     this.atmosphere.scale.set(1.1, 1.1, 1.1);
@@ -130,6 +130,11 @@ export class GlobeViewer extends LitElement {
     this.controls.maxDistance = 15;
 
     this.paint();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    removeEventListener("resize", this.onResize);
   }
 
   private onResize = () => {

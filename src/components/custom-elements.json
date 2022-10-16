@@ -148,7 +148,7 @@
             {
               "kind": "field",
               "name": "atmosphere",
-              "default": "new THREE.Mesh(\n    new THREE.SphereGeometry(5, 50, 50),\n    new THREE.ShaderMaterial({\n      vertexShader: atmosphereVert,\n      fragmentShader: atmosphereFrag,\n      blending: THREE.AdditiveBlending,\n      side: THREE.BackSide,\n    })\n  )"
+              "default": "new THREE.Mesh(\n    new THREE.SphereGeometry(5, 64, 64),\n    new THREE.ShaderMaterial({\n      vertexShader: atmosphereVert,\n      fragmentShader: atmosphereFrag,\n      blending: THREE.AdditiveBlending,\n      side: THREE.BackSide,\n    })\n  )"
             },
             {
               "kind": "field",
@@ -172,12 +172,12 @@
             },
             {
               "kind": "field",
-              "name": "pointsList",
+              "name": "markerList",
               "type": {
-                "text": "Point[]"
+                "text": "Marker[]"
               },
               "default": "[]",
-              "attribute": "pointsList"
+              "attribute": "markerList"
             },
             {
               "kind": "field",
@@ -200,6 +200,13 @@
             },
             {
               "kind": "field",
+              "name": "dotGeometry",
+              "privacy": "private",
+              "static": true,
+              "default": "new THREE.SphereGeometry(0.03, 12, 12)"
+            },
+            {
+              "kind": "field",
               "name": "addPoint",
               "privacy": "private"
             },
@@ -215,7 +222,11 @@
             },
             {
               "kind": "field",
-              "name": "orientPointTowardCamera",
+              "name": "orientCameraToPoint"
+            },
+            {
+              "kind": "field",
+              "name": "orientCameraToMarker",
               "privacy": "private"
             },
             {
@@ -230,12 +241,12 @@
           ],
           "attributes": [
             {
-              "name": "pointsList",
+              "name": "markerList",
               "type": {
-                "text": "Point[]"
+                "text": "Marker[]"
               },
               "default": "[]",
-              "fieldName": "pointsList"
+              "fieldName": "markerList"
             }
           ],
           "superclass": {
