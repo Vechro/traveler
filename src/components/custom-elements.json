@@ -122,7 +122,7 @@
               "kind": "field",
               "name": "camera",
               "privacy": "private",
-              "default": "new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000)"
+              "default": "new THREE.PerspectiveCamera(\n    67,\n    innerWidth / innerHeight,\n    0.1,\n    1000\n  )"
             },
             {
               "kind": "field",
@@ -219,6 +219,11 @@
               "privacy": "private"
             },
             {
+              "kind": "field",
+              "name": "handlePointClose",
+              "privacy": "private"
+            },
+            {
               "kind": "method",
               "name": "pointListElements"
             }
@@ -262,42 +267,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/menu-item/menu-item.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MenuItem",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "menu-item",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MenuItem",
-          "declaration": {
-            "name": "MenuItem",
-            "module": "src/components/menu-item/menu-item.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "menu-item",
-          "declaration": {
-            "name": "MenuItem",
-            "module": "src/components/menu-item/menu-item.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/menu-list/menu-list.ts",
       "declarations": [
         {
@@ -328,6 +297,67 @@
           "declaration": {
             "name": "MenuList",
             "module": "src/components/menu-list/menu-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-item/menu-item.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuItem",
+          "members": [
+            {
+              "kind": "field",
+              "name": "closeable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "closeable"
+            },
+            {
+              "kind": "field",
+              "name": "handleClose",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "closeable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "closeable"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuItem",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-item",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
           }
         }
       ]

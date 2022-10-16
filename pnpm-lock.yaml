@@ -22,7 +22,6 @@ specifiers:
   three: ^0.145.0
   typescript: ^4.8.4
   vite: ^3.1.7
-  vite-plugin-string: 1.1.2
   vue: ^3.2.25
   webpack: '>=5.0.0'
 
@@ -50,7 +49,6 @@ devDependencies:
   storybook: 7.0.0-alpha.37_yalvw3r2waubxycyb7k7qsruca
   typescript: 4.8.4
   vite: 3.1.8
-  vite-plugin-string: 1.1.2
   vue: 3.2.41
   webpack: 5.74.0
 
@@ -2555,13 +2553,13 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.4.6
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
     dev: true
 
   /@types/eslint/8.4.6:
     resolution: {integrity: sha512-/fqTbjxyFUaYNO7VcW5g+4npmqVACz1bB7RTHYuLj+PRjw9hrCwrUXVQFpChUS0JsyEFvMZ7U/PfmvWgxJhI9g==}
     dependencies:
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
       '@types/json-schema': 7.0.11
     dev: true
 
@@ -8924,12 +8922,6 @@ packages:
       is-buffer: 2.0.5
       unist-util-stringify-position: 3.0.2
       vfile-message: 3.1.2
-    dev: true
-
-  /vite-plugin-string/1.1.2:
-    resolution: {integrity: sha512-QMzsMAR4Vpw4DdCPNypVxKOkthtYIKNk8aR7U10kC/uMogf5tKsq5o8+lB9FtEu3XlSuym3On071zlUBP14yaw==}
-    dependencies:
-      '@rollup/pluginutils': 4.2.1
     dev: true
 
   /vite/3.1.8:

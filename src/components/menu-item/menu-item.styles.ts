@@ -5,14 +5,16 @@ export const styles = [
   globalStyles,
   css`
     :host {
+      display: flex;
+      align-items: center;
       padding: 0.75rem 1rem;
       cursor: pointer;
-      transition: var(--background-color-transition);
+      transition: var(--color-transition);
       border-top: var(--divider-border);
       border-bottom: var(--divider-border);
     }
     :host(:hover) {
-      background-color: #ececfc5f;
+      background-color: var(--background-color-hover);
       border-top: var(--divider-border-hover);
       border-bottom: var(--divider-border-hover);
     }
@@ -27,6 +29,20 @@ export const styles = [
     :host(:only-child) {
       border-color: transparent;
       border-radius: 0.5rem;
+    }
+    .menu-item-main {
+      flex: 1;
+    }
+    .menu-item-close {
+      display: inline-flex;
+      width: 1rem;
+    }
+    .menu-item-close > svg {
+      transition: var(--color-transition);
+      color: transparent;
+    }
+    :host(:hover) > .menu-item-close > svg {
+      color: currentColor;
     }
   `,
 ];

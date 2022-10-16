@@ -19,10 +19,10 @@ import earthUvMap from "../../assets/earth-uv-map.jpg";
 import "../../extension";
 import { MenuList } from "../menu-list";
 import { styles } from "./globe-viewer.styles";
-import atmosphereFrag from "./shaders/atmosphere.frag";
-import atmosphereVert from "./shaders/atmosphere.vert";
-import sphereFrag from "./shaders/sphere.frag";
-import sphereVert from "./shaders/sphere.vert";
+import atmosphereFrag from "./shaders/atmosphere.frag?raw";
+import atmosphereVert from "./shaders/atmosphere.vert?raw";
+import sphereFrag from "./shaders/sphere.frag?raw";
+import sphereVert from "./shaders/sphere.vert?raw";
 
 type Point = {
   id: number;
@@ -38,15 +38,15 @@ export class GlobeViewer extends LitElement {
     super();
     CameraControls.install({
       THREE: {
-        Vector2: Vector2,
-        Vector3: Vector3,
-        Vector4: Vector4,
-        Quaternion: Quaternion,
-        Matrix4: Matrix4,
-        Spherical: Spherical,
-        Box3: Box3,
-        Sphere: Sphere,
-        Raycaster: Raycaster,
+        Vector2,
+        Vector3,
+        Vector4,
+        Quaternion,
+        Matrix4,
+        Spherical,
+        Box3,
+        Sphere,
+        Raycaster,
         MathUtils: {
           DEG2RAD: MathUtils.DEG2RAD,
           clamp: MathUtils.clamp,
@@ -63,7 +63,12 @@ export class GlobeViewer extends LitElement {
 
   private clock = new THREE.Clock();
   private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
+  private camera = new THREE.PerspectiveCamera(
+    67,
+    innerWidth / innerHeight,
+    0.1,
+    1000
+  );
   private controls?: CameraControls;
   private renderer?: THREE.WebGLRenderer;
 
@@ -117,8 +122,6 @@ export class GlobeViewer extends LitElement {
     this.camera.position.z = 10;
 
     this.controls = new CameraControls(this.camera, this.canvas);
-    // this.controls = new OrbitControls(this.camera, this.canvas);
-    // this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.1;
     this.controls.draggingDampingFactor = 0.1;
     this.controls.mouseButtons.right = CameraControls.ACTION.NONE;
@@ -141,8 +144,6 @@ export class GlobeViewer extends LitElement {
     const delta = this.clock.getDelta();
     this.controls?.update(delta);
     this.renderer?.render(this.scene, this.camera);
-    // this.controls?.update();
-    // TWEEN.update();
   }
 
   private onGrabStart = (event: PointerEvent) => {
@@ -191,12 +192,21 @@ export class GlobeViewer extends LitElement {
     this.controls?.rotateTo(spherical.theta, spherical.phi, true);
   };
 
+  private handlePointClose = (point: Point) => {
+    this.scene.remove(point.mesh);
+    this.pointsList = this.pointsList.filter((p) => p.id !== point.id);
+  };
+
   pointListElements() {
     return html`
       ${this.pointsList.map(
         (point) =>
           html`
-            <menu-item @pointerup=${() => this.orientPointTowardCamera(point)}>
+            <menu-item
+              @pointerup=${() => this.orientPointTowardCamera(point)}
+              .closeable=${true}
+              @close=${() => this.handlePointClose(point)}
+            >
               ${point.name}
             </menu-item>
           `

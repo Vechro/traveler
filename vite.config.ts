@@ -1,14 +1,10 @@
-import { defineConfig } from "vite";
-import vitePluginString from "vite-plugin-string";
-
+import type { UserConfig } from "vite";
 // https://vitejs.dev/config/
-export default defineConfig({
+export default <UserConfig>{
   build: {
     rollupOptions: {
       input: "./index.html",
     },
   },
-  base: "/globe/",
-  // @ts-ignore-error https://stackoverflow.com/questions/70824882/vitepluginstring-is-not-a-function
-  plugins: [vitePluginString.default()],
-});
+  base: "/globe/"
+};

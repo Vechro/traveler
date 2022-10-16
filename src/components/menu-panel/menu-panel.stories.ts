@@ -12,7 +12,7 @@ export default {
 const menuItems = rangeTo(20).map(
   (x) =>
     html`
-      <menu-item>Item #${x}</menu-item>
+      <menu-item .closeable=${true}>Item #${x}</menu-item>
     `
 );
 

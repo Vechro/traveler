@@ -3,12 +3,12 @@ import { css } from "lit";
 export const globalStyles = css`
   :host {
     --font-color: #213547;
-    --background-color-transition: background-color 0.08s ease-out;
+    --color-transition: background-color 0.08s ease-out, color 0.2s ease-in;
     --outline-border: 2px solid #dddded;
     --divider-border: 1px solid #ececfc;
     --divider-border-hover: 1px solid #dddded;
-    /* --background-color: rgba(100, 100, 100, 0.3); */
     --background-color: #fcfcff;
+    --background-color-hover: #ececfc5f;
     --border-radius-first: 0.5rem 0.5rem 0 0;
     --border-radius-last: 0 0 0.5rem 0.5rem;
     --border-radius: 0.5rem;
