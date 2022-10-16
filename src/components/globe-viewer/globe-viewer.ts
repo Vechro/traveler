@@ -24,7 +24,7 @@ import atmosphereVert from "./shaders/atmosphere.vert?raw";
 import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
 
-type Point = {
+type Marker = {
   id: number;
   name: string;
   mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
@@ -86,7 +86,7 @@ export class GlobeViewer extends LitElement {
   );
 
   atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(5, 50, 50),
+    new THREE.SphereGeometry(5, 64, 64),
     new THREE.ShaderMaterial({
       vertexShader: atmosphereVert,
       fragmentShader: atmosphereFrag,
@@ -102,7 +102,7 @@ export class GlobeViewer extends LitElement {
   raycaster = new THREE.Raycaster();
 
   @property()
-  pointsList: Point[] = [];
+  markerList: Marker[] = [];
 
   firstUpdated() {
     this.renderer = new THREE.WebGLRenderer({
@@ -148,32 +148,45 @@ export class GlobeViewer extends LitElement {
 
   private onGrabStart = (event: PointerEvent) => {
     if (event.button === 0) {
+      this.grabPointer = new Vector2(...event.normalizedPosition());
       this.canvas.style.cursor = "grabbing";
     }
   };
 
-  private onGrabEnd = () => {
+  private onGrabEnd = (event: PointerEvent) => {
     this.canvas.style.cursor = "default";
+    const endPosition = new Vector2(...event.normalizedPosition());
+    if (this.grabPointer.distanceToSquared(endPosition) < 0.01) {
+      this.raycaster.setFromCamera(endPosition, this.camera);
+      const intersects = this.raycaster.intersectObjects(
+        this.markerList.map((m) => m.mesh),
+        false
+      );
+      const point = intersects.shift()?.point;
+      if (!point) return;
+      this.orientCameraToPoint(point);
+    }
   };
 
-  private addPoint = () => {
+  private static dotGeometry = new THREE.SphereGeometry(0.03, 12, 12);
+
+  private addPoint = (event: PointerEvent) => {
+    if (event.button !== 0) return;
     this.raycaster.setFromCamera(this.clickPointer, this.camera);
     const intersects = this.raycaster.intersectObjects([this.sphere], false);
     const point = intersects.shift()?.point;
-    if (!point) {
-      return;
-    }
+    if (!point) return;
     const dot = new THREE.Mesh(
-      new THREE.SphereGeometry(0.03, 12, 12),
+      GlobeViewer.dotGeometry,
       new THREE.MeshBasicMaterial({ color: 0xff5000 })
     );
     dot.position.copy(point);
     this.scene.add(dot);
-    this.pointsList = [
-      ...this.pointsList,
+    this.markerList = [
+      ...this.markerList,
       {
-        id: this.pointsList.length,
-        name: `Point #${this.pointsList.length}`,
+        id: this.markerList.length,
+        name: `Point #${this.markerList.length}`,
         mesh: dot,
       },
     ];
@@ -187,23 +200,28 @@ export class GlobeViewer extends LitElement {
     this.clickPointer = new Vector2();
   };
 
-  private orientPointTowardCamera = (point: Point) => {
-    const spherical = new Spherical().setFromVector3(point.mesh.position);
-    this.controls?.rotateTo(spherical.theta, spherical.phi, true);
+  orientCameraToPoint = (point: Vector3) => {
+    const { theta, phi } = new Spherical().setFromVector3(point);
+    this.controls?.rotateTo(theta, phi, true);
+    this.controls?.dollyTo(7, true);
   };
 
-  private handlePointClose = (point: Point) => {
+  private orientCameraToMarker = ({ mesh }: Marker) => {
+    this.orientCameraToPoint(mesh.position);
+  };
+
+  private handlePointClose = (point: Marker) => {
     this.scene.remove(point.mesh);
-    this.pointsList = this.pointsList.filter((p) => p.id !== point.id);
+    this.markerList = this.markerList.filter((p) => p.id !== point.id);
   };
 
   pointListElements() {
     return html`
-      ${this.pointsList.map(
+      ${this.markerList.map(
         (point) =>
           html`
             <menu-item
-              @pointerup=${() => this.orientPointTowardCamera(point)}
+              @pointerup=${() => this.orientCameraToMarker(point)}
               .closeable=${true}
               @close=${() => this.handlePointClose(point)}
             >

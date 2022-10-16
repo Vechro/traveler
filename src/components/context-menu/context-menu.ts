@@ -17,7 +17,8 @@ export class ContextMenu extends LitElement {
 
   private handleContextMenu = (event: MouseEvent) => {
     event.preventDefault();
-    this.open = !this.open;
+    event.stopPropagation();
+    this.open = true;
     this.location = event.pagePosition;
     this.dispatchEvent(new MouseEvent("open", event));
   };
