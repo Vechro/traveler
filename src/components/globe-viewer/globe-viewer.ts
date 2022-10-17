@@ -23,15 +23,20 @@ import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
 import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
+import { DatabaseMixin } from "../database-mixin/database-mixin";
 
-type Marker = {
+interface MarkerMesh extends Marker {
+  mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+}
+
+interface Marker {
   id: number;
   name: string;
-  mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
-};
+  position: Vector3;
+}
 
 @customElement("globe-viewer")
-export class GlobeViewer extends LitElement {
+export class GlobeViewer extends DatabaseMixin(LitElement) {
   static styles = styles;
 
   constructor() {
@@ -102,7 +107,7 @@ export class GlobeViewer extends LitElement {
   raycaster = new THREE.Raycaster();
 
   @property()
-  markerList: Marker[] = [];
+  markerList: MarkerMesh[] = [];
 
   firstUpdated() {
     this.renderer = new THREE.WebGLRenderer({
@@ -129,8 +134,22 @@ export class GlobeViewer extends LitElement {
     this.controls.minDistance = 6;
     this.controls.maxDistance = 15;
 
+    this.readMarkersFromDatabase();
+
     this.paint();
   }
+
+  readMarkersFromDatabase = () => {
+    this.database?.then(async (db) => {
+      const markers = (await db.getAllFromIndex("markers", "id")) as Marker[];
+
+      for (const marker of markers) {
+        const dot = GlobeViewer.createDotAt(marker.position);
+        this.scene.add(dot);
+        this.markerList = [...this.markerList, { ...marker, mesh: dot }];
+      }
+    });
+  };
 
   disconnectedCallback() {
     super.disconnectedCallback();
@@ -144,7 +163,7 @@ export class GlobeViewer extends LitElement {
     this.camera.updateProjectionMatrix();
   };
 
-  paint() {
+  protected paint() {
     requestAnimationFrame(this.paint.bind(this));
     const delta = this.clock.getDelta();
     this.controls?.update(delta);
@@ -175,23 +194,33 @@ export class GlobeViewer extends LitElement {
 
   private static dotGeometry = new THREE.SphereGeometry(0.03, 12, 12);
 
+  private static createDotAt = (position: Vector3) => {
+    const mesh = new THREE.Mesh(
+      GlobeViewer.dotGeometry,
+      new THREE.MeshBasicMaterial({ color: 0xff5000 })
+    );
+    mesh.position.copy(position);
+    return mesh;
+  };
+
   private addPoint = (event: PointerEvent) => {
     if (event.button !== 0) return;
     this.raycaster.setFromCamera(this.clickPointer, this.camera);
     const intersects = this.raycaster.intersectObjects([this.sphere], false);
     const point = intersects.shift()?.point;
     if (!point) return;
-    const dot = new THREE.Mesh(
-      GlobeViewer.dotGeometry,
-      new THREE.MeshBasicMaterial({ color: 0xff5000 })
-    );
-    dot.position.copy(point);
+    const marker: Marker = {
+      id: Math.floor(Math.random() * 100_000_000),
+      name: `Point #${this.markerList.length}`,
+      position: point,
+    };
+    this.database?.then((db) => db.add("markers", marker));
+    const dot = GlobeViewer.createDotAt(point);
     this.scene.add(dot);
     this.markerList = [
       ...this.markerList,
       {
-        id: this.markerList.length,
-        name: `Point #${this.markerList.length}`,
+        ...marker,
         mesh: dot,
       },
     ];
@@ -211,13 +240,14 @@ export class GlobeViewer extends LitElement {
     this.controls?.dollyTo(7, true);
   };
 
-  private orientCameraToMarker = ({ mesh }: Marker) => {
+  private orientCameraToMarker = ({ mesh }: MarkerMesh) => {
     this.orientCameraToPoint(mesh.position);
   };
 
-  private handlePointClose = (point: Marker) => {
-    this.scene.remove(point.mesh);
-    this.markerList = this.markerList.filter((p) => p.id !== point.id);
+  private handlePointClose = (marker: MarkerMesh) => {
+    this.scene.remove(marker.mesh);
+    this.database?.then((db) => db.delete("markers", marker.id));
+    this.markerList = this.markerList.filter((p) => p.id !== marker.id);
   };
 
   pointListElements() {

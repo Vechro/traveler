@@ -85,6 +85,48 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/database-mixin/database-mixin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DatabaseMixinInterface",
+          "members": [
+            {
+              "kind": "field",
+              "name": "database",
+              "type": {
+                "text": "Promise<IDBPDatabase<unknown>> | undefined"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "DatabaseMixin"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DatabaseMixinInterface",
+          "declaration": {
+            "name": "DatabaseMixinInterface",
+            "module": "src/components/database-mixin/database-mixin.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DatabaseMixin",
+          "declaration": {
+            "name": "DatabaseMixin",
+            "module": "src/components/database-mixin/database-mixin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/editor-panel/editor-panel.ts",
       "declarations": [
         {
@@ -233,10 +275,14 @@
               "kind": "field",
               "name": "markerList",
               "type": {
-                "text": "Marker[]"
+                "text": "MarkerMesh[]"
               },
               "default": "[]",
               "attribute": "markerList"
+            },
+            {
+              "kind": "field",
+              "name": "readMarkersFromDatabase"
             },
             {
               "kind": "field",
@@ -245,7 +291,8 @@
             },
             {
               "kind": "method",
-              "name": "paint"
+              "name": "paint",
+              "privacy": "protected"
             },
             {
               "kind": "field",
@@ -263,6 +310,12 @@
               "privacy": "private",
               "static": true,
               "default": "new THREE.SphereGeometry(0.03, 12, 12)"
+            },
+            {
+              "kind": "field",
+              "name": "createDotAt",
+              "privacy": "private",
+              "static": true
             },
             {
               "kind": "field",
@@ -302,10 +355,16 @@
             {
               "name": "markerList",
               "type": {
-                "text": "Marker[]"
+                "text": "MarkerMesh[]"
               },
               "default": "[]",
               "fieldName": "markerList"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DatabaseMixin",
+              "module": "/src/components/database-mixin/database-mixin"
             }
           ],
           "superclass": {
