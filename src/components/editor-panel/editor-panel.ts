@@ -42,7 +42,6 @@ export class EditorPanel extends LitElement {
       <section class="content" part="content">
         <slot name="content" @input=${this.handleTitleInput}></slot>
       </section>
-      <div id="editor"></div>
     `;
   }
 }
