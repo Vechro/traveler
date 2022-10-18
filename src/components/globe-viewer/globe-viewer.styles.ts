@@ -25,5 +25,20 @@ export const styles = [
     .points-menu menu-item {
       padding: 1rem;
     }
+    .bar-item {
+      width: 1rem;
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+    }
+    .bar-item:hover {
+      background-color: var(--background-color-hover);
+    }
+    .bar-item svg {
+      transition: var(--color-transition);
+      color: transparent;
+    }
+    menu-item:hover svg {
+      color: currentColor;
+    }
   `,
 ];

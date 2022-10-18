@@ -9,25 +9,13 @@ import { styles } from "./menu-item.styles";
 export class MenuItem extends LitElement {
   static styles = styles;
 
-  @property({ type: Boolean })
-  closeable = false;
-
-  private handleClose = (event: PointerEvent) => {
-    event.stopPropagation();
-    this.dispatchEvent(new MouseEvent("close", event));
-  };
-
   render() {
     return html`
-      <span class="menu-item-main"><slot></slot></span>
-      <span
-        class=${classMap({
-          "menu-item-close": this.closeable,
-        })}
-        part="close"
-        @pointerup=${this.handleClose}
-      >
-        ${unsafeSVG(cross)}
+      <span class="title" part="title">
+        <slot></slot>
+      </span>
+      <span part="interaction-bar">
+        <slot name="interaction-bar"></slot>
       </span>
     `;
   }

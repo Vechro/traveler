@@ -30,19 +30,8 @@ export const styles = [
       border-color: transparent;
       border-radius: 0.5rem;
     }
-    .menu-item-main {
+    .title {
       flex: 1;
-    }
-    .menu-item-close {
-      display: inline-flex;
-      width: 1rem;
-    }
-    .menu-item-close > svg {
-      transition: var(--color-transition);
-      color: transparent;
-    }
-    :host(:hover) > .menu-item-close > svg {
-      color: currentColor;
     }
   `,
 ];

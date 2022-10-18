@@ -15,15 +15,18 @@ import {
 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import CameraControls from "camera-controls";
+import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import earthUvMap from "../../assets/earth-uv-map.jpg";
+import cross from "../../assets/icons/cross.svg?raw";
+import edit from "../../assets/icons/edit.svg?raw";
 import "../../extension";
+import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
 import { MenuList } from "../menu-list";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
 import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
-import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
 
 interface MarkerMesh extends Marker {
   mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
@@ -238,7 +241,8 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.orientCameraToPoint(mesh.position);
   };
 
-  private handlePointClose = (marker: MarkerMesh) => {
+  private handlePointClose = (event: PointerEvent, marker: MarkerMesh) => {
+    event.stopPropagation();
     this.scene.remove(marker.mesh);
     this.database?.then((db) => db.delete("markers", marker.id));
     this.markerList = this.markerList.filter((p) => p.id !== marker.id);
@@ -251,10 +255,17 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
           html`
             <menu-item
               @pointerup=${() => this.orientCameraToMarker(point)}
-              .closeable=${true}
-              @close=${() => this.handlePointClose(point)}
             >
-              ${point.name}
+              <span>${point.name}</span>
+              <div slot="interaction-bar">
+                <span class="bar-item">${unsafeSVG(edit)}</span>
+                <span
+                  class="bar-item"
+                  @pointerup=${(event: PointerEvent) => this.handlePointClose(event, point)}
+                >
+                  ${unsafeSVG(cross)}
+                </span>
+              </div>
             </menu-item>
           `
       )}
