@@ -96,7 +96,7 @@
               "kind": "field",
               "name": "database",
               "type": {
-                "text": "Promise<IDBPDatabase<unknown>> | undefined"
+                "text": "Promise<IDBPDatabase<GlobeViewerSchema>> | undefined"
               }
             }
           ]
@@ -306,10 +306,10 @@
             },
             {
               "kind": "field",
-              "name": "dotGeometry",
+              "name": "dotMesh",
               "privacy": "private",
               "static": true,
-              "default": "new THREE.SphereGeometry(0.03, 12, 12)"
+              "default": "new THREE.Mesh(\n    new THREE.SphereGeometry(0.03, 12, 12),\n    new THREE.MeshBasicMaterial({ color: 0xff5000 })\n  )"
             },
             {
               "kind": "field",

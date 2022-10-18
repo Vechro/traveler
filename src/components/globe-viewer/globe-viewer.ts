@@ -23,16 +23,10 @@ import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
 import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
-import { DatabaseMixin } from "../database-mixin/database-mixin";
+import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
 
 interface MarkerMesh extends Marker {
   mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
-}
-
-interface Marker {
-  id: number;
-  name: string;
-  position: Vector3;
 }
 
 @customElement("globe-viewer")
@@ -192,13 +186,13 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     }
   };
 
-  private static dotGeometry = new THREE.SphereGeometry(0.03, 12, 12);
+  private static dotMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(0.03, 12, 12),
+    new THREE.MeshBasicMaterial({ color: 0xff5000 })
+  );
 
   private static createDotAt = (position: Vector3) => {
-    const mesh = new THREE.Mesh(
-      GlobeViewer.dotGeometry,
-      new THREE.MeshBasicMaterial({ color: 0xff5000 })
-    );
+    const mesh = GlobeViewer.dotMesh.clone();
     mesh.position.copy(position);
     return mesh;
   };

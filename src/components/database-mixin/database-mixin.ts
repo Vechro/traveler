@@ -1,22 +1,38 @@
 import { Constructor, dedupeMixin } from "@open-wc/dedupe-mixin";
-import { IDBPDatabase, openDB } from "idb";
+import { DBSchema, IDBPDatabase, openDB } from "idb";
 import { LitElement } from "lit";
+import { Vector3 } from "three";
+
+export interface Marker {
+  id: number;
+  name: string;
+  position: Vector3;
+}
+
+export interface GlobeViewerSchema extends DBSchema {
+  markers: {
+    key: Marker["id"];
+    value: Marker;
+    indexes: {
+      id: "id";
+    };
+  };
+}
 
 export declare class DatabaseMixinInterface {
-  database?: Promise<IDBPDatabase<unknown>>;
+  database?: Promise<IDBPDatabase<GlobeViewerSchema>>;
 }
 
 export const DatabaseMixin = dedupeMixin(
   <T extends Constructor<LitElement>>(superClass: T) => {
     class Database extends superClass {
-      database?: Promise<IDBPDatabase<unknown>>;
+      database?: Promise<IDBPDatabase<GlobeViewerSchema>>;
 
       // https://github.com/microsoft/TypeScript/issues/37142
       constructor(..._: any[]) {
         super();
-        this.database = openDB("globe", 2, {
+        this.database = openDB<GlobeViewerSchema>("globe", 2, {
           upgrade(db) {
-            // Create a store of objects
             const store = db.createObjectStore("markers", {
               // The 'id' property of the object will be the key.
               keyPath: "id",
