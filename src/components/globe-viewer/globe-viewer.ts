@@ -237,11 +237,22 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.orientCameraToPoint(mesh.position);
   };
 
-  private handleTitleRename = (event: InputEvent, marker: Marker) => {
+  private handleTitleRename = (
+    event: InputEvent | KeyboardEvent,
+    marker: Marker
+  ) => {
     if (!event.currentTarget) return;
     event.stopPropagation();
     // What else is it going to be?
     const target = event.currentTarget as EventTarget & HTMLElement;
+    if (event instanceof KeyboardEvent) {
+      if (event.key === "Enter" || event.key === "Escape") {
+        target.blur();
+        event.preventDefault();
+      } else if ((event.isAlphanumeric || event.key === " ") && target.innerText.length > 16) {
+        event.preventDefault();
+      }
+    }
     this.database?.then((db) => {
       db.put("markers", {
         id: marker.id,
@@ -266,8 +277,11 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
           html`
             <menu-item>
               <span
+                class="marker-title"
                 contenteditable
                 @input=${(event: InputEvent) =>
+                  this.handleTitleRename(event, point)}
+                @keydown=${(event: KeyboardEvent) =>
                   this.handleTitleRename(event, point)}
               >
                 ${point.name}

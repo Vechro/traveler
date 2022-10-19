@@ -13,6 +13,10 @@ export const styles = [
     .title {
       margin: 0;
     }
+    .marker-title {
+      line-height: 1.8;
+      padding: 0.25rem;
+    }
     .points-menu {
       position: absolute;
       top: 2rem;
