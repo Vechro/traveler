@@ -8,7 +8,6 @@ export const styles = [
       display: flex;
       align-items: center;
       padding: 0.75rem 1rem;
-      cursor: pointer;
       transition: var(--color-transition);
       border-top: var(--divider-border);
       border-bottom: var(--divider-border);

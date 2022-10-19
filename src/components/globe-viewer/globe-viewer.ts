@@ -18,6 +18,7 @@ import CameraControls from "camera-controls";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import earthUvMap from "../../assets/earth-uv-map.jpg";
 import cross from "../../assets/icons/cross.svg?raw";
+import pin from "../../assets/icons/pin.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
 import "../../extension";
 import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
@@ -241,6 +242,10 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.orientCameraToPoint(mesh.position);
   };
 
+  private handleTitleRename = (event: PointerEvent, marker: Marker) => {
+    event.stopPropagation();
+  };
+
   private handlePointClose = (event: PointerEvent, marker: MarkerMesh) => {
     event.stopPropagation();
     this.scene.remove(marker.mesh);
@@ -253,15 +258,26 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       ${this.markerList.map(
         (point) =>
           html`
-            <menu-item
-              @pointerup=${() => this.orientCameraToMarker(point)}
-            >
-              <span>${point.name}</span>
+            <menu-item contenteditable>
+              <span contenteditable>${point.name}</span>
               <div slot="interaction-bar">
-                <span class="bar-item">${unsafeSVG(edit)}</span>
                 <span
                   class="bar-item"
-                  @pointerup=${(event: PointerEvent) => this.handlePointClose(event, point)}
+                  @pointerup=${(event: PointerEvent) =>
+                    this.handleTitleRename(event, point)}
+                >
+                  ${unsafeSVG(edit)}
+                </span>
+                <span
+                  class="bar-item"
+                  @pointerup=${() => this.orientCameraToMarker(point)}
+                >
+                  ${unsafeSVG(pin)}
+                </span>
+                <span
+                  class="bar-item"
+                  @pointerup=${(event: PointerEvent) =>
+                    this.handlePointClose(event, point)}
                 >
                   ${unsafeSVG(cross)}
                 </span>
@@ -287,7 +303,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
           @pointerout=${this.onGrabEnd}
         ></canvas>
         <menu-panel class="points-menu">
-          <h3 slot="header">Points</h3>
+          <h3 class="title" slot="header" contenteditable>Points</h3>
           <menu-list>${this.pointListElements()}</menu-list>
         </menu-panel>
       </context-menu>

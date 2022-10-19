@@ -10,14 +10,14 @@ export const styles = [
       height: 100%;
       contain: size layout paint;
     }
-    h3 {
+    .title {
       margin: 0;
     }
     .points-menu {
       position: absolute;
       top: 2rem;
       left: 2rem;
-      width: 15rem;
+      width: 20rem;
     }
     .points-menu menu-list {
       max-height: 12rem;
@@ -29,6 +29,7 @@ export const styles = [
       width: 1rem;
       padding: 0.5rem;
       border-radius: var(--border-radius);
+      cursor: pointer;
     }
     .bar-item:hover {
       background-color: var(--background-color-hover);
