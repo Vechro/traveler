@@ -253,7 +253,12 @@
             },
             {
               "kind": "field",
-              "name": "group",
+              "name": "globeGroup",
+              "default": "new THREE.Group()"
+            },
+            {
+              "kind": "field",
+              "name": "markerGroup",
               "default": "new THREE.Group()"
             },
             {
@@ -314,8 +319,7 @@
             {
               "kind": "field",
               "name": "createDotAt",
-              "privacy": "private",
-              "static": true
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -339,6 +343,11 @@
             {
               "kind": "field",
               "name": "orientCameraToMarker",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleTitleRename",
               "privacy": "private"
             },
             {
@@ -402,32 +411,7 @@
           "kind": "class",
           "description": "",
           "name": "MenuItem",
-          "members": [
-            {
-              "kind": "field",
-              "name": "closeable",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "closeable"
-            },
-            {
-              "kind": "field",
-              "name": "handleClose",
-              "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "closeable",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "closeable"
-            }
-          ],
+          "members": [],
           "superclass": {
             "name": "LitElement",
             "package": "lit"

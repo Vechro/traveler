@@ -98,7 +98,8 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     })
   );
 
-  group = new THREE.Group();
+  globeGroup = new THREE.Group();
+  markerGroup = new THREE.Group();
 
   clickPointer = new Vector2();
   grabPointer = new Vector2();
@@ -119,8 +120,9 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.atmosphere.scale.set(1.1, 1.1, 1.1);
     this.scene.add(this.atmosphere);
 
-    this.group.add(this.sphere);
-    this.scene.add(this.group);
+    this.globeGroup.add(this.sphere);
+    this.scene.add(this.globeGroup);
+    this.scene.add(this.markerGroup);
 
     this.camera.position.z = 10;
 
@@ -140,12 +142,12 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   readMarkersFromDatabase = () => {
     this.database?.then(async (db) => {
       const markers = (await db.getAllFromIndex("markers", "id")) as Marker[];
-
-      for (const marker of markers) {
-        const dot = GlobeViewer.createDotAt(marker.position);
-        this.scene.add(dot);
-        this.markerList = [...this.markerList, { ...marker, mesh: dot }];
-      }
+      this.markerGroup.clear();
+      this.markerList = markers.map((marker) => ({
+        ...marker,
+        mesh: this.createDotAt(marker.position),
+      }));
+      this.markerList.reverse();
     });
   };
 
@@ -181,7 +183,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     if (this.grabPointer.distanceToSquared(endPosition) < 0.01) {
       this.raycaster.setFromCamera(endPosition, this.camera);
       const intersects = this.raycaster.intersectObjects(
-        this.markerList.map((m) => m.mesh),
+        this.markerList.map(({ mesh }) => mesh),
         false
       );
       const point = intersects.shift()?.point;
@@ -195,9 +197,10 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     new THREE.MeshBasicMaterial({ color: 0xff5000 })
   );
 
-  private static createDotAt = (position: Vector3) => {
+  private createDotAt = (position: Vector3) => {
     const mesh = GlobeViewer.dotMesh.clone();
     mesh.position.copy(position);
+    this.markerGroup.add(mesh);
     return mesh;
   };
 
@@ -208,20 +211,12 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     const point = intersects.shift()?.point;
     if (!point) return;
     const marker: Marker = {
-      id: Math.floor(Math.random() * 100_000_000),
+      id: Math.floor(Math.random() * 1_000_000_000),
       name: `Point #${this.markerList.length}`,
       position: point,
     };
     this.database?.then((db) => db.add("markers", marker));
-    const dot = GlobeViewer.createDotAt(point);
-    this.scene.add(dot);
-    this.markerList = [
-      ...this.markerList,
-      {
-        ...marker,
-        mesh: dot,
-      },
-    ];
+    this.readMarkersFromDatabase();
   };
 
   private handleClickPointer = (event: MouseEvent) => {
@@ -242,15 +237,26 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.orientCameraToPoint(mesh.position);
   };
 
-  private handleTitleRename = (event: PointerEvent, marker: Marker) => {
+  private handleTitleRename = (event: InputEvent, marker: Marker) => {
+    if (!event.currentTarget) return;
     event.stopPropagation();
+    // What else is it going to be?
+    const target = event.currentTarget as EventTarget & HTMLElement;
+    this.database?.then((db) => {
+      db.put("markers", {
+        id: marker.id,
+        position: marker.position,
+        name: target.innerText,
+      });
+    });
   };
 
   private handlePointClose = (event: PointerEvent, marker: MarkerMesh) => {
     event.stopPropagation();
-    this.scene.remove(marker.mesh);
-    this.database?.then((db) => db.delete("markers", marker.id));
-    this.markerList = this.markerList.filter((p) => p.id !== marker.id);
+    marker.mesh.removeFromParent();
+    this.database
+      ?.then((db) => db.delete("markers", marker.id))
+      ?.then(() => this.readMarkersFromDatabase());
   };
 
   pointListElements() {
@@ -258,16 +264,16 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       ${this.markerList.map(
         (point) =>
           html`
-            <menu-item contenteditable>
-              <span contenteditable>${point.name}</span>
+            <menu-item>
+              <span
+                contenteditable
+                @input=${(event: InputEvent) =>
+                  this.handleTitleRename(event, point)}
+              >
+                ${point.name}
+              </span>
               <div slot="interaction-bar">
-                <span
-                  class="bar-item"
-                  @pointerup=${(event: PointerEvent) =>
-                    this.handleTitleRename(event, point)}
-                >
-                  ${unsafeSVG(edit)}
-                </span>
+                <span class="bar-item">${unsafeSVG(edit)}</span>
                 <span
                   class="bar-item"
                   @pointerup=${() => this.orientCameraToMarker(point)}
@@ -303,7 +309,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
           @pointerout=${this.onGrabEnd}
         ></canvas>
         <menu-panel class="points-menu">
-          <h3 class="title" slot="header" contenteditable>Points</h3>
+          <h3 class="title" slot="header">Points</h3>
           <menu-list>${this.pointListElements()}</menu-list>
         </menu-panel>
       </context-menu>

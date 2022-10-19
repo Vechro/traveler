@@ -1,8 +1,5 @@
 import { html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
-import { unsafeSVG } from "lit/directives/unsafe-svg.js";
-import cross from "../../assets/icons/cross.svg?raw";
+import { customElement } from "lit/decorators.js";
 import { styles } from "./menu-item.styles";
 
 @customElement("menu-item")

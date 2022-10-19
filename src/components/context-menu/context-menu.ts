@@ -27,7 +27,6 @@ export class ContextMenu extends LitElement {
     if (event instanceof KeyboardEvent && event.key !== "Escape") {
       return;
     }
-    event.preventDefault();
     this.open = false;
     this.dispatchEvent(new UIEvent("close", event));
   };
