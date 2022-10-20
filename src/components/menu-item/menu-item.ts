@@ -11,7 +11,7 @@ export class MenuItem extends LitElement {
       <span class="title" part="title">
         <slot></slot>
       </span>
-      <span part="interaction-bar">
+      <span class="interaction-bar" part="interaction-bar">
         <slot name="interaction-bar"></slot>
       </span>
     `;

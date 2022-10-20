@@ -237,27 +237,17 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.orientCameraToPoint(mesh.position);
   };
 
-  private handleTitleRename = (
-    event: InputEvent | KeyboardEvent,
-    marker: Marker
-  ) => {
+  private handleTitleRename = (event: KeyboardEvent, marker: Marker) => {
     if (!event.currentTarget) return;
-    event.stopPropagation();
-    // What else is it going to be?
-    const target = event.currentTarget as EventTarget & HTMLElement;
-    if (event instanceof KeyboardEvent) {
-      if (event.key === "Enter" || event.key === "Escape") {
-        target.blur();
-        event.preventDefault();
-      } else if ((event.isAlphanumeric || event.key === " ") && target.innerText.length > 16) {
-        event.preventDefault();
-      }
+    const target = event.currentTarget as EventTarget & HTMLInputElement;
+    if (event.key === "Enter" || event.key === "Escape") {
+      target.blur();
     }
     this.database?.then((db) => {
       db.put("markers", {
         id: marker.id,
         position: marker.position,
-        name: target.innerText,
+        name: target.value,
       });
     });
   };
@@ -276,16 +266,14 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
         (point) =>
           html`
             <menu-item>
-              <span
+              <input
+                type="text"
                 class="marker-title"
-                contenteditable
-                @input=${(event: InputEvent) =>
-                  this.handleTitleRename(event, point)}
+                maxlength="32"
+                value=${point.name}
                 @keydown=${(event: KeyboardEvent) =>
                   this.handleTitleRename(event, point)}
-              >
-                ${point.name}
-              </span>
+              />
               <div slot="interaction-bar">
                 <span class="bar-item">${unsafeSVG(edit)}</span>
                 <span
@@ -314,7 +302,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
         @open=${this.handleClickPointer}
         @close=${this.resetClickPointer}
       >
-        <menu-list slot="menu-list">
+        <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>
         <canvas

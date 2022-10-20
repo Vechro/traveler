@@ -4,7 +4,7 @@ import { globalStyles } from "../global.styles";
 export const styles = [
   globalStyles,
   css`
-    ::slotted([slot="menu-list"]) {
+    ::slotted([slot="context-menu"]) {
       position: absolute;
       z-index: 3;
       min-width: 10rem;

@@ -46,12 +46,12 @@ export class ContextMenu extends LitElement {
   render() {
     return html`
       <style>
-        ::slotted([slot="menu-list"]) {
+        ::slotted([slot="context-menu"]) {
           left: ${this.location?.[0] ?? 0}px;
           top: ${this.location?.[1] ?? 0}px;
         }
       </style>
-      <slot ?hidden=${!this.open} name="menu-list"></slot>
+      <slot ?hidden=${!this.open} name="context-menu"></slot>
       <slot id="container" @contextmenu=${this.handleContextMenu}></slot>
     `;
   }

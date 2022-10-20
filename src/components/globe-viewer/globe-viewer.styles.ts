@@ -14,8 +14,7 @@ export const styles = [
       margin: 0;
     }
     .marker-title {
-      line-height: 1.8;
-      padding: 0.25rem;
+      padding-block: 0.25rem;
     }
     .points-menu {
       position: absolute;
@@ -26,11 +25,13 @@ export const styles = [
     .points-menu menu-list {
       max-height: 12rem;
     }
-    .points-menu menu-item {
-      padding: 1rem;
+    div[slot="interaction-bar"] {
+      display: flex;
+      flex-direction: row;
+      margin-inline-end: 0.5rem;
+      gap: 0.25rem;
     }
     .bar-item {
-      width: 1rem;
       padding: 0.5rem;
       border-radius: var(--border-radius);
       cursor: pointer;
@@ -44,6 +45,9 @@ export const styles = [
     }
     menu-item:hover svg {
       color: currentColor;
+    }
+    .context-menu > menu-item {
+      padding: 0.75rem 1rem;
     }
   `,
 ];

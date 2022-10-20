@@ -7,10 +7,10 @@ export const styles = [
     :host {
       display: flex;
       align-items: center;
-      padding: 0.75rem 1rem;
       transition: var(--color-transition);
       border-top: var(--divider-border);
       border-bottom: var(--divider-border);
+      padding-inline: 0.5rem;
     }
     :host(:hover) {
       background-color: var(--background-color-hover);
@@ -28,6 +28,15 @@ export const styles = [
     :host(:only-child) {
       border-color: transparent;
       border-radius: 0.5rem;
+    }
+    ::slotted(input) {
+      border: unset;
+      color: unset;
+      background: unset;
+      font: unset;
+      font-size: unset;
+      margin: 0.75rem;
+      width: 10rem;
     }
     .title {
       flex: 1;
