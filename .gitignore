@@ -15,6 +15,7 @@ types/
 
 # Editor directories and files
 .vscode/*
+.fleet/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -25,3 +26,4 @@ types/
 *.sw?
 
 **/assets/**/*-max.jpg
+vite.config.ts.timestamp-*

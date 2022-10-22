@@ -1,16 +1,17 @@
-import { StoryObj } from "@storybook/web-components";
+import { Story } from "@storybook/web-components";
 import { html } from "lit";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import cross from "../../assets/icons/cross.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
 import "../menu-item";
 import "./menu-list";
+import { MenuList } from "./menu-list";
 
 export default {
   component: "menu-list",
 };
 
-export const Default: StoryObj = {
+export const Default: Story<MenuList> = {
   render: () => html`
     <style>
       .container {
@@ -29,7 +30,7 @@ export const Default: StoryObj = {
   `,
 };
 
-export const UtilizingButtonBar: StoryObj = {
+export const UtilizingButtonBar: Story<MenuList> = {
   render: () => html`
     <style>
       .container {

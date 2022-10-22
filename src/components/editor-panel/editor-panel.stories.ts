@@ -1,12 +1,13 @@
-import { StoryObj } from "@storybook/web-components";
+import { Story } from "@storybook/web-components";
 import { html } from "lit";
-
 import "./editor-panel";
+import { EditorPanel } from "./editor-panel";
+
 export default {
   component: "editor-panel",
 };
 
-export const Default: StoryObj = {
+export const Default: Story<EditorPanel> = {
   render: () => html`
     <style>
       .container {
@@ -15,7 +16,10 @@ export const Default: StoryObj = {
       }
     </style>
     <section class="container">
-      <editor-panel .content=${"...and this is the content"}>
+      <editor-panel
+        .content=${"...and this is the content"}
+        @content-change=${console.log}
+      >
         <input slot="header" maxlength="32" value="This is the title" />
       </editor-panel>
     </section>

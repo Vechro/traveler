@@ -1,14 +1,14 @@
-import { StoryObj } from "@storybook/web-components";
+import { Story } from "@storybook/web-components";
 import { html } from "lit";
-
-import "./context-menu";
 import "../menu-item";
+import "./context-menu";
+import { ContextMenu } from "./context-menu";
 
 export default {
   component: "context-menu",
 };
 
-export const Default: StoryObj = {
+export const Default: Story<ContextMenu> = {
   render: () => html`
     <style>
       .container {

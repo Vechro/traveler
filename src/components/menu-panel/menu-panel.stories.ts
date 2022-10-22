@@ -1,10 +1,11 @@
-import { StoryObj } from "@storybook/web-components";
+import { Story } from "@storybook/web-components";
 import { html } from "lit";
-
-import "./menu-panel";
-import "../menu-list";
-import "../menu-item";
 import { rangeTo } from "../../extension";
+import "../menu-item";
+import "../menu-list";
+import "./menu-panel";
+import { MenuPanel } from "./menu-panel";
+
 export default {
   component: "menu-panel",
 };
@@ -16,7 +17,7 @@ const menuItems = rangeTo(20).map(
     `
 );
 
-export const Default: StoryObj = {
+export const Default: Story<MenuPanel> = {
   render: () => html`
     <style>
       .container {
@@ -38,7 +39,7 @@ export const Default: StoryObj = {
   `,
 };
 
-export const NoFooter: StoryObj = {
+export const NoFooter: Story<MenuPanel> = {
   render: () => html`
     <style>
       .container {
