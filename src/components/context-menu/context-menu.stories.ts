@@ -19,7 +19,7 @@ export const Default: StoryObj = {
       }
     </style>
     <context-menu>
-      <menu-list slot="menu-list">
+      <menu-list slot="context-menu">
         <menu-item>Foo</menu-item>
         <menu-item>Bar</menu-item>
         <menu-item>Baz</menu-item>

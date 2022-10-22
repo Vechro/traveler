@@ -10,9 +10,6 @@ export class ContextMenu extends LitElement {
   @property({ type: Boolean })
   open = false;
 
-  @query("slot[name='menu-list']", true)
-  menuListSlot!: HTMLSlotElement;
-
   private location?: [number, number];
 
   private handleContextMenu = (event: MouseEvent) => {
