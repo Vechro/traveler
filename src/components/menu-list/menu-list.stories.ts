@@ -1,4 +1,4 @@
-import { StoryObj } from "@storybook/web-components-vite";
+import { StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import cross from "../../assets/icons/cross.svg?raw";

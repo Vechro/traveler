@@ -22,13 +22,6 @@
             },
             {
               "kind": "field",
-              "name": "menuListSlot",
-              "type": {
-                "text": "HTMLSlotElement"
-              }
-            },
-            {
-              "kind": "field",
               "name": "location",
               "type": {
                 "text": "[number, number] | undefined"
@@ -136,10 +129,12 @@
           "members": [
             {
               "kind": "field",
-              "name": "headerElements",
+              "name": "content",
               "type": {
-                "text": "HTMLElement[]"
-              }
+                "text": "string"
+              },
+              "default": "\"\"",
+              "attribute": "content"
             },
             {
               "kind": "field",
@@ -150,11 +145,21 @@
             },
             {
               "kind": "field",
-              "name": "handleTitleInput"
+              "name": "handleContentInput"
             },
             {
               "kind": "field",
-              "name": "handleContentInput"
+              "name": "handleKeyDown"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "fieldName": "content"
             }
           ],
           "superclass": {

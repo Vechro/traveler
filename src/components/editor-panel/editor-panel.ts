@@ -28,6 +28,28 @@ export class EditorPanel extends LitElement {
     );
   };
 
+  handleKeyDown = (event: KeyboardEvent) => {
+    if (event.ctrlKey) {
+      switch (event.key) {
+        case "b":
+          document.execCommand("bold");
+          break;
+        case "i":
+          document.execCommand("italic");
+          break;
+        case "q":
+          document.execCommand("removeFormat");
+          break;
+        case "u":
+          document.execCommand("underline");
+          break;
+        default:
+          return;
+      }
+    }
+    event.preventDefault();
+  };
+
   render() {
     return html`
       <slot name="header"></slot>
@@ -36,6 +58,7 @@ export class EditorPanel extends LitElement {
         part="content"
         contenteditable
         @input=${this.handleContentInput}
+        @keydown=${this.handleKeyDown}
       >
         ${this.content}
       </section>

@@ -1,5 +1,5 @@
 import { html, LitElement } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import "../../extension";
 import { styles } from "./context-menu.styles";
 
