@@ -1,6 +1,6 @@
 import { Story } from "@storybook/web-components";
 import { html } from "lit";
-import { rangeTo } from "../../extension";
+import { rangeTo } from "../../utilities";
 import "../menu-item";
 import "../menu-list";
 import "./menu-panel";

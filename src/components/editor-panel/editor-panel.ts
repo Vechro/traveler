@@ -1,10 +1,7 @@
 import { html, LitElement } from "lit";
-import {
-  customElement,
-  property,
-  queryAssignedElements,
-} from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 import { styles } from "./editor-panel.styles";
+import { applyFormat } from "../../utilities";
 
 @customElement("editor-panel")
 export class EditorPanel extends LitElement {
@@ -13,16 +10,15 @@ export class EditorPanel extends LitElement {
   @property({ type: String })
   content = "";
 
-  @queryAssignedElements({ slot: "content" })
-  contentElements!: HTMLElement[];
+  @query(".content")
+  contentElement!: HTMLElement;
 
   handleContentInput = () => {
-    const content = this.contentElements[0];
-    if (!content) return;
     this.dispatchEvent(
       new CustomEvent("content-change", {
         detail: {
-          text: content.innerText,
+          text: this.contentElement.innerText,
+          rawHtml: this.contentElement.innerHTML,
         },
       })
     );
@@ -32,20 +28,25 @@ export class EditorPanel extends LitElement {
     if (event.ctrlKey) {
       switch (event.key) {
         case "b":
-          document.execCommand("bold");
+          applyFormat("bold");
+          break;
+        case "h":
+          applyFormat("h3");
           break;
         case "i":
-          document.execCommand("italic");
+          applyFormat("italic");
           break;
         case "q":
-          document.execCommand("removeFormat");
+          applyFormat("removeFormat");
           break;
         case "u":
-          document.execCommand("underline");
+          applyFormat("underline");
           break;
         default:
           return;
       }
+    } else {
+      return;
     }
     event.preventDefault();
   };

@@ -23,5 +23,8 @@ export const styles = [
       padding: 1rem;
       line-height: 1.7;
     }
+    .content h3 {
+      margin-block: 0.25rem 0.5rem;
+    }
   `,
 ];
