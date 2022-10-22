@@ -15,11 +15,8 @@ export const Default: StoryObj = {
       }
     </style>
     <section class="container">
-      <editor-panel>
-        <h3 slot="header" contenteditable>This is the title</h3>
-        <section slot="content" contenteditable>
-          ...and this is the content
-        </section>
+      <editor-panel .content=${"...and this is the content"}>
+        <input slot="header" maxlength="32" value="This is the title" />
       </editor-panel>
     </section>
   `,

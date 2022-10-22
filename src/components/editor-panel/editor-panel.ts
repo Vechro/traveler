@@ -1,28 +1,20 @@
 import { html, LitElement } from "lit";
-import { customElement, queryAssignedElements } from "lit/decorators.js";
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+} from "lit/decorators.js";
 import { styles } from "./editor-panel.styles";
 
 @customElement("editor-panel")
 export class EditorPanel extends LitElement {
   static styles = styles;
 
-  @queryAssignedElements({ slot: "header" })
-  headerElements!: HTMLElement[];
+  @property({ type: String })
+  content = "";
 
   @queryAssignedElements({ slot: "content" })
   contentElements!: HTMLElement[];
-
-  handleTitleInput = () => {
-    const header = this.headerElements[0];
-    if (!header) return;
-    this.dispatchEvent(
-      new CustomEvent("title-change", {
-        detail: {
-          text: header.innerText,
-        },
-      })
-    );
-  };
 
   handleContentInput = () => {
     const content = this.contentElements[0];
@@ -38,9 +30,14 @@ export class EditorPanel extends LitElement {
 
   render() {
     return html`
-      <slot name="header" @input=${this.handleTitleInput}></slot>
-      <section class="content" part="content">
-        <slot name="content" @input=${this.handleTitleInput}></slot>
+      <slot name="header"></slot>
+      <section
+        class="content"
+        part="content"
+        contenteditable
+        @input=${this.handleContentInput}
+      >
+        ${this.content}
       </section>
     `;
   }

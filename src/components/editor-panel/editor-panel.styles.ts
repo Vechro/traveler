@@ -11,12 +11,15 @@ export const styles = [
       box-shadow: var(--panel-shadow);
       border-radius: var(--border-radius);
     }
-    ::slotted([slot="header"]) {
+    ::slotted(input[slot="header"]) {
+      all: unset;
+      font-size: 1.2rem;
+      font-weight: 600;
       margin: 0;
       padding: 1rem;
       border-bottom: var(--outline-border);
     }
-    ::slotted([slot="content"]) {
+    .content {
       padding: 1rem;
       line-height: 1.7;
     }
