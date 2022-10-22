@@ -36,7 +36,7 @@
     "@types/three": "^0.144.0",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-plugin-lit": "^1.6.1",
     "eslint-plugin-storybook": "^0.6.6",
     "lit-html": "^2.4.0",
