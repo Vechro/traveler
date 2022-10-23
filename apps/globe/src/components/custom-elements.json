@@ -138,9 +138,9 @@
             },
             {
               "kind": "field",
-              "name": "contentElements",
+              "name": "contentElement",
               "type": {
-                "text": "HTMLElement[]"
+                "text": "HTMLElement"
               }
             },
             {

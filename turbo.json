@@ -1,0 +1,21 @@
+{
+  "baseBranch": "origin/main",
+  "npmClient": "pnpm",
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "globe#generate-elements-manifest"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "dev": {
+      "cache": false
+    },
+    "lint": {
+      "outputs": []
+    },
+    "globe#generate-elements-manifest": {}
+  }
+}
