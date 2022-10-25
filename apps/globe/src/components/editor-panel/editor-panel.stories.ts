@@ -1,3 +1,4 @@
+import { action } from "@storybook/addon-actions";
 import { Story } from "@storybook/web-components";
 import { html } from "lit";
 import "./editor-panel";
@@ -18,7 +19,7 @@ export const Default: Story<EditorPanel> = {
     <section class="container">
       <editor-panel
         .content=${"...and this is the content"}
-        @content-change=${console.log}
+        @content-change=${(event: CustomEvent) => action("content-change")(event.detail)}
       >
         <input slot="header" maxlength="32" value="This is the title" />
       </editor-panel>
