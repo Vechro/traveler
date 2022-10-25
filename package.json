@@ -10,9 +10,9 @@
     "globe:dev": "turbo run dev --scope=globe"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.40.1",
-    "@typescript-eslint/parser": "^5.40.1",
-    "dprint": "^0.32.1",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "dprint": "^0.32.2",
     "eslint": "^8.26.0",
     "eslint-plugin-lit": "^1.6.1",
     "eslint-plugin-storybook": "^0.6.6",
