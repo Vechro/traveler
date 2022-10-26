@@ -46,6 +46,7 @@ export class EditorPanel extends LitElement {
           return;
       }
     } else {
+      event.stopImmediatePropagation();
       return;
     }
     event.preventDefault();
