@@ -10,5 +10,10 @@
     {
       "path": "../apps/globe"
     }
-  ]
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/apps": true
+    }
+  }
 }

@@ -1,0 +1,52 @@
+name: traveler
+services:
+  globe:
+    build:
+      context: globe
+      target: development
+    networks:
+      - client-side
+    ports:
+      - 3000:3000
+    volumes:
+      - ./apps/globe/src:/code/src:ro
+
+  elephant:
+    build:
+      context: elephant
+      target: development
+    environment:
+      - ADDRESS=0.0.0.0:8000
+      - RUST_LOG=debug
+      - PG_DBNAME=postgres
+      - PG_HOST=db
+      - PG_USER=postgres
+      - PG_PASSWORD=mysecretpassword
+    networks:
+      - client-side
+      - server-side
+    volumes:
+      - ./apps/elephant/src:/code/src
+      - elephant-cache:/code/target
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    networks:
+      - server-side
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+networks:
+  client-side: {}
+  server-side: {}
+
+volumes:
+  elephant-cache: {}
+  db-data: {}
