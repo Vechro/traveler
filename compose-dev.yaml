@@ -1,32 +1,33 @@
-name: react-rust-postgres
+name: traveler
 services:
   globe:
     build:
-      context: ../globe
-      target: dev-envs
+      context: globe
+      target: development
     networks:
       - client-side
     ports:
       - 3000:3000
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./apps/globe/src:/code/src:ro
 
   elephant:
     build:
-      context: ../elephant
-      target: dev-envs
+      context: elephant
+      target: development
     environment:
+      - ADDRESS=0.0.0.0:8000
       - RUST_LOG=debug
       - PG_DBNAME=postgres
       - PG_HOST=db
       - PG_USER=postgres
       - PG_PASSWORD=mysecretpassword
-      - ADDRESS=0.0.0.0:8000
     networks:
       - client-side
       - server-side
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./apps/elephant/src:/code/src
+      - elephant-cache:/code/target
     depends_on:
       - db
 
@@ -41,6 +42,25 @@ services:
       - 5432:5432
     volumes:
       - db-data:/var/lib/postgresql/data
+
+  proxy:
+    build:
+      context: proxy
+      target: development
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./proxy/Caddyfile
+        target: /etc/caddy/Caddyfile
+        read_only: true
+    ports:
+        - "80:80"
+        - "443:443"
+    depends_on:
+      - elephant
+    networks:
+      - client-side
+      - server-side
 
 networks:
   client-side: {}

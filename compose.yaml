@@ -43,6 +43,18 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
+  proxy:
+    build:
+      context: proxy
+      target: development
+    restart: unless-stopped
+    ports:
+        - "80:80"
+        - "443:443"
+    networks:
+      - client-side
+      - server-side
+
 networks:
   client-side: {}
   server-side: {}
