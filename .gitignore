@@ -13,11 +13,9 @@ dist-ssr
 *.local
 types/
 .turbo
+target/
 
 # Editor directories and files
-.vscode/*
-.fleet/*
-!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo

@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "name": "traveler",
+      "path": "../"
+    },
+    {
+      "path": "../apps/elephant"
+    },
+    {
+      "path": "../apps/globe"
+    }
+  ]
+}
