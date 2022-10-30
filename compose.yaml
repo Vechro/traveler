@@ -6,8 +6,6 @@ services:
       target: development
     networks:
       - client-side
-    ports:
-      - 5173:5173
     volumes:
       - ./apps/globe/src:/code/src:ro
 
@@ -16,10 +14,10 @@ services:
       context: apps/elephant
       target: development
     networks:
-      - client-side
       - server-side
     volumes:
       - ./apps/elephant/src:/code/src
+      - ./apps/elephant/configuration:/code/configuration
       - elephant-cache:/code/target
     depends_on:
       - db

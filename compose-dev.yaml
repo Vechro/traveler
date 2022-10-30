@@ -7,21 +7,15 @@ services:
       target: development
     networks:
       - client-side
-    ports:
-      - 5173:5173
     volumes:
       - ./apps/globe/src:/code/src:ro
 
   elephant:
-    container_name: elephant
     build:
       context: apps/elephant
       target: development
     networks:
-      - client-side
       - server-side
-    ports:
-      - "8080:8080"
     volumes:
       - ./apps/elephant/src:/code/src
       - ./apps/elephant/configuration:/code/configuration
