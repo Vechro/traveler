@@ -2,7 +2,6 @@
 FROM node:lts AS development
 
 ENV CI=true
-ENV PORT=5173
 
 WORKDIR /code
 RUN corepack enable

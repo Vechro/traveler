@@ -1,3 +1,9 @@
 :80 {
-	reverse_proxy elephant
+	handle /api/* {
+		uri strip_prefix /api
+		reverse_proxy elephant
+	}
+	handle {
+		reverse_proxy globe
+	}
 }

@@ -9,7 +9,14 @@ export default defineConfig(({ command }) => {
         input: "./index.html",
       },
     },
-    base: "/globe/",
+    base: "/",
     plugins: command === "build" ? [minifyHTML()] : [],
+    server: {
+      port: 80,
+      host: "0.0.0.0",
+      watch: {
+        usePolling: true,
+      },
+    },
   };
 });
