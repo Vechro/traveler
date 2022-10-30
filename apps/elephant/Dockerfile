@@ -11,7 +11,8 @@ COPY . /code
 
 FROM base AS development
 
-CMD [ "cargo", "run", "--offline" ]
+RUN cargo install cargo-watch
+CMD [ "cargo", "watch", "-x run" ]
 
 FROM base AS dev-envs
 

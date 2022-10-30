@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build --parallel",
     "dev": "turbo run dev --parallel --no-cache",
+    "dev:compose": "docker compose -f ./compose-dev.yaml up",
     "format": "pnpm exec dprint fmt",
     "lint": "turbo run lint --parallel",
     "globe": "pnpm --filter=./apps/globe",
