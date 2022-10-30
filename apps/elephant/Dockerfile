@@ -11,13 +11,13 @@ COPY . /code
 
 FROM base AS development
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD [ "cargo", "run", "--offline" ]
 
 FROM base AS dev-envs
 
-EXPOSE 8000
+EXPOSE 8080
 RUN <<EOF
 apt-get update
 apt-get install -y --no-install-recommends git
@@ -38,8 +38,7 @@ RUN cargo build --release --offline
 
 FROM debian:buster-slim
 
-EXPOSE 8000
-
+EXPOSE 8080
 COPY --from=builder /code/target/release/elephant /elephant
 
 CMD [ "/elephant" ]

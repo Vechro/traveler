@@ -2,26 +2,19 @@ name: traveler
 services:
   globe:
     build:
-      context: globe
+      context: apps/globe
       target: development
     networks:
       - client-side
     ports:
-      - 3000:3000
+      - 5173:5173
     volumes:
       - ./apps/globe/src:/code/src:ro
 
   elephant:
     build:
-      context: elephant
+      context: apps/elephant
       target: development
-    environment:
-      - ADDRESS=0.0.0.0:8000
-      - RUST_LOG=debug
-      - PG_DBNAME=postgres
-      - PG_HOST=db
-      - PG_USER=postgres
-      - PG_PASSWORD=mysecretpassword
     networks:
       - client-side
       - server-side
@@ -46,7 +39,6 @@ services:
   proxy:
     build:
       context: proxy
-      target: development
     restart: unless-stopped
     ports:
         - "80:80"

@@ -2,12 +2,15 @@
 FROM node:lts AS development
 
 ENV CI=true
-ENV PORT=3000
+ENV PORT=5173
 
 WORKDIR /code
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
+
 COPY package.json /code/package.json
-COPY pnpm-lock.json /code/pnpm-lock.json
-RUN pnpm install
+COPY pnpm-lock.yaml /code/pnpm-lock.yaml
+RUN pnpm install --no-frozen-lockfile
 COPY . /code
 
 CMD [ "pnpm", "run", "dev" ]

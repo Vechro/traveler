@@ -50,6 +50,8 @@ pub fn get_connection_pool(configuration: &DatabaseSettings) -> PgPool {
 pub async fn run(listener: TcpListener, db_pool: PgPool) -> Result<Server, std::io::Error> {
     let db_pool = Data::new(db_pool);
 
+    println!("Listening on http://{}", listener.local_addr()?);
+
     let server = HttpServer::new(move || {
         App::new()
             .wrap(TracingLogger::default())

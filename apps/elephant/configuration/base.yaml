@@ -1,9 +1,9 @@
 application:
   port: 8080
-  host: 0.0.0.0
+  host: "0.0.0.0"
   hmac_secret: "super-long-and-secret-random-key-needed-to-verify-message-integrity"
 database:
-  host: "127.0.0.1"
+  host: "0.0.0.0"
   port: 5432
   username: "elephant"
   password: "elephant"
