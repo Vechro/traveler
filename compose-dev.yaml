@@ -52,6 +52,7 @@ services:
       - "443:443"
     depends_on:
       - elephant
+      - globe
 
 networks:
   client-side: {}
