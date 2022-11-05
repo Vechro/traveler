@@ -3,12 +3,8 @@
   "npmClient": "pnpm",
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "globe#generate-elements-manifest"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "dependsOn": ["globe#generate-elements-manifest"],
+      "outputs": ["dist/**"]
     },
     "dev": {
       "cache": false

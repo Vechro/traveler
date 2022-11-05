@@ -12,7 +12,8 @@ export default {
 };
 
 export const Default: Story<MenuList> = {
-  render: () => html`
+  render: () =>
+    html`
     <style>
       .container {
         margin: 0;
@@ -31,7 +32,8 @@ export const Default: Story<MenuList> = {
 };
 
 export const UtilizingButtonBar: Story<MenuList> = {
-  render: () => html`
+  render: () =>
+    html`
     <style>
       .container {
         margin: 0;

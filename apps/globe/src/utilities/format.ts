@@ -20,27 +20,17 @@ export type FormatCommand =
   | "formatBlock"
   | Heading;
 
-const takeIfSelectionInTag = <T extends keyof HTMLElementTagNameMap>(
-  tag: T
-): HTMLElementTagNameMap[T] | null => {
+const takeIfSelectionInTag = <T extends keyof HTMLElementTagNameMap>(tag: T): HTMLElementTagNameMap[T] | null => {
   const selection = document.getSelection();
   const ancestor = selection?.anchorNode?.parentElement;
-  return tag.toUpperCase() === ancestor?.tagName
-    ? (ancestor as HTMLElementTagNameMap[T])
-    : null;
+  return tag.toUpperCase() === ancestor?.tagName ? (ancestor as HTMLElementTagNameMap[T]) : null;
 };
 
-const isHeading = (command: FormatCommand): command is Heading =>
-  command in HeadingKind;
+const isHeading = (command: FormatCommand): command is Heading => command in HeadingKind;
 
-export function applyFormat(
-  format: "formatBlock",
-  argument: `<${string}>`
-): void;
+export function applyFormat(format: "formatBlock", argument: `<${string}>`): void;
 export function applyFormat(format: Heading): void;
-export function applyFormat(
-  format: "bold" | "italic" | "underline" | "removeFormat" | "strikeThrough"
-): void;
+export function applyFormat(format: "bold" | "italic" | "underline" | "removeFormat" | "strikeThrough"): void;
 
 export function applyFormat(format: FormatCommand, argument?: string): void {
   if (isHeading(format)) {
@@ -53,12 +43,7 @@ export function applyFormat(format: FormatCommand, argument?: string): void {
       const textNode = document.createTextNode(ancestor.innerText);
       ancestor.remove();
       anchorRange?.insertNode(textNode);
-      selection?.setBaseAndExtent(
-        textNode,
-        anchorOffset,
-        textNode,
-        focusOffset
-      );
+      selection?.setBaseAndExtent(textNode, anchorOffset, textNode, focusOffset);
     } else {
       applyFormat("formatBlock", `<${format}>`);
     }

@@ -1,4 +1,4 @@
-Selection.prototype.offsetRange = function () {
+Selection.prototype.offsetRange = function() {
   return [this.anchorOffset, this.focusOffset];
 };
 

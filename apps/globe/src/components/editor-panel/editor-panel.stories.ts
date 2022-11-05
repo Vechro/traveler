@@ -9,7 +9,8 @@ export default {
 };
 
 export const Default: Story<EditorPanel> = {
-  render: () => html`
+  render: () =>
+    html`
     <style>
       .container {
         margin: 0 auto;

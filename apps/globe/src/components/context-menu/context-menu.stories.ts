@@ -9,7 +9,8 @@ export default {
 };
 
 export const Default: Story<ContextMenu> = {
-  render: () => html`
+  render: () =>
+    html`
     <style>
       .container {
         width: 300px;

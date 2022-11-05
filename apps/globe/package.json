@@ -8,10 +8,7 @@
     ".": "./dist/index.es.js"
   },
   "types": "types/index.d.ts",
-  "files": [
-    "dist",
-    "types"
-  ],
+  "files": ["dist", "types"],
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -46,8 +43,5 @@
     "vite": "^3.2.2",
     "webpack": "^5.74.0"
   },
-  "customElements": "src/components/custom-elements.json",
-  "prettier": {
-    "htmlWhitespaceSensitivity": "ignore"
-  }
+  "customElements": "src/components/custom-elements.json"
 }

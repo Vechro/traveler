@@ -1,25 +1,14 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import * as THREE from "three";
-import {
-  Box3,
-  MathUtils,
-  Matrix4,
-  Quaternion,
-  Raycaster,
-  Sphere,
-  Spherical,
-  Vector2,
-  Vector3,
-  Vector4,
-} from "three";
+import { Box3, MathUtils, Matrix4, Quaternion, Raycaster, Sphere, Spherical, Vector2, Vector3, Vector4 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import CameraControls from "camera-controls";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import earthUvMap from "../../assets/earth-uv-map.jpg";
 import cross from "../../assets/icons/cross.svg?raw";
-import pin from "../../assets/icons/pin.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
+import pin from "../../assets/icons/pin.svg?raw";
 import "../../extension";
 import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
 import { MenuList } from "../menu-list";
@@ -66,12 +55,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
 
   private clock = new THREE.Clock();
   private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(
-    67,
-    innerWidth / innerHeight,
-    0.1,
-    1000
-  );
+  private camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
   private controls?: CameraControls;
   private renderer?: THREE.WebGLRenderer;
 
@@ -85,7 +69,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
           value: new THREE.TextureLoader().load(earthUvMap),
         },
       },
-    })
+    }),
   );
 
   atmosphere = new THREE.Mesh(
@@ -95,7 +79,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       fragmentShader: atmosphereFrag,
       blending: THREE.AdditiveBlending,
       side: THREE.BackSide,
-    })
+    }),
   );
 
   globeGroup = new THREE.Group();
@@ -184,7 +168,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       this.raycaster.setFromCamera(endPosition, this.camera);
       const intersects = this.raycaster.intersectObjects(
         this.markerList.map(({ mesh }) => mesh),
-        false
+        false,
       );
       const point = intersects.shift()?.point;
       if (!point) return;
@@ -194,7 +178,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
 
   private static dotMesh = new THREE.Mesh(
     new THREE.SphereGeometry(0.03, 12, 12),
-    new THREE.MeshBasicMaterial({ color: 0xff5000 })
+    new THREE.MeshBasicMaterial({ color: 0xff5000 }),
   );
 
   private createDotAt = (position: Vector3) => {
@@ -255,14 +239,13 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   private handlePointClose = (event: PointerEvent, marker: MarkerMesh) => {
     event.stopPropagation();
     marker.mesh.removeFromParent();
-    this.database
-      ?.then((db) => db.delete("markers", marker.id))
-      ?.then(() => this.readMarkersFromDatabase());
+    this.database?.then((db) => db.delete("markers", marker.id))?.then(() => this.readMarkersFromDatabase());
   };
 
   pointListElements() {
     return html`
-      ${this.markerList.map(
+      ${
+      this.markerList.map(
         (point) =>
           html`
             <menu-item>
@@ -271,45 +254,29 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
                 class="marker-title"
                 maxlength="32"
                 value=${point.name}
-                @keydown=${(event: KeyboardEvent) =>
-                  this.handleTitleRename(event, point)}
+                @keydown=${(event: KeyboardEvent) => this.handleTitleRename(event, point)}
               />
               <div slot="interaction-bar">
                 <span class="bar-item">${unsafeSVG(edit)}</span>
-                <span
-                  class="bar-item"
-                  @pointerup=${() => this.orientCameraToMarker(point)}
-                >
-                  ${unsafeSVG(pin)}
-                </span>
-                <span
-                  class="bar-item"
-                  @pointerup=${(event: PointerEvent) =>
-                    this.handlePointClose(event, point)}
-                >
+                <span class="bar-item" @pointerup=${() => this.orientCameraToMarker(point)}>${unsafeSVG(pin)}</span>
+                <span class="bar-item" @pointerup=${(event: PointerEvent) => this.handlePointClose(event, point)}>
                   ${unsafeSVG(cross)}
                 </span>
               </div>
             </menu-item>
-          `
-      )}
+          `,
+      )
+    }
     `;
   }
 
   render() {
     return html`
-      <context-menu
-        @open=${this.handleClickPointer}
-        @close=${this.resetClickPointer}
-      >
+      <context-menu @open=${this.handleClickPointer} @close=${this.resetClickPointer}>
         <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>
-        <canvas
-          @pointerdown=${this.onGrabStart}
-          @pointerup=${this.onGrabEnd}
-          @pointerout=${this.onGrabEnd}
-        ></canvas>
+        <canvas @pointerdown=${this.onGrabStart} @pointerup=${this.onGrabEnd} @pointerout=${this.onGrabEnd}></canvas>
         <menu-panel class="points-menu">
           <h3 class="title" slot="header">Points</h3>
           <menu-list>${this.pointListElements()}</menu-list>

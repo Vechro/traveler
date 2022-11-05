@@ -1,32 +1,29 @@
 Object.defineProperty(MouseEvent.prototype, "clientPosition", {
-  get: function () {
+  get: function() {
     return [this.clientX, this.clientY];
   },
 });
 
 Object.defineProperty(MouseEvent.prototype, "offsetPosition", {
-  get: function () {
+  get: function() {
     return [this.offsetX, this.offsetY];
   },
 });
 
 Object.defineProperty(MouseEvent.prototype, "pagePosition", {
-  get: function () {
+  get: function() {
     return [this.pageX, this.pageY];
   },
 });
 
 Object.defineProperty(MouseEvent.prototype, "screenPosition", {
-  get: function () {
+  get: function() {
     return [this.screenX, this.screenY];
   },
 });
 
-MouseEvent.prototype.normalizedPosition = function () {
-  return [
-    (this.clientX / innerWidth) * 2 - 1,
-    -(this.clientY / innerHeight) * 2 + 1,
-  ];
+MouseEvent.prototype.normalizedPosition = function() {
+  return [(this.clientX / innerWidth) * 2 - 1, -(this.clientY / innerHeight) * 2 + 1];
 };
 
 declare global {

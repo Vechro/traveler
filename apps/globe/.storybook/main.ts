@@ -1,6 +1,6 @@
 import { StorybookConfig } from "@storybook/web-components-vite";
 
-export default <StorybookConfig>{
+export default <StorybookConfig> {
   stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-actions"],
   framework: {

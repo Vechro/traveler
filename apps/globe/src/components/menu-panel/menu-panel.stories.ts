@@ -14,11 +14,12 @@ const menuItems = rangeTo(20).map(
   (x) =>
     html`
       <menu-item .closeable=${true}>Item #${x}</menu-item>
-    `
+    `,
 );
 
 export const Default: Story<MenuPanel> = {
-  render: () => html`
+  render: () =>
+    html`
     <style>
       .container {
         margin: 0;
@@ -40,7 +41,8 @@ export const Default: Story<MenuPanel> = {
 };
 
 export const NoFooter: Story<MenuPanel> = {
-  render: () => html`
+  render: () =>
+    html`
     <style>
       .container {
         margin: 0;

@@ -23,33 +23,31 @@ export declare class DatabaseMixinInterface {
   database?: Promise<IDBPDatabase<GlobeViewerSchema>>;
 }
 
-export const DatabaseMixin = dedupeMixin(
-  <T extends Constructor<LitElement>>(superClass: T) => {
-    class Database extends superClass {
-      database?: Promise<IDBPDatabase<GlobeViewerSchema>>;
+export const DatabaseMixin = dedupeMixin(<T extends Constructor<LitElement>>(superClass: T) => {
+  class Database extends superClass {
+    database?: Promise<IDBPDatabase<GlobeViewerSchema>>;
 
-      // https://github.com/microsoft/TypeScript/issues/37142
-      constructor(..._: any[]) {
-        super();
-        this.database = openDB<GlobeViewerSchema>("globe", 2, {
-          upgrade(db) {
-            const store = db.createObjectStore("markers", {
-              // The 'id' property of the object will be the key.
-              keyPath: "id",
-              // If it isn't explicitly set, create a value by auto incrementing.
-              autoIncrement: true,
-            });
-            store.createIndex("id", "id");
-          },
-        });
-      }
-
-      disconnectedCallback() {
-        super.disconnectedCallback();
-        this.database?.then((db) => db.close());
-      }
+    // https://github.com/microsoft/TypeScript/issues/37142
+    constructor(..._: any[]) {
+      super();
+      this.database = openDB<GlobeViewerSchema>("globe", 2, {
+        upgrade(db) {
+          const store = db.createObjectStore("markers", {
+            // The 'id' property of the object will be the key.
+            keyPath: "id",
+            // If it isn't explicitly set, create a value by auto incrementing.
+            autoIncrement: true,
+          });
+          store.createIndex("id", "id");
+        },
+      });
     }
 
-    return Database as Constructor<DatabaseMixinInterface> & T;
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      this.database?.then((db) => db.close());
+    }
   }
-);
+
+  return Database as Constructor<DatabaseMixinInterface> & T;
+});

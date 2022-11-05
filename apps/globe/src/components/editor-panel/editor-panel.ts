@@ -1,7 +1,7 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { styles } from "./editor-panel.styles";
 import { applyFormat } from "../../utilities";
+import { styles } from "./editor-panel.styles";
 
 @customElement("editor-panel")
 export class EditorPanel extends LitElement {
@@ -20,7 +20,7 @@ export class EditorPanel extends LitElement {
           text: this.contentElement.innerText,
           rawHtml: this.contentElement.innerHTML,
         },
-      })
+      }),
     );
   };
 
