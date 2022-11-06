@@ -1,5 +1,0 @@
-:80 {
-	handle {
-		reverse_proxy globe:5174
-	}
-}

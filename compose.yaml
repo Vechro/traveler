@@ -39,7 +39,7 @@ services:
       API_EXTERNAL_URL: ${API_EXTERNAL_URL}
 
       GOTRUE_DB_DRIVER: postgres
-      GOTRUE_DB_DATABASE_URL: postgres://auth_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
 
       GOTRUE_SITE_URL: ${SITE_URL}
       GOTRUE_URI_ALLOW_LIST: ${ADDITIONAL_REDIRECT_URLS}
@@ -91,22 +91,6 @@ services:
     volumes:
       - ./volumes/db/roles.sql:/docker-entrypoint-initdb.d/roles.sql
       - db-data:/var/lib/postgresql/data
-
-  proxy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    volumes:
-      - type: bind
-        source: ./proxy/Caddyfile
-        target: /etc/caddy/Caddyfile
-        read_only: true
-    ports:
-      - "80:80"
-      - "443:443"
-
-networks:
-  client-side: {}
-  server-side: {}
 
 volumes:
   db-data: {}
