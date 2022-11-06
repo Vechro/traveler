@@ -8,7 +8,6 @@ RUN corepack enable
 RUN corepack prepare pnpm@latest --activate
 
 COPY package.json /code/package.json
-COPY pnpm-lock.yaml /code/pnpm-lock.yaml
 RUN pnpm install --no-frozen-lockfile
 COPY . /code
 

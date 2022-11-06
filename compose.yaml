@@ -1,54 +1,112 @@
+version: '3.8'
 name: traveler
+# Based off of https://github.com/supabase/supabase/tree/master/docker
 services:
+  kong:
+    image: kong:2.8.3
+    restart: unless-stopped
+    ports:
+      - ${KONG_HTTP_PORT}:8000/tcp
+      - ${KONG_HTTPS_PORT}:8443/tcp
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /var/lib/kong/kong.yml
+      # https://github.com/supabase/cli/issues/14
+      KONG_DNS_ORDER: LAST,A,CNAME
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl
+      KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
+      KONG_NGINX_PROXY_PROXY_BUFFERS: 64 160k
+    volumes:
+      - ./volumes/api:/var/lib/kong:ro
+
   globe:
     build:
       context: apps/globe
       target: development
-    networks:
-      - client-side
     volumes:
       - ./apps/globe/src:/code/src:ro
 
-  elephant:
-    build:
-      context: apps/elephant
-      target: development
-    networks:
-      - server-side
-    volumes:
-      - ./apps/elephant/src:/code/src
-      - ./apps/elephant/configuration:/code/configuration
-      - elephant-cache:/code/target
+  auth:
+    # https://github.com/supabase/gotrue
+    image: supabase/gotrue:v2.27.0
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL}
+
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://auth_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+
+      GOTRUE_SITE_URL: ${SITE_URL}
+      GOTRUE_URI_ALLOW_LIST: ${ADDITIONAL_REDIRECT_URLS}
+      GOTRUE_DISABLE_SIGNUP: ${DISABLE_SIGNUP}
+
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_EXP: ${JWT_EXPIRY}
+      GOTRUE_JWT_SECRET: ${JWT_SECRET}
+
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: ${ENABLE_EMAIL_SIGNUP}
+      GOTRUE_MAILER_AUTOCONFIRM: ${ENABLE_EMAIL_AUTOCONFIRM}
+      # GOTRUE_MAILER_SECURE_EMAIL_CHANGE_ENABLED: true
+      # GOTRUE_SMTP_MAX_FREQUENCY: 1s
+      GOTRUE_SMTP_ADMIN_EMAIL: ${SMTP_ADMIN_EMAIL}
+      GOTRUE_SMTP_HOST: ${SMTP_HOST}
+      GOTRUE_SMTP_PORT: ${SMTP_PORT}
+      GOTRUE_SMTP_USER: ${SMTP_USER}
+      GOTRUE_SMTP_PASS: ${SMTP_PASS}
+      GOTRUE_SMTP_SENDER_NAME: ${SMTP_SENDER_NAME}
+      GOTRUE_MAILER_URLPATHS_INVITE: ${MAILER_URLPATHS_INVITE}
+      GOTRUE_MAILER_URLPATHS_CONFIRMATION: ${MAILER_URLPATHS_CONFIRMATION}
+      GOTRUE_MAILER_URLPATHS_RECOVERY: ${MAILER_URLPATHS_RECOVERY}
+      GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: ${MAILER_URLPATHS_EMAIL_CHANGE}
+
+      GOTRUE_EXTERNAL_PHONE_ENABLED: ${ENABLE_PHONE_SIGNUP}
+      GOTRUE_SMS_AUTOCONFIRM: ${ENABLE_PHONE_AUTOCONFIRM}
 
   db:
-    image: postgres:15-alpine
-    restart: always
-    environment:
-      - POSTGRES_PASSWORD=mysecretpassword
-    networks:
-      - server-side
+    image: supabase/postgres:14.1.0.87
+    healthcheck:
+      test: pg_isready -U postgres -h localhost
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    command:
+      - postgres
+      - -c
+      - config_file=/etc/postgresql/postgresql.conf
+      - -c
+      - log_min_messages=fatal # prevents Realtime polling queries from appearing in logs
+    restart: unless-stopped
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
+    environment:
+      POSTGRES_HOST: /var/run/postgresql
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
+      - ./volumes/db/roles.sql:/docker-entrypoint-initdb.d/roles.sql
       - db-data:/var/lib/postgresql/data
 
   proxy:
-    build:
-      context: proxy
+    image: caddy:2-alpine
     restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./proxy/Caddyfile
+        target: /etc/caddy/Caddyfile
+        read_only: true
     ports:
-        - "80:80"
-        - "443:443"
-    networks:
-      - client-side
-      - server-side
+      - "80:80"
+      - "443:443"
 
 networks:
   client-side: {}
   server-side: {}
 
 volumes:
-  elephant-cache: {}
   db-data: {}
