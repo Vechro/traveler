@@ -1,0 +1,301 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/context-menu/context-menu.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContextMenu",
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "location",
+              "type": {
+                "text": "[number, number] | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleContextMenu",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleDismiss",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "context-menu",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContextMenu",
+          "declaration": {
+            "name": "ContextMenu",
+            "module": "src/components/context-menu/context-menu.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "context-menu",
+          "declaration": {
+            "name": "ContextMenu",
+            "module": "src/components/context-menu/context-menu.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/database-mixin/database-mixin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DatabaseMixinInterface",
+          "members": [
+            {
+              "kind": "field",
+              "name": "database",
+              "type": {
+                "text": "Promise<IDBPDatabase<GlobeViewerSchema>> | undefined"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "DatabaseMixin"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DatabaseMixinInterface",
+          "declaration": {
+            "name": "DatabaseMixinInterface",
+            "module": "src/components/database-mixin/database-mixin.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DatabaseMixin",
+          "declaration": {
+            "name": "DatabaseMixin",
+            "module": "src/components/database-mixin/database-mixin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/editor-panel/editor-panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "EditorPanel",
+          "members": [
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "attribute": "content"
+            },
+            {
+              "kind": "field",
+              "name": "contentElement",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleContentInput"
+            },
+            {
+              "kind": "field",
+              "name": "handleKeyDown"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "fieldName": "content"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "editor-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "EditorPanel",
+          "declaration": {
+            "name": "EditorPanel",
+            "module": "src/components/editor-panel/editor-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "editor-panel",
+          "declaration": {
+            "name": "EditorPanel",
+            "module": "src/components/editor-panel/editor-panel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-item/menu-item.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuItem",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuItem",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-item",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-list/menu-list.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuList",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-list",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuList",
+          "declaration": {
+            "name": "MenuList",
+            "module": "src/components/menu-list/menu-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-list",
+          "declaration": {
+            "name": "MenuList",
+            "module": "src/components/menu-list/menu-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-panel/menu-panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuPanel",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuPanel",
+          "declaration": {
+            "name": "MenuPanel",
+            "module": "src/components/menu-panel/menu-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-panel",
+          "declaration": {
+            "name": "MenuPanel",
+            "module": "src/components/menu-panel/menu-panel.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

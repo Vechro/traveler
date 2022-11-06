@@ -11,7 +11,7 @@ import edit from "../../assets/icons/edit.svg?raw";
 import pin from "../../assets/icons/pin.svg?raw";
 import "../../extension";
 import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
-import { MenuList } from "../menu-list";
+import { MenuList } from "@vechro/turtle";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";

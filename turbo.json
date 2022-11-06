@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["globe#generate-elements-manifest"],
+      "dependsOn": ["lint"],
       "outputs": ["dist/**"]
     },
     "dev": {
@@ -10,7 +10,6 @@
     },
     "lint": {
       "outputs": []
-    },
-    "globe#generate-elements-manifest": {}
+    }
   }
 }

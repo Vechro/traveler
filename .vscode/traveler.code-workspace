@@ -6,11 +6,15 @@
     },
     {
       "path": "../apps/globe"
+    },
+    {
+      "path": "../packages/turtle"
     }
   ],
   "settings": {
     "files.exclude": {
-      "**/apps": true
+      "**/apps": true,
+      "**/packages": true
     },
     "yaml.schemas": {
       "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": "file:///e%3A/Source/traveler/compose-dev.yaml"
