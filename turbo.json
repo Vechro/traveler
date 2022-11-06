@@ -2,7 +2,18 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "outputs": ["dist/**", "types/**"]
+      "inputs": ["src/**", "tsconfig*.json", "vite.config.ts"],
+      "outputs": ["dist/**"]
+    },
+    "check": {
+      "inputs": ["src/**", "tsconfig*.json", "vite.config.ts"],
+      "outputs": ["types/**"]
+    },
+    "generate-metadata": {
+      "outputs": ["custom-elements.json"]
+    },
+    "bundle": {
+      "dependsOn": ["build", "check", "generate-metadata"]
     },
     "dev": {
       "cache": false

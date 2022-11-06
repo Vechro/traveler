@@ -1,3 +1,4 @@
 packages:
   - "apps/globe"
+  - "packages/eslint-config-traveler"
   - "packages/turtle"

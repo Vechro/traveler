@@ -15,8 +15,9 @@
   "scripts": {
     "dev": "storybook dev -p 22117",
     "build": "vite build",
-    "lint": "pnpm run generate-ce-manifest && tsc",
-    "generate-ce-manifest": "custom-elements-manifest analyze"
+    "check": "tsc",
+    "generate-metadata": "custom-elements-manifest analyze",
+    "lint": "eslint . --ext .ts,.js,.json"
   },
   "dependencies": {
     "lit": "^2.4.1",
@@ -29,6 +30,8 @@
     "@storybook/addon-actions": "7.0.0-alpha.47",
     "@storybook/web-components": "7.0.0-alpha.47",
     "@storybook/web-components-vite": "7.0.0-alpha.47",
+    "@vechro/eslint-config-traveler": "workspace:*",
+    "eslint": "^8.26.0",
     "lit-html": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -39,5 +42,5 @@
     "vite": "^3.2.2",
     "webpack": "^5.74.0"
   },
-  "customElements": "src/components/custom-elements.json"
+  "customElements": "custom-elements.json"
 }

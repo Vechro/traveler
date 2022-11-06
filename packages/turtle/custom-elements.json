@@ -78,48 +78,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/database-mixin/database-mixin.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "DatabaseMixinInterface",
-          "members": [
-            {
-              "kind": "field",
-              "name": "database",
-              "type": {
-                "text": "Promise<IDBPDatabase<GlobeViewerSchema>> | undefined"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "variable",
-          "name": "DatabaseMixin"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "DatabaseMixinInterface",
-          "declaration": {
-            "name": "DatabaseMixinInterface",
-            "module": "src/components/database-mixin/database-mixin.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "DatabaseMixin",
-          "declaration": {
-            "name": "DatabaseMixin",
-            "module": "src/components/database-mixin/database-mixin.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/editor-panel/editor-panel.ts",
       "declarations": [
         {

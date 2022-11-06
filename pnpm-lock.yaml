@@ -4,50 +4,36 @@ importers:
 
   .:
     specifiers:
-      '@typescript-eslint/eslint-plugin': ^5.42.0
-      '@typescript-eslint/parser': ^5.42.0
+      '@vechro/eslint-config-traveler': workspace:*
       dprint: ^0.32.2
       eslint: ^8.26.0
-      eslint-plugin-lit: ^1.6.1
-      eslint-plugin-storybook: ^0.6.7
       turbo: ^1.6.3
       typescript: ^4.8.4
     devDependencies:
-      '@typescript-eslint/eslint-plugin': 5.42.0_6xw5wg2354iw4zujk2f3vyfrzu
-      '@typescript-eslint/parser': 5.42.0_wyqvi574yv7oiwfeinomdzmc3m
+      '@vechro/eslint-config-traveler': link:packages/eslint-config-traveler
       dprint: 0.32.2
       eslint: 8.26.0
-      eslint-plugin-lit: 1.6.1_eslint@8.26.0
-      eslint-plugin-storybook: 0.6.7_wyqvi574yv7oiwfeinomdzmc3m
       turbo: 1.6.3
       typescript: 4.8.4
 
   apps/globe:
     specifiers:
-      '@babel/core': ^7.19.6
-      '@babel/preset-typescript': ^7.18.6
       '@custom-elements-manifest/analyzer': ^0.6.6
       '@open-wc/dedupe-mixin': ^1.3.1
-      '@storybook/addon-actions': 7.0.0-alpha.47
-      '@storybook/web-components': 7.0.0-alpha.47
-      '@storybook/web-components-vite': 7.0.0-alpha.47
       '@supabase/gotrue-js': ^2.2.3
       '@types/three': ^0.144.0
+      '@vechro/eslint-config-traveler': workspace:*
       '@vechro/turtle': workspace:*
       camera-controls: ^1.37.3
+      eslint: ^8.26.0
       idb: ^7.1.1
       lit: ^2.4.1
-      lit-html: ^2.4.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
       rollup: ^2.79.1
       rollup-plugin-html-literals: 1.1.5
-      storybook: 7.0.0-alpha.47
       three: ^0.146.0
       tinykeys: ^1.4.0
       typescript: ^4.8.4
       vite: ^3.2.2
-      webpack: ^5.74.0
     dependencies:
       '@open-wc/dedupe-mixin': 1.3.1
       '@supabase/gotrue-js': 2.2.3
@@ -58,22 +44,32 @@ importers:
       three: 0.146.0
       tinykeys: 1.4.0
     devDependencies:
-      '@babel/core': 7.19.6
-      '@babel/preset-typescript': 7.18.6_@babel+core@7.19.6
       '@custom-elements-manifest/analyzer': 0.6.6
-      '@storybook/addon-actions': 7.0.0-alpha.47_biqbaboplfbrettd7655fr4n2y
-      '@storybook/web-components': 7.0.0-alpha.47_e6u5xnnze4ywl4avuu3fvhwnza
-      '@storybook/web-components-vite': 7.0.0-alpha.47_zatebdu4zvo55ultrbf6wp57gq
       '@types/three': 0.144.0
-      lit-html: 2.4.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
+      '@vechro/eslint-config-traveler': link:../../packages/eslint-config-traveler
+      eslint: 8.26.0
       rollup: 2.79.1
       rollup-plugin-html-literals: 1.1.5_rollup@2.79.1
-      storybook: 7.0.0-alpha.47_yalvw3r2waubxycyb7k7qsruca
       typescript: 4.8.4
       vite: 3.2.2
-      webpack: 5.74.0
+
+  packages/eslint-config-traveler:
+    specifiers:
+      '@typescript-eslint/eslint-plugin': ^5.42.0
+      '@typescript-eslint/parser': ^5.42.0
+      eslint: ^8.26.0
+      eslint-config-turbo: ^0.0.4
+      eslint-plugin-lit: ^1.6.1
+      eslint-plugin-storybook: ^0.6.7
+      typescript: '>=2.8.0'
+    devDependencies:
+      '@typescript-eslint/eslint-plugin': 5.42.0_6xw5wg2354iw4zujk2f3vyfrzu
+      '@typescript-eslint/parser': 5.42.0_wyqvi574yv7oiwfeinomdzmc3m
+      eslint: 8.26.0
+      eslint-config-turbo: 0.0.4_eslint@8.26.0
+      eslint-plugin-lit: 1.6.1_eslint@8.26.0
+      eslint-plugin-storybook: 0.6.7_wyqvi574yv7oiwfeinomdzmc3m
+      typescript: 4.8.4
 
   packages/turtle:
     specifiers:
@@ -83,6 +79,8 @@ importers:
       '@storybook/addon-actions': 7.0.0-alpha.47
       '@storybook/web-components': 7.0.0-alpha.47
       '@storybook/web-components-vite': 7.0.0-alpha.47
+      '@vechro/eslint-config-traveler': workspace:*
+      eslint: ^8.26.0
       lit: ^2.4.1
       lit-html: ^2.4.0
       react: ^18.2.0
@@ -104,6 +102,8 @@ importers:
       '@storybook/addon-actions': 7.0.0-alpha.47_biqbaboplfbrettd7655fr4n2y
       '@storybook/web-components': 7.0.0-alpha.47_e6u5xnnze4ywl4avuu3fvhwnza
       '@storybook/web-components-vite': 7.0.0-alpha.47_zatebdu4zvo55ultrbf6wp57gq
+      '@vechro/eslint-config-traveler': link:../eslint-config-traveler
+      eslint: 8.26.0
       lit-html: 2.4.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -3105,8 +3105,10 @@ packages:
       acorn: 8.8.0
     dev: true
 
-  /acorn-jsx/5.3.2:
+  /acorn-jsx/5.3.2_acorn@8.8.1:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
+    peerDependencies:
+      acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
       acorn: 8.8.1
     dev: true
@@ -3119,6 +3121,7 @@ packages:
   /acorn/8.8.1:
     resolution: {integrity: sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==}
     engines: {node: '>=0.4.0'}
+    hasBin: true
     dev: true
 
   /address/1.2.1:
@@ -4656,6 +4659,17 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /eslint-config-turbo/0.0.4_eslint@8.26.0:
+    resolution: {integrity: sha512-HErPS/wfWkSdV9Yd2dDkhZt3W2B78Ih/aWPFfaHmCMjzPalh+5KxRRGTf8MOBQLCebcWJX0lP1Zvc1rZIHlXGg==}
+    peerDependencies:
+      eslint: ^7.23.0 || ^8.0.0
+    dependencies:
+      eslint: 8.26.0
+      eslint-plugin-turbo: 0.0.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /eslint-plugin-lit/1.6.1_eslint@8.26.0:
     resolution: {integrity: sha512-BpPoWVhf8dQ/Sz5Pi9NlqbGoH5BcMcVyXhi2XTx2XGMAO9U2lS+GTSsqJjI5hL3OuxCicNiUEWXazAwi9cAGxQ==}
     engines: {node: '>= 12'}
@@ -4682,6 +4696,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
+    dev: true
+
+  /eslint-plugin-turbo/0.0.4:
+    resolution: {integrity: sha512-dfmYE/iPvoJInQq+5E/0mj140y/rYwKtzZkn3uVK8+nvwC5zmWKQ6ehMWrL4bYBkGzSgpOndZM+jOXhPQ2m8Cg==}
+    dependencies:
+      eslint: 8.26.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /eslint-scope/5.1.1:
@@ -4723,6 +4745,7 @@ packages:
   /eslint/8.26.0:
     resolution: {integrity: sha512-kzJkpaw1Bfwheq4VXUezFriD1GxszX6dUekM7Z3aC2o4hju+tsR/XyTC3RcoSD7jmy9VkPU3+N6YjVU2e96Oyg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    hasBin: true
     dependencies:
       '@eslint/eslintrc': 1.3.3
       '@humanwhocodes/config-array': 0.11.7
@@ -4772,7 +4795,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       acorn: 8.8.1
-      acorn-jsx: 5.3.2
+      acorn-jsx: 5.3.2_acorn@8.8.1
       eslint-visitor-keys: 3.3.0
     dev: true
 
@@ -6025,12 +6048,14 @@ packages:
 
   /js-yaml/4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
+    hasBin: true
     dependencies:
       argparse: 2.0.1
     dev: true
 
   /jscodeshift/0.13.1_@babel+preset-env@7.19.4:
     resolution: {integrity: sha512-lGyiEbGOvmMRKgWk4vf+lUrCWO/8YR8sUR3FKF1Cq5fovjZDlIcw3Hu5ppLHAnEXshVffvaM0eyuY/AbOeYpnQ==}
+    hasBin: true
     peerDependencies:
       '@babel/preset-env': ^7.1.6
     dependencies:
@@ -6516,7 +6541,7 @@ packages:
     resolution: {integrity: sha512-TZZRZgeHvtgm+IhtgC2+uDMR7h8eTKF0QUX9YsgoL9+bADBpBY6SiLvWqnBlLbCEevITmTqmEuY3FoxMKVs1rQ==}
     dependencies:
       acorn: 8.8.1
-      acorn-jsx: 5.3.2
+      acorn-jsx: 5.3.2_acorn@8.8.1
       micromark-extension-mdx-expression: 1.0.3
       micromark-extension-mdx-jsx: 1.0.3
       micromark-extension-mdx-md: 1.0.0
@@ -7728,6 +7753,7 @@ packages:
 
   /rimraf/3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    hasBin: true
     dependencies:
       glob: 7.2.3
     dev: true
@@ -8638,6 +8664,7 @@ packages:
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
+    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -8756,6 +8783,7 @@ packages:
   /vite/3.2.2:
     resolution: {integrity: sha512-pLrhatFFOWO9kS19bQ658CnRYzv0WLbsPih6R+iFeEEhDOuYgYCX2rztUViMz/uy/V8cLCJvLFeiOK7RJEzHcw==}
     engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
     peerDependencies:
       less: '*'
       sass: '*'
@@ -8801,6 +8829,7 @@ packages:
   /webpack/5.74.0:
     resolution: {integrity: sha512-A2InDwnhhGN4LYctJj6M1JEaGL7Luj6LOmyBHjcI8529cm5p6VXiTIW2sn6ffvEAKmveLzvu4jrihwXtPojlAA==}
     engines: {node: '>=10.13.0'}
+    hasBin: true
     peerDependencies:
       webpack-cli: '*'
     peerDependenciesMeta:
@@ -8868,6 +8897,7 @@ packages:
   /which/2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
     engines: {node: '>= 8'}
+    hasBin: true
     dependencies:
       isexe: 2.0.0
     dev: true

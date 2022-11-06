@@ -8,7 +8,7 @@
     "compose:up": "docker compose up",
     "compose:destroy": "docker compose down -v --remove-orphans",
     "format": "pnpm exec dprint fmt",
-    "lint": "turbo run lint --parallel",
+    "lint": "turbo run lint",
     "globe": "pnpm --filter=./apps/globe",
     "globe:dev": "turbo run dev --scope=globe",
     "turtle": "pnpm --filter=./packages/turtle",
@@ -16,12 +16,9 @@
     "elephant:dev": "cargo watch -x run -p elephant -w ./apps/elephant"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.42.0",
-    "@typescript-eslint/parser": "^5.42.0",
     "dprint": "^0.32.2",
     "eslint": "^8.26.0",
-    "eslint-plugin-lit": "^1.6.1",
-    "eslint-plugin-storybook": "^0.6.7",
+    "@vechro/eslint-config-traveler": "workspace:*",
     "turbo": "^1.6.3",
     "typescript": "^4.8.4"
   },

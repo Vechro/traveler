@@ -8,6 +8,9 @@
       "path": "../apps/globe"
     },
     {
+      "path": "../packages/eslint-config-traveler"
+    },
+    {
       "path": "../packages/turtle"
     }
   ],
