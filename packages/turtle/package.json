@@ -7,10 +7,9 @@
   "exports": {
     ".": "./dist/turtle.js"
   },
-  "types": "types/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
   "scripts": {
     "dev": "storybook dev -p 22117",
@@ -38,6 +37,7 @@
     "storybook": "7.0.0-alpha.47",
     "typescript": "^4.8.4",
     "vite": "^3.2.2",
+    "vite-plugin-dts": "^1.6.6",
     "webpack": "^5.74.0"
   },
   "customElements": "src/components/custom-elements.json"

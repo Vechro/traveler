@@ -11,6 +11,8 @@
     "lint": "turbo run lint --parallel",
     "globe": "pnpm --filter=./apps/globe",
     "globe:dev": "turbo run dev --scope=globe",
+    "turtle": "pnpm --filter=./packages/turtle",
+    "turtle:dev": "turbo run dev --scope=turtle",
     "elephant:dev": "cargo watch -x run -p elephant -w ./apps/elephant"
   },
   "devDependencies": {
