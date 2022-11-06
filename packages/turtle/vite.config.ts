@@ -1,6 +1,5 @@
 import minifyHTML from "rollup-plugin-html-literals";
 import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
@@ -13,9 +12,7 @@ export default defineConfig(() => {
       },
     },
     base: "/",
-    plugins: [minifyHTML(), dts({
-      outputDir: "./dist/types",
-    })],
+    plugins: [minifyHTML()],
     server: {
       port: 5174,
       host: "0.0.0.0",
