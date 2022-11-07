@@ -8,6 +8,7 @@
     "emitDeclarationOnly": true,
     "outDir": "./types",
     "strict": true,
+    "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -20,7 +21,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts"],
   "references": [

@@ -21,10 +21,8 @@ services:
 
   globe:
     build:
-      context: apps/globe
+      context: .
       target: development
-    volumes:
-      - ./apps/globe/src:/code/src:ro
 
   auth:
     # https://github.com/supabase/gotrue
