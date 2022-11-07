@@ -1,4 +1,9 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
+  env: {
+    browser: true,
+    node: true,
+  },
   ignorePatterns: ["dist/", "types/", "node_modules/"],
   extends: [
     "eslint:recommended",
