@@ -19,11 +19,6 @@ services:
     volumes:
       - ./volumes/api:/var/lib/kong:ro
 
-  globe:
-    build:
-      context: .
-      target: development
-
   auth:
     # https://github.com/supabase/gotrue
     image: supabase/gotrue:v2.27.0
