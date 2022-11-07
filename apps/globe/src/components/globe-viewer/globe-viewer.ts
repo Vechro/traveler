@@ -13,6 +13,7 @@ import "../../extension";
 import { MenuList } from "@vechro/turtle";
 import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
 import "@vechro/turtle";
+import { GoTrueClient } from "@supabase/gotrue-js";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
@@ -120,6 +121,21 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.controls.maxDistance = 15;
 
     this.readMarkersFromDatabase();
+
+    const apiUrl = "http://localhost:8000";
+    const apiAnon =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE";
+
+    const auth = new GoTrueClient({
+      url: `${apiUrl}/auth/v1`,
+      headers: {
+        accept: "json",
+        apikey: apiAnon,
+      },
+    });
+
+    window.auth = auth
+
 
     this.paint();
   }

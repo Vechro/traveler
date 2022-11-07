@@ -77,7 +77,7 @@ services:
   ## Route / to Globe
   # https://docs.docker.com/desktop/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
   - name: globe
-    url: http://host.docker.internal:5174/
+    url: http://host.docker.internal:5173/
     routes:
       - name: globe
         paths:

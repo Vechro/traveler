@@ -4,7 +4,6 @@
   "scripts": {
     "build": "turbo run build --parallel",
     "dev": "turbo run dev --parallel --no-cache",
-    "dev:compose:up": "docker compose -f ./compose-dev.yaml up",
     "compose:up": "docker compose up",
     "compose:destroy": "docker compose down -v --remove-orphans",
     "format": "pnpm exec dprint fmt",
@@ -12,8 +11,7 @@
     "globe": "pnpm --filter=./apps/globe",
     "globe:dev": "turbo run dev --scope=globe",
     "turtle": "pnpm --filter=./packages/turtle",
-    "turtle:dev": "turbo run dev --scope=turtle",
-    "elephant:dev": "cargo watch -x run -p elephant -w ./apps/elephant"
+    "turtle:dev": "turbo run dev --scope=turtle"
   },
   "devDependencies": {
     "dprint": "^0.32.2",

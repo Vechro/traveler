@@ -3,7 +3,7 @@ name: traveler
 # Based off of https://github.com/supabase/supabase/tree/master/docker
 services:
   kong:
-    image: kong:2.8.3
+    image: kong:3.0.0
     restart: unless-stopped
     ports:
       - ${KONG_HTTP_PORT}:8000/tcp
