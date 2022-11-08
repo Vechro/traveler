@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { Box3, MathUtils, Matrix4, Quaternion, Raycaster, Sphere, Spherical, Vector2, Vector3, Vector4 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import "@vechro/turtle";
-import { MenuList } from "@vechro/turtle";
+import type { MenuList } from "@vechro/turtle";
 import CameraControls from "camera-controls";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import earthUvMap from "../../assets/earth-uv-map.jpg";
@@ -12,7 +12,7 @@ import cross from "../../assets/icons/cross.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
 import pin from "../../assets/icons/pin.svg?raw";
 import "../../extension";
-import { DatabaseMixin, Marker } from "../database-mixin/database-mixin";
+import { DatabaseMixin, Marker } from "../database-mixin";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
@@ -119,7 +119,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.controls.minDistance = 6;
     this.controls.maxDistance = 15;
 
-    this.readMarkersFromDatabase()
+    this.readMarkersFromDatabase();
 
     this.paint();
   }

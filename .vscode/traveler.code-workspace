@@ -8,6 +8,9 @@
       "path": "../apps/globe"
     },
     {
+      "path": "../apps/orbit"
+    },
+    {
       "path": "../packages/eslint-config-traveler"
     },
     {
@@ -16,8 +19,8 @@
   ],
   "settings": {
     "files.exclude": {
-      "**/apps": true,
-      "**/packages": true
+      "apps/": true,
+      "packages/": true
     },
     "yaml.schemas": {
       "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": "file:///e%3A/Source/traveler/compose-dev.yaml"

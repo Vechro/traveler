@@ -6,6 +6,7 @@ export default defineConfig(({ command }) => {
   return {
     build: {
       rollupOptions: {
+        // https://vitejs.dev/guide/build.html#multi-page-app
         input: "./index.html",
       },
     },

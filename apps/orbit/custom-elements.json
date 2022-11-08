@@ -1,0 +1,267 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/database-mixin/database-mixin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DatabaseMixinInterface",
+          "members": [
+            {
+              "kind": "field",
+              "name": "database",
+              "type": {
+                "text": "Promise<IDBPDatabase<GlobeViewerSchema>> | undefined"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "DatabaseMixin"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DatabaseMixinInterface",
+          "declaration": {
+            "name": "DatabaseMixinInterface",
+            "module": "src/components/database-mixin/database-mixin.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DatabaseMixin",
+          "declaration": {
+            "name": "DatabaseMixin",
+            "module": "src/components/database-mixin/database-mixin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/globe-viewer/globe-viewer.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "GlobeViewer",
+          "members": [
+            {
+              "kind": "field",
+              "name": "canvas",
+              "type": {
+                "text": "HTMLCanvasElement"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pointsMenu",
+              "type": {
+                "text": "MenuList"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "clock",
+              "privacy": "private",
+              "default": "new THREE.Clock()"
+            },
+            {
+              "kind": "field",
+              "name": "scene",
+              "privacy": "private",
+              "default": "new THREE.Scene()"
+            },
+            {
+              "kind": "field",
+              "name": "camera",
+              "privacy": "private",
+              "default": "new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000)"
+            },
+            {
+              "kind": "field",
+              "name": "controls",
+              "type": {
+                "text": "CameraControls | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "renderer",
+              "type": {
+                "text": "THREE.WebGLRenderer | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "sphere",
+              "default": "new THREE.Mesh(\n    new THREE.SphereGeometry(5, 64, 64),\n    new THREE.ShaderMaterial({\n      vertexShader: sphereVert,\n      fragmentShader: sphereFrag,\n      uniforms: {\n        globeTexture: {\n          value: new THREE.TextureLoader().load(earthUvMap),\n        },\n      },\n    }),\n  )"
+            },
+            {
+              "kind": "field",
+              "name": "atmosphere",
+              "default": "new THREE.Mesh(\n    new THREE.SphereGeometry(5, 64, 64),\n    new THREE.ShaderMaterial({\n      vertexShader: atmosphereVert,\n      fragmentShader: atmosphereFrag,\n      blending: THREE.AdditiveBlending,\n      side: THREE.BackSide,\n    }),\n  )"
+            },
+            {
+              "kind": "field",
+              "name": "globeGroup",
+              "default": "new THREE.Group()"
+            },
+            {
+              "kind": "field",
+              "name": "markerGroup",
+              "default": "new THREE.Group()"
+            },
+            {
+              "kind": "field",
+              "name": "clickPointer",
+              "default": "new Vector2()"
+            },
+            {
+              "kind": "field",
+              "name": "grabPointer",
+              "default": "new Vector2()"
+            },
+            {
+              "kind": "field",
+              "name": "raycaster",
+              "default": "new THREE.Raycaster()"
+            },
+            {
+              "kind": "field",
+              "name": "markerList",
+              "type": {
+                "text": "MarkerMesh[]"
+              },
+              "default": "[]",
+              "attribute": "markerList"
+            },
+            {
+              "kind": "field",
+              "name": "readMarkersFromDatabase"
+            },
+            {
+              "kind": "field",
+              "name": "onResize",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "paint",
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "onGrabStart",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "onGrabEnd",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "dotMesh",
+              "privacy": "private",
+              "static": true,
+              "default": "new THREE.Mesh(\n    new THREE.SphereGeometry(0.03, 12, 12),\n    new THREE.MeshBasicMaterial({ color: 0xff5000 }),\n  )"
+            },
+            {
+              "kind": "field",
+              "name": "createDotAt",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "addPoint",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleClickPointer",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "resetClickPointer",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "orientCameraToPoint"
+            },
+            {
+              "kind": "field",
+              "name": "orientCameraToMarker",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleTitleRename",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handlePointClose",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "pointListElements"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "markerList",
+              "type": {
+                "text": "MarkerMesh[]"
+              },
+              "default": "[]",
+              "fieldName": "markerList"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DatabaseMixin",
+              "module": "/src/components/database-mixin"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "globe-viewer",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "GlobeViewer",
+          "declaration": {
+            "name": "GlobeViewer",
+            "module": "src/components/globe-viewer/globe-viewer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "globe-viewer",
+          "declaration": {
+            "name": "GlobeViewer",
+            "module": "src/components/globe-viewer/globe-viewer.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,8 @@
     "lint": "turbo run lint",
     "globe": "pnpm --filter=./apps/globe",
     "globe:dev": "turbo run dev --scope=globe",
+    "orbit": "pnpm --filter=./apps/orbit",
+    "orbit:dev": "turbo run dev --scope=orbit",
     "turtle": "pnpm --filter=./packages/turtle",
     "turtle:dev": "turbo run dev --scope=turtle"
   },
