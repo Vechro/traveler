@@ -1,4 +1,4 @@
-:host {
+:root {
   --font-color: #213547;
   --color-transition: background-color 0.08s ease-out, color 0.2s ease-in;
   --outline-border: 2px solid #dddded;

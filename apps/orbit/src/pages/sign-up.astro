@@ -1,23 +1,105 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { GoTrueClient } from "@supabase/gotrue-js";
-
-const apiUrl = "http://localhost:8000";
-const apiAnon =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE";
-
-const auth = new GoTrueClient({
-  url: `${apiUrl}/auth/v1`,
-  headers: {
-    accept: "json",
-    apikey: apiAnon,
-  },
-});
 ---
 
-<Layout title="Globe">
+<script>
+  import { GoTrueClient } from "@supabase/gotrue-js";
+  import "@vechro/turtle";
+
+  interface FormShape {
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }
+
+  const apiUrl = "http://localhost:8000";
+  const apiAnon =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE";
+
+  const auth = new GoTrueClient({
+    url: `${apiUrl}/auth/v1`,
+    headers: {
+      accept: "json",
+      apikey: apiAnon,
+    },
+  });
+
+  const form = document.querySelector("form")!;
+
+  const registerUser = async (event: SubmitEvent) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+
+    const formResult = Object.fromEntries(
+      formData.entries()
+    ) as unknown as FormShape;
+
+    if (formResult.password !== formResult.confirmPassword) {
+      console.error("Passwords do not match");
+      return;
+    }
+
+    const { data, error } = await auth.signUp({
+      email: formResult.email,
+      password: formResult.password,
+    });
+
+    if (error) {
+      console.error(`Registration failed: ${error.message}`);
+    } else {
+      console.log(`Registration successful: ${data}`);
+    }
+  };
+
+  form.addEventListener("submit", registerUser);
+</script>
+<Layout title="Sign up">
   <main>
-    <h1>Sign up</h1>
-    <form action="get"></form>
+    <form>
+      <menu-panel>
+        <h1 slot="header">Sign up</h1>
+        <div class="content">
+          <div class="form-group">
+            <label slot="label" for="email">Email</label>
+            <input type="email" name="email" />
+          </div>
+          <div class="form-group">
+            <label slot="label" for="password">Password</label>
+            <input type="password" name="password" />
+          </div>
+          <div class="form-group">
+            <label slot="label" for="confirmPassword">Confirm password</label>
+            <input type="password" name="confirmPassword" />
+          </div>
+        </div>
+        <div slot="footer"><button>Sign up</button></div>
+      </menu-panel>
+    </form>
   </main>
 </Layout>
+<style>
+  h1 {
+    margin-block: 0;
+    padding: 1.5rem;
+  }
+  main {
+    color: var(--background-color);
+    display: grid;
+    min-height: 75vh;
+  }
+  form {
+    place-self: center;
+    width: 70ch;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    gap: 0.5rem;
+    min-height: 20rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
