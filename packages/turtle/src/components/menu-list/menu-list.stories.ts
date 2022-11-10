@@ -1,11 +1,11 @@
-import { StoryObj } from "@storybook/web-components";
+import type { StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import cross from "../../assets/icons/cross.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
 import "../menu-item";
 import "./menu-list";
-import { MenuList } from "./menu-list";
+import type { MenuList } from "./menu-list";
 
 export default {
   component: "menu-list",

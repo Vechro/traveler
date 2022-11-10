@@ -1,8 +1,8 @@
-import { StoryObj } from "@storybook/web-components";
+import type { StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import "../menu-item";
 import "./context-menu";
-import { ContextMenu } from "./context-menu";
+import type { ContextMenu } from "./context-menu";
 
 export default {
   component: "context-menu",

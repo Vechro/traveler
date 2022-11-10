@@ -1,7 +1,7 @@
 import { Constructor, dedupeMixin } from "@open-wc/dedupe-mixin";
 import { DBSchema, IDBPDatabase, openDB } from "idb";
-import { LitElement } from "lit";
-import { Vector3 } from "three";
+import type { LitElement } from "lit";
+import type { Vector3 } from "three";
 
 export interface Marker {
   id: number;

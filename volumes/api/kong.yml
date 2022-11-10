@@ -74,11 +74,11 @@ services:
             - admin
             - anon
 
-  ## Route / to Globe
+  ## Route / to Orbit
   # https://docs.docker.com/desktop/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
-  - name: globe
-    url: http://host.docker.internal:5173/
+  - name: orbit
+    url: http://host.docker.internal:3000/
     routes:
-      - name: globe
+      - name: orbit
         paths:
           - /

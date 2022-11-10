@@ -1,10 +1,10 @@
-import { StoryObj } from "@storybook/web-components";
+import type { StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import { rangeTo } from "../../utilities";
 import "../menu-item";
 import "../menu-list";
 import "./menu-panel";
-import { MenuPanel } from "./menu-panel";
+import type { MenuPanel } from "./menu-panel";
 
 export default {
   component: "menu-panel",

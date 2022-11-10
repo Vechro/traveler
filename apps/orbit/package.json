@@ -30,6 +30,7 @@
     "@custom-elements-manifest/analyzer": "^0.6.6",
     "@types/three": "^0.144.0",
     "@vechro/eslint-config-traveler": "workspace:*",
+    "@vechro/tsconfig-traveler": "workspace:*",
     "eslint": "^8.26.0",
     "rollup": "^2.79.1",
     "rollup-plugin-html-literals": "1.1.5",
