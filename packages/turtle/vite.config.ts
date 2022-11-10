@@ -10,6 +10,9 @@ export default defineConfig(() => {
         name: "Turtle",
         formats: ["es"],
       },
+      rollupOptions:{
+        external: /^lit/
+      }
     },
     plugins: [minifyHTML()],
   };
