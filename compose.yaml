@@ -1,13 +1,12 @@
 version: '3.8'
 name: traveler
-# Based off of https://github.com/supabase/supabase/tree/master/docker
+# Based off https://github.com/supabase/supabase/tree/master/docker
 services:
   apisix:
     image: apache/apisix:3.0.0-debian
     restart: unless-stopped
     ports:
       - "9080:9080/tcp"
-      - "9180:9180/tcp"
     volumes:
       - ./volumes/api/config.yaml:/usr/local/apisix/conf/config.yaml:ro
       - ./volumes/api/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro
@@ -102,8 +101,7 @@ services:
       POSTGREST_URL: http://rest:3000
       PGRST_JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-      # 50 MiB
-      FILE_SIZE_LIMIT: 52428800
+      FILE_SIZE_LIMIT: 52428800 # 50 MiB
       STORAGE_BACKEND: file
       FILE_STORAGE_BACKEND_PATH: /var/lib/storage
       TENANT_ID: stub
