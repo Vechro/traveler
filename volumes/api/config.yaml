@@ -1,0 +1,10 @@
+# https://apisix.apache.org/docs/apisix/stand-alone/
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+
+apisix:
+  router:
+    http: radixtree_uri_with_parameter
+#END

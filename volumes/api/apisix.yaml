@@ -1,0 +1,75 @@
+
+consumer:
+  username: authenticated
+  plugins:
+    jwt-auth:
+      key: your-super-secret-jwt-token-with-at-least-32-characters-long
+      secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE
+      algorithm: HS256
+      exp: 3600
+
+routes:
+  # -
+  #   uri: /auth/v1/verify
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "auth:9999/verify": 1
+  #   plugins:
+  #     proxy-rewrite:
+  #       uri: /verify
+  # -
+  #   uri: /auth/v1/callback
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "auth:9999/callback": 1
+  #   plugins:
+  #     proxy-rewrite:
+  #       uri: /callback
+  # -
+  #   uri: /auth/v1/authorize
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "auth:9999/authorize": 1
+  #   plugins:
+  #     proxy-rewrite:
+  #       uri: /authorize
+
+  -
+    uri: /auth/v1/*
+    priority: 100
+    upstream:
+      type: roundrobin
+      nodes:
+        "auth:9999": 1
+    plugins:
+      proxy-rewrite:
+        regex_uri: ["^/auth/v1/(.*)","/$1"]
+
+  -
+    uri: /globe
+    upstream:
+      nodes:
+        "host.docker.internal:3000": 1
+      type: roundrobin
+    plugins:
+      jwt-auth:
+        cookie: sb-access-token
+
+  -
+    uri: /sign-*
+    upstream:
+      nodes:
+        "host.docker.internal:3000": 1
+      type: roundrobin
+
+  -
+    uri: /:path/*
+    upstream:
+      nodes:
+        "host.docker.internal:3000": 1
+      type: roundrobin
+
+#END
