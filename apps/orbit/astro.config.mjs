@@ -8,4 +8,7 @@ export default defineConfig({
   vite: {
     plugins: [minifyHTML()],
   },
+  server: {
+    port: 5173
+  }
 });

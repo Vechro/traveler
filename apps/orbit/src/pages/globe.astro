@@ -3,7 +3,30 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <script>
-  import "../components/globe-viewer";
+  import { getAuth, getPostgrest } from "../utilities/api";
+
+  import { UnreachableError } from "../utilities/UnreachableError";
+
+  const auth = getAuth();
+
+  const {
+    data: { user, session },
+    error,
+  } = await auth.refreshSession();
+  if (!user || !session || error) {
+    console.error(error);
+    window.location.pathname = "/sign-in";
+    throw new UnreachableError();
+  } else {
+    import("../components/globe-viewer");
+  }
+
+  const rest = getPostgrest();
+
+  rest.from("users").select("*").then((data) => {
+    console.log(data);
+  });
+
 </script>
 <Layout title="Globe">
   <globe-viewer />

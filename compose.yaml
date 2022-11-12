@@ -2,15 +2,6 @@ version: '3.8'
 name: traveler
 # Based off of https://github.com/supabase/supabase/tree/master/docker
 services:
-  # envoy:
-  #   image: envoyproxy/envoy:v1.24.0
-  #   entrypoint: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
-  #   ports:
-  #     - "10000:10000/tcp"
-  #     - "9901:9901/tcp"
-  #   volumes:
-  #     - ./volumes/api/envoy.yaml:/etc/envoy/envoy.yaml:ro
-
   apisix:
     image: apache/apisix:3.0.0-debian
     restart: unless-stopped
@@ -20,19 +11,6 @@ services:
     volumes:
       - ./volumes/api/config.yaml:/usr/local/apisix/conf/config.yaml:ro
       - ./volumes/api/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro
-
-  # etcd:
-  #   image: bitnami/etcd:3.4.15
-  #   restart: always
-  #   volumes:
-  #     - etcd_data:/bitnami/etcd
-  #   environment:
-  #     ETCD_ENABLE_V2: "true"
-  #     ALLOW_NONE_AUTHENTICATION: "yes"
-  #     ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
-  #     ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
-  #   ports:
-  #     - "2379:2379/tcp"
 
   auth:
     # https://github.com/supabase/gotrue
@@ -85,12 +63,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    command:
-      - postgres
-      - -c
-      - config_file=/etc/postgresql/postgresql.conf
-      - -c
-      - log_min_messages=fatal # prevents Realtime polling queries from appearing in logs
     restart: unless-stopped
     ports:
       - ${POSTGRES_PORT}:5432
@@ -99,6 +71,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ./volumes/db/roles.sql:/docker-entrypoint-initdb.d/roles.sql
+      - ./volumes/db/init/data.sql:/docker-entrypoint-initdb.d/seed.sql
       - db-data:/var/lib/postgresql/data
 
   rest:
@@ -114,7 +87,31 @@ services:
       PGRST_JWT_SECRET: ${JWT_SECRET}
       PGRST_DB_USE_LEGACY_GUCS: "false"
 
+  storage:
+    # https://github.com/supabase/storage-api
+    image: supabase/storage-api:v0.24.3
+    depends_on:
+      db: # Disable this if you are using an external Postgres database
+        condition: service_healthy
+      rest:
+        condition: service_started
+    restart: unless-stopped
+    environment:
+      ANON_KEY: ${ANON_KEY}
+      SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      POSTGREST_URL: http://rest:3000
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      # 50 MiB
+      FILE_SIZE_LIMIT: 52428800
+      STORAGE_BACKEND: file
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: stub
+      # TODO: https://github.com/supabase/storage-api/issues/55
+      REGION: stub
+      GLOBAL_S3_BUCKET: stub
+    volumes:
+      - ./volumes/storage:/var/lib/storage
+
 volumes:
   db-data: {}
-  # etcd_data:
-  #   driver: local
