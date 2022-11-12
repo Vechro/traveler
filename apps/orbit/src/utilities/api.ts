@@ -1,4 +1,4 @@
-import { GoTrueClient } from "@supabase/gotrue-js";
+import { GoTrueClient, type Session } from "@supabase/gotrue-js";
 import { PostgrestClient } from "@supabase/postgrest-js";
 
 const API_URL = "http://localhost:9080";
@@ -14,4 +14,8 @@ export const getAuth = () =>
     },
   });
 
-export const getPostgrest = () => new PostgrestClient(`${API_URL}/rest/v1`);
+export const getPostgrest = (options?: ConstructorParameters<typeof PostgrestClient>[1]) =>
+  new PostgrestClient(`${API_URL}/rest/v1`, options);
+
+export const getPostgrestWithSession = ({ access_token }: Session) =>
+  getPostgrest({ headers: { Authorization: `Bearer ${access_token}` } });

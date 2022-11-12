@@ -3,8 +3,7 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <script>
-  import { getAuth, getPostgrest } from "../utilities/api";
-
+  import { getAuth, getPostgrestWithSession } from "../utilities/api";
   import { UnreachableError } from "../utilities/UnreachableError";
 
   const auth = getAuth();
@@ -19,14 +18,16 @@ import Layout from "../layouts/Layout.astro";
     throw new UnreachableError();
   } else {
     import("../components/globe-viewer");
+
+    const rest = getPostgrestWithSession(session);
+    rest
+      .from("profiles")
+      .select("*")
+      .match({ id: user.id })
+      .then((data) => {
+        console.log(data);
+      });
   }
-
-  const rest = getPostgrest();
-
-  rest.from("users").select("*").then((data) => {
-    console.log(data);
-  });
-
 </script>
 <Layout title="Globe">
   <globe-viewer />
