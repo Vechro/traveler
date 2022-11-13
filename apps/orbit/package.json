@@ -23,7 +23,6 @@
     "@vechro/turtle": "workspace:*",
     "@webcomponents/template-shadowroot": "^0.1.0",
     "astro": "^1.6.7",
-    "camera-controls": "^1.37.3",
     "idb": "^7.1.1",
     "lit": "^2.4.1",
     "nanostores": "^0.7.0",

@@ -128,6 +128,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   disconnectedCallback() {
     super.disconnectedCallback();
     removeEventListener("resize", this.onResize);
+    // TODO: make sure we clean up after threejs
   }
 
   private onResize = () => {
@@ -232,7 +233,8 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
         <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>
-        <model-viewer loading="eager" camera-controls disable-pan src="." interaction-prompt="none" @camera-change=${this.updateCameraFieldOfView}>
+        <model-viewer loading="eager" camera-controls disable-pan src="." interaction-prompt="none"
+          @camera-change=${this.updateCameraFieldOfView} min-camera-orbit="auto 0deg 15m" max-camera-orbit="auto 180deg auto">
           <canvas slot="canvas"></canvas>
         </model-viewer>
         <menu-panel class="points-menu">
