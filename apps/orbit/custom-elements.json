@@ -62,6 +62,13 @@
             },
             {
               "kind": "field",
+              "name": "modelViewer",
+              "type": {
+                "text": "ModelViewerElement"
+              }
+            },
+            {
+              "kind": "field",
               "name": "pointsMenu",
               "type": {
                 "text": "MenuList"
@@ -69,9 +76,17 @@
             },
             {
               "kind": "field",
-              "name": "clock",
+              "name": "camera",
               "privacy": "private",
-              "default": "new THREE.Clock()"
+              "default": "new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000)"
+            },
+            {
+              "kind": "field",
+              "name": "controls",
+              "type": {
+                "text": "SmoothControls"
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -81,15 +96,9 @@
             },
             {
               "kind": "field",
-              "name": "camera",
-              "privacy": "private",
-              "default": "new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000)"
-            },
-            {
-              "kind": "field",
-              "name": "controls",
+              "name": "globeRenderer",
               "type": {
-                "text": "CameraControls | undefined"
+                "text": "GlobeRenderer"
               },
               "privacy": "private"
             },
@@ -97,7 +106,7 @@
               "kind": "field",
               "name": "renderer",
               "type": {
-                "text": "THREE.WebGLRenderer | undefined"
+                "text": "THREE.WebGLRenderer"
               },
               "privacy": "private"
             },
@@ -147,26 +156,16 @@
             },
             {
               "kind": "field",
+              "name": "updateCameraFieldOfView",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
               "name": "readMarkersFromDatabase"
             },
             {
               "kind": "field",
               "name": "onResize",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "paint",
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "onGrabStart",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "onGrabEnd",
               "privacy": "private"
             },
             {
@@ -199,11 +198,6 @@
             {
               "kind": "field",
               "name": "orientCameraToPoint"
-            },
-            {
-              "kind": "field",
-              "name": "orientCameraToMarker",
-              "privacy": "private"
             },
             {
               "kind": "field",

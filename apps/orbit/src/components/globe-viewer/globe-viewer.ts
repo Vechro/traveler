@@ -4,7 +4,9 @@ import * as THREE from "three";
 import { PerspectiveCamera, Spherical, Vector2, Vector3 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import "@google/model-viewer";
+import { $controls } from "@google/model-viewer/lib/features/controls";
 import type { ModelViewerElement } from "@google/model-viewer/lib/model-viewer";
+import type { SmoothControls } from "@google/model-viewer/lib/three-components/SmoothControls";
 import "@vechro/turtle";
 import type { MenuList } from "@vechro/turtle";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
@@ -38,10 +40,11 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   @query(".points-menu", true)
   pointsMenu!: MenuList;
 
-  private clock = new THREE.Clock();
+  private camera = new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000);
+  private controls!: SmoothControls;
   private scene = new THREE.Scene();
   private globeRenderer!: GlobeRenderer;
-  private renderer?: THREE.WebGLRenderer;
+  private renderer!: THREE.WebGLRenderer;
 
   sphere = new THREE.Mesh(
     new THREE.SphereGeometry(5, 64, 64),
@@ -82,6 +85,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       canvas: this.canvas,
       alpha: true,
     });
+
     addEventListener("resize", this.onResize);
     this.onResize();
 
@@ -95,13 +99,19 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.globeRenderer = new GlobeRenderer(
       this.renderer,
       this.scene,
-      new PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000),
+      this.camera,
     );
 
     this.modelViewer.registerRenderer(this.globeRenderer);
+    this.controls = (this.modelViewer as never)[$controls];
 
     this.readMarkersFromDatabase();
   }
+
+  private updateCameraFieldOfView = () => {
+    this.camera.fov = this.modelViewer.getFieldOfView();
+    this.camera.updateProjectionMatrix();
+  };
 
   readMarkersFromDatabase = () => {
     this.database?.then(async (db) => {
@@ -123,28 +133,6 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   private onResize = () => {
     this.renderer?.setSize(innerWidth, innerHeight);
     this.renderer?.setPixelRatio(devicePixelRatio);
-  };
-
-  private onGrabStart = (event: PointerEvent) => {
-    if (event.button === 0) {
-      this.grabPointer = new Vector2(...event.normalizedPosition());
-      this.canvas.style.cursor = "grabbing";
-    }
-  };
-
-  private onGrabEnd = (event: PointerEvent) => {
-    this.canvas.style.cursor = "default";
-    const endPosition = new Vector2(...event.normalizedPosition());
-    if (this.grabPointer.distanceToSquared(endPosition) < 0.01) {
-      this.raycaster.setFromCamera(endPosition, this.camera);
-      const intersects = this.raycaster.intersectObjects(
-        this.markerList.map(({ mesh }) => mesh),
-        false,
-      );
-      const point = intersects.shift()?.point;
-      if (!point) return;
-      this.orientCameraToPoint(point);
-    }
   };
 
   private static dotMesh = new THREE.Mesh(
@@ -182,8 +170,9 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.clickPointer = new Vector2();
   };
 
-  private orientCameraToMarker = ({ mesh }: MarkerMesh) => {
-    this.orientCameraToPoint(mesh.position);
+  orientCameraToPoint = (point: Vector3) => {
+    const { theta, phi } = new Spherical().setFromVector3(point);
+    this.controls.setOrbit(theta, phi, 7);
   };
 
   private handleTitleRename = (event: KeyboardEvent, marker: Marker) => {
@@ -223,7 +212,9 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
               />
               <div slot="interaction-bar">
                 <span class="bar-item">${unsafeSVG(edit)}</span>
-                <span class="bar-item" @pointerup=${() => this.orientCameraToMarker(point)}>${unsafeSVG(pin)}</span>
+                <span class="bar-item" @pointerup=${() => this.orientCameraToPoint(point.position)}>${
+            unsafeSVG(pin)
+          }</span>
                 <span class="bar-item" @pointerup=${(event: PointerEvent) => this.handlePointClose(event, point)}>
                   ${unsafeSVG(cross)}
                 </span>
@@ -241,7 +232,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
         <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>
-        <model-viewer loading="eager" camera-controls src="." auto-rotate>
+        <model-viewer loading="eager" camera-controls disable-pan src="." interaction-prompt="none" @camera-change=${this.updateCameraFieldOfView}>
           <canvas slot="canvas"></canvas>
         </model-viewer>
         <menu-panel class="points-menu">
