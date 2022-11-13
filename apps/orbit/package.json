@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.6.6",
-    "@types/three": "^0.146.0",
+    "@types/three": "0.144.0",
     "@vechro/eslint-config-traveler": "workspace:*",
     "@vechro/tsconfig-traveler": "workspace:*",
     "eslint": "^8.27.0",

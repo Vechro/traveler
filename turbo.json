@@ -11,7 +11,7 @@
       "outputs": ["types/**"]
     },
     "generate-metadata": {
-      "inputs": ["custom-elements-manifest.config.js"],
+      "inputs": ["custom-elements-manifest.config.js", "src/**"],
       "outputs": ["custom-elements.json"]
     },
     "bundle": {

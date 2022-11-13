@@ -63,7 +63,7 @@ importers:
       '@supabase/gotrue-js': ^2.3.0
       '@supabase/postgrest-js': ^1.1.0
       '@supabase/storage-js': ^2.0.0
-      '@types/three': ^0.146.0
+      '@types/three': 0.144.0
       '@vechro/eslint-config-traveler': workspace:*
       '@vechro/tsconfig-traveler': workspace:*
       '@vechro/turtle': workspace:*
@@ -97,7 +97,7 @@ importers:
       tinykeys: 1.4.0
     devDependencies:
       '@custom-elements-manifest/analyzer': 0.6.6
-      '@types/three': 0.146.0
+      '@types/three': 0.144.0
       '@vechro/eslint-config-traveler': link:../../packages/eslint-config-traveler
       '@vechro/tsconfig-traveler': link:../../packages/tsconfig-traveler
       eslint: 8.27.0
@@ -3075,12 +3075,6 @@ packages:
 
   /@types/three/0.144.0:
     resolution: {integrity: sha512-psvEs6q5rLN50jUYZ3D4pZMfxTbdt3A243blt0my7/NcL6chaCZpHe2csbCtx0SOD9fI/XnF3wnVUAYZGqCSYg==}
-    dependencies:
-      '@types/webxr': 0.5.0
-    dev: true
-
-  /@types/three/0.146.0:
-    resolution: {integrity: sha512-75AgysUrIvTCB054eQa2pDVFurfeFW8CrMQjpzjt3yHBfuuknoSvvsESd/3EhQxPrz9si3+P0wiDUVsWUlljfA==}
     dependencies:
       '@types/webxr': 0.5.0
     dev: true

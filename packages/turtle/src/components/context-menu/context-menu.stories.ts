@@ -1,3 +1,4 @@
+import { action } from "@storybook/addon-actions";
 import type { StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import "../menu-item";
@@ -19,7 +20,7 @@ export const Default: StoryObj<ContextMenu> = {
         padding: 1rem;
       }
     </style>
-    <context-menu>
+    <context-menu @open=${(event: CustomEvent) => action("open")(event)}>
       <menu-list slot="context-menu">
         <menu-item>Foo</menu-item>
         <menu-item>Bar</menu-item>
