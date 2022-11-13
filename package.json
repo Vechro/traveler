@@ -2,12 +2,12 @@
   "name": "traveler",
   "private": true,
   "scripts": {
-    "build": "turbo run build --parallel",
-    "dev": "turbo run dev --parallel --no-cache",
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
     "compose:up": "docker compose up",
     "compose:destroy": "docker compose down -v --remove-orphans",
     "format": "pnpm exec dprint fmt",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint --parallel",
     "globe": "pnpm --filter=./apps/globe",
     "globe:dev": "turbo run dev --scope=globe",
     "orbit": "pnpm --filter=./apps/orbit",
@@ -16,9 +16,9 @@
     "turtle:dev": "turbo run dev --scope=turtle"
   },
   "devDependencies": {
+    "@vechro/eslint-config-traveler": "workspace:0.0.0",
     "dprint": "^0.32.2",
-    "eslint": "^8.26.0",
-    "@vechro/eslint-config-traveler": "workspace:*",
+    "eslint": "^8.27.0",
     "turbo": "^1.6.3",
     "typescript": "^4.8.4"
   },
