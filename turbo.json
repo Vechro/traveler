@@ -2,14 +2,16 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "inputs": ["src/**", "tsconfig*.json", "vite.config.ts"],
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "tsconfig*.json", "*.config.*"],
       "outputs": ["dist/**"]
     },
     "check": {
-      "inputs": ["src/**", "tsconfig*.json", "vite.config.ts"],
+      "inputs": ["src/**", "tsconfig*.json", "*.config.*"],
       "outputs": ["types/**"]
     },
     "generate-metadata": {
+      "inputs": ["custom-elements-manifest.config.js"],
       "outputs": ["custom-elements.json"]
     },
     "bundle": {
@@ -19,6 +21,7 @@
       "cache": false
     },
     "lint": {
+      "inputs": [".eslintrc.*"],
       "outputs": []
     }
   }
