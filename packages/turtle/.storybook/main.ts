@@ -6,5 +6,4 @@ export default <StorybookConfig> {
   framework: {
     name: "@storybook/web-components-vite",
   },
-  staticDirs: ["../public"],
 };

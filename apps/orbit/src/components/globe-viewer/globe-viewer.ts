@@ -1,17 +1,19 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import * as THREE from "three";
-import { Box3, MathUtils, Matrix4, Quaternion, Raycaster, Sphere, Spherical, Vector2, Vector3, Vector4 } from "three";
+import { PerspectiveCamera, Spherical, Vector2, Vector3 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
+import "@google/model-viewer";
+import type { ModelViewerElement } from "@google/model-viewer/lib/model-viewer";
 import "@vechro/turtle";
 import type { MenuList } from "@vechro/turtle";
-import CameraControls from "camera-controls";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import earthUvMap from "../../assets/earth-uv-map.jpg";
 import cross from "../../assets/icons/cross.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
 import pin from "../../assets/icons/pin.svg?raw";
 import "../../extension";
+import { GlobeRenderer } from "../../utilities/GlobeRenderer";
 import { DatabaseMixin, Marker } from "../database-mixin";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
@@ -27,37 +29,18 @@ interface MarkerMesh extends Marker {
 export class GlobeViewer extends DatabaseMixin(LitElement) {
   static styles = styles;
 
-  constructor() {
-    super();
-    CameraControls.install({
-      THREE: {
-        Vector2,
-        Vector3,
-        Vector4,
-        Quaternion,
-        Matrix4,
-        Spherical,
-        Box3,
-        Sphere,
-        Raycaster,
-        MathUtils: {
-          DEG2RAD: MathUtils.DEG2RAD,
-          clamp: MathUtils.clamp,
-        },
-      },
-    });
-  }
-
   @query("canvas", true)
   canvas!: HTMLCanvasElement;
+
+  @query("model-viewer", true)
+  modelViewer!: ModelViewerElement;
 
   @query(".points-menu", true)
   pointsMenu!: MenuList;
 
   private clock = new THREE.Clock();
   private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000);
-  private controls?: CameraControls;
+  private globeRenderer!: GlobeRenderer;
   private renderer?: THREE.WebGLRenderer;
 
   sphere = new THREE.Mesh(
@@ -109,19 +92,15 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.scene.add(this.globeGroup);
     this.scene.add(this.markerGroup);
 
-    this.camera.position.z = 10;
+    this.globeRenderer = new GlobeRenderer(
+      this.renderer,
+      this.scene,
+      new PerspectiveCamera(67, innerWidth / innerHeight, 0.1, 1000),
+    );
 
-    this.controls = new CameraControls(this.camera, this.canvas);
-    this.controls.dampingFactor = 0.1;
-    this.controls.draggingDampingFactor = 0.1;
-    this.controls.mouseButtons.right = CameraControls.ACTION.NONE;
-    this.controls.touches.three = CameraControls.ACTION.NONE;
-    this.controls.minDistance = 6;
-    this.controls.maxDistance = 15;
+    this.modelViewer.registerRenderer(this.globeRenderer);
 
     this.readMarkersFromDatabase();
-
-    this.paint();
   }
 
   readMarkersFromDatabase = () => {
@@ -144,16 +123,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   private onResize = () => {
     this.renderer?.setSize(innerWidth, innerHeight);
     this.renderer?.setPixelRatio(devicePixelRatio);
-    this.camera.aspect = innerWidth / innerHeight;
-    this.camera.updateProjectionMatrix();
   };
-
-  protected paint() {
-    requestAnimationFrame(this.paint.bind(this));
-    const delta = this.clock.getDelta();
-    this.controls?.update(delta);
-    this.renderer?.render(this.scene, this.camera);
-  }
 
   private onGrabStart = (event: PointerEvent) => {
     if (event.button === 0) {
@@ -210,12 +180,6 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
 
   private resetClickPointer = () => {
     this.clickPointer = new Vector2();
-  };
-
-  orientCameraToPoint = (point: Vector3) => {
-    const { theta, phi } = new Spherical().setFromVector3(point);
-    this.controls?.rotateTo(theta, phi, true);
-    this.controls?.dollyTo(7, true);
   };
 
   private orientCameraToMarker = ({ mesh }: MarkerMesh) => {
@@ -277,7 +241,9 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
         <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>
-        <canvas @pointerdown=${this.onGrabStart} @pointerup=${this.onGrabEnd} @pointerout=${this.onGrabEnd}></canvas>
+        <model-viewer loading="eager" camera-controls src="." auto-rotate>
+          <canvas slot="canvas"></canvas>
+        </model-viewer>
         <menu-panel class="points-menu">
           <h3 class="title" slot="header">Points</h3>
           <menu-list>${this.pointListElements()}</menu-list>

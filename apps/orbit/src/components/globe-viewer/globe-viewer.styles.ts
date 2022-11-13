@@ -8,6 +8,10 @@ export const styles = [
       height: 100%;
       contain: size layout paint;
     }
+    model-viewer {
+      width: 100%;
+      height: 100vh;
+    }
     .title {
       margin: 0;
     }
