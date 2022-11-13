@@ -9,6 +9,6 @@ export default defineConfig({
     plugins: [minifyHTML()],
   },
   server: {
-    port: 5173
-  }
+    port: 5173,
+  },
 });

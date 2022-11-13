@@ -1,4 +1,4 @@
 {
   "extends": "@vechro/tsconfig-traveler/standard",
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts"]
 }

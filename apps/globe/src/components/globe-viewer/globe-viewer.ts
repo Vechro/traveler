@@ -119,7 +119,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.controls.minDistance = 6;
     this.controls.maxDistance = 15;
 
-    this.readMarkersFromDatabase()
+    this.readMarkersFromDatabase();
 
     this.paint();
   }
