@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": ["@vechro/eslint-config-traveler"]
+  "extends": ["@vechro/eslint-config-etc"]
 }

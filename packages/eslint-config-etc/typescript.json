@@ -22,7 +22,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
-    "outDir": "./types",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,

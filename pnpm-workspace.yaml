@@ -1,6 +1,5 @@
 packages:
   - "apps/globe"
   - "apps/orbit"
-  - "packages/eslint-config-traveler"
-  - "packages/tsconfig-traveler"
+  - "packages/eslint-config-etc"
   - "packages/turtle"

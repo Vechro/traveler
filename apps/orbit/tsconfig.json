@@ -1,4 +1,7 @@
 {
-  "extends": "@vechro/tsconfig-traveler/standard",
-  "include": ["src/**/*.ts"]
+  "extends": "@vechro/eslint-config-etc/typescript",
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "outDir": "./types"
+  }
 }

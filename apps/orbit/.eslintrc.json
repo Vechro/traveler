@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["@vechro/eslint-config-traveler", "plugin:astro/recommended"],
+  "extends": ["@vechro/eslint-config-etc", "plugin:astro/recommended"],
   "overrides": [
     {
       // Define the configuration for `.astro` file.

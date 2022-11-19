@@ -8,10 +8,7 @@
       "path": "../apps/orbit"
     },
     {
-      "path": "../packages/eslint-config-traveler"
-    },
-    {
-      "path": "../packages/tsconfig-traveler"
+      "path": "../packages/eslint-config-etc"
     },
     {
       "path": "../packages/turtle"
