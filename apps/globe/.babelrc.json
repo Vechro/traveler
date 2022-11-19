@@ -1,5 +1,0 @@
-{
-  "sourceType": "module",
-  "extends": "plugin:storybook/recommended",
-  "presets": ["@babel/preset-typescript"]
-}

@@ -1,9 +1,0 @@
-{
-  "extends": "@vechro/tsconfig-traveler/standard",
-  "include": ["src/**/*.ts"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
-}
