@@ -22,5 +22,5 @@ export class GlobeRenderer implements RendererInterface {
     this.camera.matrix.fromArray(viewMatrix);
     this.renderer.render(this.scene, this.camera);
   };
-  resize = (_width: number, _height: number): void => undefined;
+  resize = (): void => undefined;
 }

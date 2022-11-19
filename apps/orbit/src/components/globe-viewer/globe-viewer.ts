@@ -1,15 +1,30 @@
-import { html, LitElement } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
-import * as THREE from "three";
-import { PerspectiveCamera, Spherical, Vector2, Vector3 } from "three";
-// https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import "@google/model-viewer";
 import { $controls } from "@google/model-viewer/lib/features/controls";
 import type { ModelViewerElement } from "@google/model-viewer/lib/model-viewer";
 import type { SmoothControls } from "@google/model-viewer/lib/three-components/SmoothControls";
 import "@vechro/turtle";
 import type { MenuList } from "@vechro/turtle";
+import { html, LitElement } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
+import {
+  AdditiveBlending,
+  BackSide,
+  Group,
+  Mesh,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Raycaster,
+  Scene,
+  ShaderMaterial,
+  SphereGeometry,
+  Spherical,
+  TextureLoader,
+  Vector2,
+  Vector3,
+  WebGLRenderer
+} from "three";
+// https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import earthUvMap from "../../assets/earth-uv-map.jpg";
 import cross from "../../assets/icons/cross.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
@@ -24,7 +39,7 @@ import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
 
 interface MarkerMesh extends Marker {
-  mesh: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+  mesh: Mesh<SphereGeometry, MeshBasicMaterial>;
 }
 
 @customElement("globe-viewer")
@@ -42,45 +57,45 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
 
   private camera = new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000);
   private controls!: SmoothControls;
-  private scene = new THREE.Scene();
+  private scene = new Scene();
   private globeRenderer!: GlobeRenderer;
-  private renderer!: THREE.WebGLRenderer;
+  private renderer!: WebGLRenderer;
 
-  sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(5, 64, 64),
-    new THREE.ShaderMaterial({
+  sphere = new Mesh(
+    new SphereGeometry(5, 64, 64),
+    new ShaderMaterial({
       vertexShader: sphereVert,
       fragmentShader: sphereFrag,
       uniforms: {
         globeTexture: {
-          value: new THREE.TextureLoader().load(earthUvMap),
+          value: new TextureLoader().load(earthUvMap),
         },
       },
     }),
   );
 
-  atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(5, 64, 64),
-    new THREE.ShaderMaterial({
+  atmosphere = new Mesh(
+    new SphereGeometry(5, 64, 64),
+    new ShaderMaterial({
       vertexShader: atmosphereVert,
       fragmentShader: atmosphereFrag,
-      blending: THREE.AdditiveBlending,
-      side: THREE.BackSide,
+      blending: AdditiveBlending,
+      side: BackSide,
     }),
   );
 
-  globeGroup = new THREE.Group();
-  markerGroup = new THREE.Group();
+  globeGroup = new Group();
+  markerGroup = new Group();
 
   clickPointer = new Vector2();
   grabPointer = new Vector2();
-  raycaster = new THREE.Raycaster();
+  raycaster = new Raycaster();
 
   @property()
   markerList: MarkerMesh[] = [];
 
   firstUpdated() {
-    this.renderer = new THREE.WebGLRenderer({
+    this.renderer = new WebGLRenderer({
       antialias: true,
       canvas: this.canvas,
       alpha: true,
@@ -136,9 +151,9 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.renderer?.setPixelRatio(devicePixelRatio);
   };
 
-  private static dotMesh = new THREE.Mesh(
-    new THREE.SphereGeometry(0.03, 12, 12),
-    new THREE.MeshBasicMaterial({ color: 0xff5000 }),
+  private static dotMesh = new Mesh(
+    new SphereGeometry(0.03, 12, 12),
+    new MeshBasicMaterial({ color: 0xff5000 }),
   );
 
   private createDotAt = (position: Vector3) => {
