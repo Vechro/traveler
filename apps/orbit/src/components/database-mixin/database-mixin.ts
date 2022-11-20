@@ -4,7 +4,7 @@ import type { LitElement } from "lit";
 import type { Vector3 } from "three";
 
 export interface Marker {
-  id: number;
+  id: string;
   name: string;
   position: Vector3;
 }

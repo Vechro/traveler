@@ -1,6 +1,7 @@
 import "@google/model-viewer";
 import { $controls } from "@google/model-viewer/lib/features/controls";
 import type { ModelViewerElement } from "@google/model-viewer/lib/model-viewer";
+import { toVector3D } from "@google/model-viewer/lib/model-viewer-base";
 import type { SmoothControls } from "@google/model-viewer/lib/three-components/SmoothControls";
 import "@vechro/turtle";
 import type { MenuList } from "@vechro/turtle";
@@ -22,7 +23,7 @@ import {
   TextureLoader,
   Vector2,
   Vector3,
-  WebGLRenderer
+  WebGLRenderer,
 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import earthUvMap from "../../assets/earth-uv-map.jpg";
@@ -55,7 +56,12 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   @query(".points-menu", true)
   pointsMenu!: MenuList;
 
-  private camera = new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000);
+  private camera = new PerspectiveCamera(
+    45,
+    innerWidth / innerHeight,
+    0.01,
+    1000,
+  );
   private controls!: SmoothControls;
   private scene = new Scene();
   private globeRenderer!: GlobeRenderer;
@@ -120,16 +126,35 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.modelViewer.registerRenderer(this.globeRenderer);
     this.controls = (this.modelViewer as never)[$controls];
 
-    this.readMarkersFromDatabase();
+    this.readMarkersFromDatabase().then(() => {
+      const pos = this.markerList[0]!.position;
+      this.modelViewer.updateHotspot({
+        name: "hotspot-first",
+        position: toVector3D(pos).toString(),
+        normal: toVector3D(pos).toString(),
+      });
+    });
   }
+
+  /**
+   * Doesn't check whether hotspot exists.
+   */
+  private setHotspot = ({ id, position }: Marker) => {
+    const positionSerialized = toVector3D(position).toString();
+    this.modelViewer.updateHotspot({
+      name: "hotspot-" + id,
+      position: positionSerialized,
+      normal: positionSerialized,
+    });
+  };
 
   private updateCameraFieldOfView = () => {
     this.camera.fov = this.modelViewer.getFieldOfView();
     this.camera.updateProjectionMatrix();
   };
 
-  readMarkersFromDatabase = () => {
-    this.database?.then(async (db) => {
+  private readMarkersFromDatabase = async () => {
+    return this.database?.then(async (db) => {
       const markers = (await db.getAllFromIndex("markers", "id")) as Marker[];
       this.markerGroup.clear();
       this.markerList = markers.map((marker) => ({
@@ -143,7 +168,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   disconnectedCallback() {
     super.disconnectedCallback();
     removeEventListener("resize", this.onResize);
-    // TODO: make sure we clean up after threejs
+    this.renderer.dispose();
   }
 
   private onResize = () => {
@@ -170,7 +195,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     const point = intersects.shift()?.point;
     if (!point) return;
     const marker: Marker = {
-      id: Math.floor(Math.random() * 1_000_000_000),
+      id: self.crypto.randomUUID(),
       name: `Point #${this.markerList.length}`,
       position: point,
     };
@@ -209,48 +234,64 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   private handlePointClose = (event: PointerEvent, marker: MarkerMesh) => {
     event.stopPropagation();
     marker.mesh.removeFromParent();
-    this.database?.then((db) => db.delete("markers", marker.id))?.then(() => this.readMarkersFromDatabase());
+    this.database
+      ?.then((db) => db.delete("markers", marker.id))
+      ?.then(() => this.readMarkersFromDatabase());
   };
 
-  pointListElements() {
-    return html`
-      ${
-      this.markerList.map(
-        (point) =>
-          html`
-            <menu-item>
-              <input
-                type="text"
-                class="marker-title"
-                maxlength="32"
-                value=${point.name}
-                @keydown=${(event: KeyboardEvent) => this.handleTitleRename(event, point)}
-              />
-              <div slot="interaction-bar">
-                <span class="bar-item">${unsafeSVG(edit)}</span>
-                <span class="bar-item" @pointerup=${() => this.orientCameraToPoint(point.position)}>${
-            unsafeSVG(pin)
-          }</span>
-                <span class="bar-item" @pointerup=${(event: PointerEvent) => this.handlePointClose(event, point)}>
-                  ${unsafeSVG(cross)}
-                </span>
-              </div>
-            </menu-item>
-          `,
-      )
-    }
-    `;
-  }
+  pointListElements = () =>
+    this.markerList.map(
+      (point) =>
+        html`
+          <menu-item>
+            <input
+              type="text"
+              class="marker-title"
+              maxlength="32"
+              value=${point.name}
+              @keydown=${(event: KeyboardEvent) => this.handleTitleRename(event, point)}
+            />
+            <div slot="interaction-bar">
+              <span class="bar-item">${unsafeSVG(edit)}</span>
+              <span
+                class="bar-item"
+                @pointerup=${() => this.orientCameraToPoint(point.position)}
+                >${unsafeSVG(pin)}</span
+              >
+              <span
+                class="bar-item"
+                @pointerup=${(event: PointerEvent) => this.handlePointClose(event, point)}
+              >
+                ${unsafeSVG(cross)}
+              </span>
+            </div>
+          </menu-item>
+        `,
+    );
 
   render() {
     return html`
-      <context-menu @open=${this.handleClickPointer} @close=${this.resetClickPointer}>
+      <context-menu
+        @open=${this.handleClickPointer}
+        @close=${this.resetClickPointer}
+      >
         <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>
-        <model-viewer loading="eager" camera-controls disable-pan src="." interaction-prompt="none"
-          @camera-change=${this.updateCameraFieldOfView} min-camera-orbit="auto 0deg 15m" max-camera-orbit="auto 180deg auto">
+        <model-viewer
+          loading="eager"
+          camera-controls
+          disable-pan
+          src="."
+          interaction-prompt="none"
+          @camera-change=${this.updateCameraFieldOfView}
+          min-camera-orbit="auto 0deg 15m"
+          max-camera-orbit="auto 180deg auto"
+        >
           <canvas slot="canvas"></canvas>
+          <button class="hotspot" slot="hotspot-first">
+            <div class="annotation">This hotspot disappears completely</div>
+          </button>
         </model-viewer>
         <menu-panel class="points-menu">
           <h3 class="title" slot="header">Points</h3>
