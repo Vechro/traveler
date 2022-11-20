@@ -49,21 +49,27 @@ export const styles = [
 
     .hotspot{
       display: block;
-      width: 20px;
-      height: 20px;
-      border-radius: 10px;
-      border: none;
-      background-color: #fd7050;
-      box-sizing: border-box;
-      pointer-events: none;
+      font: unset;
+      padding:unset;
+      cursor: pointer;
+      width: 12px;
+      height: 12px;
+      border-radius: 99px;
+      border: 4px solid var(--background-color);
+      background-color: #661fff;
       --min-hotspot-opacity: 0;
+      --max-hotspot-opacity: 0.9;
     }
     .annotation{
-      background-color: #888888;
+      background-color: var(--background-color);
       position: absolute;
-      transform: translate(10px, 10px);
-      border-radius: 10px;
-      padding: 10px;
+      transform: translateX(2px);
+      border-radius: calc(var(--border-radius) / 2);
+      max-width: 8rem;
+      width: max-content;
+      height: max-content;
+      overflow-wrap: break-word;
+      padding: 0.5rem 0.75rem;
     }
     /* This keeps child nodes hidden while the element loads */
     :not(:defined) > * {
