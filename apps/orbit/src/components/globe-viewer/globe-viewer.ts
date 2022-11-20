@@ -119,18 +119,6 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.readMarkersFromDatabase();
   }
 
-  /**
-   * Doesn't check whether hotspot exists.
-   */
-  private setHotspot = ({ id, position }: Marker) => {
-    const positionSerialized = toVector3D(position).toString();
-    this.modelViewer.updateHotspot({
-      name: "hotspot-" + id,
-      position: positionSerialized,
-      normal: positionSerialized,
-    });
-  };
-
   private updateCameraFieldOfView = () => {
     this.camera.fov = this.modelViewer.getFieldOfView();
     this.camera.updateProjectionMatrix();

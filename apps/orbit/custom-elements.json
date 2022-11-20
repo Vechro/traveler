@@ -78,15 +78,7 @@
               "kind": "field",
               "name": "camera",
               "privacy": "private",
-              "default": "new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000)"
-            },
-            {
-              "kind": "field",
-              "name": "controls",
-              "type": {
-                "text": "SmoothControls"
-              },
-              "privacy": "private"
+              "default": "new PerspectiveCamera(\n    45,\n    innerWidth / innerHeight,\n    0.01,\n    1000,\n  )"
             },
             {
               "kind": "field",
@@ -127,11 +119,6 @@
             },
             {
               "kind": "field",
-              "name": "markerGroup",
-              "default": "new Group()"
-            },
-            {
-              "kind": "field",
               "name": "clickPointer",
               "default": "new Vector2()"
             },
@@ -149,10 +136,9 @@
               "kind": "field",
               "name": "markerList",
               "type": {
-                "text": "MarkerMesh[]"
+                "text": "Marker[]"
               },
-              "default": "[]",
-              "attribute": "markerList"
+              "default": "[]"
             },
             {
               "kind": "field",
@@ -161,23 +147,12 @@
             },
             {
               "kind": "field",
-              "name": "readMarkersFromDatabase"
-            },
-            {
-              "kind": "field",
-              "name": "onResize",
+              "name": "readMarkersFromDatabase",
               "privacy": "private"
             },
             {
               "kind": "field",
-              "name": "dotMesh",
-              "privacy": "private",
-              "static": true,
-              "default": "new Mesh(\n    new SphereGeometry(0.03, 12, 12),\n    new MeshBasicMaterial({ color: 0xff5000 }),\n  )"
-            },
-            {
-              "kind": "field",
-              "name": "createDotAt",
+              "name": "onResize",
               "privacy": "private"
             },
             {
@@ -210,18 +185,12 @@
               "privacy": "private"
             },
             {
-              "kind": "method",
+              "kind": "field",
               "name": "pointListElements"
-            }
-          ],
-          "attributes": [
+            },
             {
-              "name": "markerList",
-              "type": {
-                "text": "MarkerMesh[]"
-              },
-              "default": "[]",
-              "fieldName": "markerList"
+              "kind": "field",
+              "name": "hotspotElements"
             }
           ],
           "mixins": [
