@@ -120,16 +120,13 @@
             {
               "kind": "field",
               "name": "clickPointer",
-              "default": "new Vector2()"
-            },
-            {
-              "kind": "field",
-              "name": "grabPointer",
+              "privacy": "private",
               "default": "new Vector2()"
             },
             {
               "kind": "field",
               "name": "raycaster",
+              "privacy": "private",
               "default": "new Raycaster()"
             },
             {

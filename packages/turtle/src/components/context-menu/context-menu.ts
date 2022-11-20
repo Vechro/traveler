@@ -13,6 +13,7 @@ export class ContextMenu extends LitElement {
   private location?: [number, number];
 
   private handleContextMenu = (event: MouseEvent) => {
+    if (event.shiftKey) return;
     event.preventDefault();
     event.stopPropagation();
     this.open = true;

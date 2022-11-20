@@ -85,9 +85,8 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
 
   globeGroup = new Group();
 
-  clickPointer = new Vector2();
-  grabPointer = new Vector2();
-  raycaster = new Raycaster();
+  private clickPointer = new Vector2();
+  private raycaster = new Raycaster();
 
   @state()
   markerList: Marker[] = [];
