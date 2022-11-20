@@ -20,7 +20,7 @@ export class EditorPanel extends LitElement {
           text: this.contentElement.innerText,
           rawHtml: this.contentElement.innerHTML,
         },
-      }),
+      })
     );
   };
 

@@ -50,12 +50,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   @query(".points-menu", true)
   pointsMenu!: MenuList;
 
-  private camera = new PerspectiveCamera(
-    45,
-    innerWidth / innerHeight,
-    0.01,
-    1000,
-  );
+  private camera = new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000);
   private scene = new Scene();
   private globeRenderer!: GlobeRenderer;
   private renderer!: WebGLRenderer;
@@ -70,7 +65,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
           value: new TextureLoader().load(earthUvMap),
         },
       },
-    }),
+    })
   );
 
   atmosphere = new Mesh(
@@ -80,7 +75,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       fragmentShader: atmosphereFrag,
       blending: AdditiveBlending,
       side: BackSide,
-    }),
+    })
   );
 
   globeGroup = new Group();
@@ -107,11 +102,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.globeGroup.add(this.sphere);
     this.scene.add(this.globeGroup);
 
-    this.globeRenderer = new GlobeRenderer(
-      this.renderer,
-      this.scene,
-      this.camera,
-    );
+    this.globeRenderer = new GlobeRenderer(this.renderer, this.scene, this.camera);
 
     this.modelViewer.registerRenderer(this.globeRenderer);
 
@@ -156,9 +147,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       name: `Point #${this.markerList.length}`,
       position: point,
     };
-    this.database
-      ?.then((db) => db.add("markers", marker))
-      .then(() => this.readMarkersFromDatabase());
+    this.database?.then((db) => db.add("markers", marker)).then(() => this.readMarkersFromDatabase());
   };
 
   private handleClickPointer = (event: MouseEvent) => {
@@ -193,9 +182,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
 
   private handlePointClose = (event: PointerEvent, marker: Marker) => {
     event.stopPropagation();
-    this.database
-      ?.then((db) => db.delete("markers", marker.id))
-      .then(() => this.readMarkersFromDatabase());
+    this.database?.then((db) => db.delete("markers", marker.id)).then(() => this.readMarkersFromDatabase());
   };
 
   pointListElements = () =>
@@ -214,20 +201,15 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
             />
             <div slot="interaction-bar">
               <span class="bar-item">${unsafeSVG(edit)}</span>
-              <span
-                class="bar-item"
-                @pointerup=${() => this.orientCameraToPoint(marker.position)}
-                >${unsafeSVG(pin)}</span
-              >
-              <span
-                class="bar-item"
-                @pointerup=${(event: PointerEvent) => this.handlePointClose(event, marker)}
-              >
+              <span class="bar-item" @pointerup=${() => this.orientCameraToPoint(marker.position)}>
+                ${unsafeSVG(pin)}
+              </span>
+              <span class="bar-item" @pointerup=${(event: PointerEvent) => this.handlePointClose(event, marker)}>
                 ${unsafeSVG(cross)}
               </span>
             </div>
           </menu-item>
-        `,
+        `
     );
 
   hotspotElements = () =>
@@ -235,23 +217,22 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
       this.markerList,
       ({ id }) => id,
       ({ id, name, position }) =>
-        html` <button
-          class="hotspot"
-          slot="hotspot-${id}"
-          @click=${() => this.orientCameraToPoint(position)}
-          data-position=${toVector3D(position).toString()}
-          data-normal=${toVector3D(position).toString()}
-        >
-          <div class="annotation">${name}</div>
-        </button>`,
+        html`
+          <button
+            class="hotspot"
+            slot="hotspot-${id}"
+            @click=${() => this.orientCameraToPoint(position)}
+            data-position=${toVector3D(position).toString()}
+            data-normal=${toVector3D(position).toString()}
+          >
+            <div class="annotation">${name}</div>
+          </button>
+        `
     );
 
   render() {
     return html`
-      <context-menu
-        @open=${this.handleClickPointer}
-        @close=${this.resetClickPointer}
-      >
+      <context-menu @open=${this.handleClickPointer} @close=${this.resetClickPointer}>
         <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>

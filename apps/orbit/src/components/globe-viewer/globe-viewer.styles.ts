@@ -47,10 +47,10 @@ export const styles = [
       padding: 0.75rem 1rem;
     }
 
-    .hotspot{
+    .hotspot {
       display: block;
       font: unset;
-      padding:unset;
+      padding: unset;
       cursor: pointer;
       width: 12px;
       height: 12px;
@@ -60,7 +60,7 @@ export const styles = [
       --min-hotspot-opacity: 0;
       --max-hotspot-opacity: 0.9;
     }
-    .annotation{
+    .annotation {
       background-color: var(--background-color);
       position: absolute;
       transform: translateX(2px);

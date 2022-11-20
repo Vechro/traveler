@@ -15,7 +15,7 @@ export class GlobeRenderer implements RendererInterface {
 
   load = (progressCallback: (progress: number) => void): Promise<FramingInfo> => {
     return progressCallback(1.0), Promise.resolve({ framedRadius: 5, fieldOfViewAspect: innerWidth / innerHeight });
-  }
+  };
   render = ({ viewMatrix, projectionMatrix }: Camera): void => {
     this.camera.updateMatrix();
     this.camera.projectionMatrix.fromArray(projectionMatrix);

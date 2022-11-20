@@ -11,19 +11,19 @@ export default {
 export const Default: StoryObj<EditorPanel> = {
   render: () =>
     html`
-    <style>
-      .container {
-        margin: 0 auto;
-        max-width: 640px;
-      }
-    </style>
-    <section class="container">
-      <editor-panel
-        .content=${"...and this is the content"}
-        @content-change=${(event: CustomEvent) => action("content-change")(event.detail)}
-      >
-        <input slot="header" maxlength="32" value="This is the title" />
-      </editor-panel>
-    </section>
-  `,
+      <style>
+        .container {
+          margin: 0 auto;
+          max-width: 640px;
+        }
+      </style>
+      <section class="container">
+        <editor-panel
+          .content=${"...and this is the content"}
+          @content-change=${(event: CustomEvent) => action("content-change")(event.detail)}
+        >
+          <input slot="header" maxlength="32" value="This is the title" />
+        </editor-panel>
+      </section>
+    `,
 };
