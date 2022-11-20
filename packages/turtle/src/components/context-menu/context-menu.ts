@@ -1,6 +1,5 @@
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import "../../extension";
 import { styles } from "./context-menu.styles";
 
 @customElement("context-menu")
@@ -17,7 +16,7 @@ export class ContextMenu extends LitElement {
     event.preventDefault();
     event.stopPropagation();
     this.open = true;
-    this.location = event.pagePosition;
+    this.location = [event.pageX, event.pageY];
     this.dispatchEvent(new MouseEvent("open", event));
   };
 

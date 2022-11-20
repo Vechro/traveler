@@ -195,7 +195,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     event.stopPropagation();
     this.database
       ?.then((db) => db.delete("markers", marker.id))
-      ?.then(() => this.readMarkersFromDatabase());
+      .then(() => this.readMarkersFromDatabase());
   };
 
   pointListElements = () =>

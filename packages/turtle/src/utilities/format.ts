@@ -1,5 +1,3 @@
-import "../extension";
-
 enum HeadingKind {
   "h1",
   "h2",
@@ -38,7 +36,7 @@ export function applyFormat(format: FormatCommand, argument?: string): void {
     if (ancestor) {
       const selection = document.getSelection();
       if (!selection) return;
-      const [anchorOffset, focusOffset] = selection.offsetRange();
+      const { anchorOffset, focusOffset } = selection;
       const anchorRange = selection.getRangeAt(0);
       const textNode = document.createTextNode(ancestor.innerText);
       ancestor.remove();
