@@ -28,7 +28,7 @@ import earthUvMap from "../../assets/earth-uv-map.jpg";
 import cross from "../../assets/icons/cross.svg?raw";
 import edit from "../../assets/icons/edit.svg?raw";
 import pin from "../../assets/icons/pin.svg?raw";
-import "../../extension";
+import { MouseEventX } from "../../extension";
 import { GlobeRenderer } from "../../utilities/GlobeRenderer";
 import { DatabaseMixin, Marker } from "../database-mixin";
 import { styles } from "./globe-viewer.styles";
@@ -162,7 +162,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   };
 
   private handleClickPointer = (event: MouseEvent) => {
-    this.clickPointer = new Vector2(...event.normalizedPosition());
+    this.clickPointer = new Vector2(...MouseEventX.from(event).normalizedPosition());
   };
 
   private resetClickPointer = () => {
