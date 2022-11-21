@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.6.6",
-    "@types/three": "0.146.0",
+    "@types/three": "^0.146.0",
     "@vechro/eslint-config-etc": "workspace:*",
     "eslint": "^8.28.0",
     "eslint-plugin-astro": "^0.21.0",

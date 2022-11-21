@@ -6,17 +6,17 @@
     "dev": "turbo run dev --parallel",
     "compose:up": "docker compose up",
     "compose:destroy": "docker compose down -v --remove-orphans",
-    "format": "pnpm exec dprint fmt",
+    "format": "dprint fmt",
     "lint": "turbo run lint --parallel",
     "orbit": "pnpm --filter=./apps/orbit",
     "turtle": "pnpm --filter=./packages/turtle"
   },
   "devDependencies": {
     "@vechro/eslint-config-etc": "workspace:*",
-    "dprint": "^0.32.2",
+    "dprint": "^0.33.0",
     "eslint": "^8.28.0",
     "turbo": "^1.6.3",
     "typescript": "^4.9.3"
   },
-  "packageManager": "pnpm@7.16.1"
+  "packageManager": "pnpm@7.17.0"
 }
