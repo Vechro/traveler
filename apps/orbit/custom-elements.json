@@ -78,7 +78,7 @@
               "kind": "field",
               "name": "camera",
               "privacy": "private",
-              "default": "new PerspectiveCamera(\n    45,\n    innerWidth / innerHeight,\n    0.01,\n    1000,\n  )"
+              "default": "new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000)"
             },
             {
               "kind": "field",
@@ -105,12 +105,12 @@
             {
               "kind": "field",
               "name": "sphere",
-              "default": "new Mesh(\n    new SphereGeometry(5, 64, 64),\n    new ShaderMaterial({\n      vertexShader: sphereVert,\n      fragmentShader: sphereFrag,\n      uniforms: {\n        globeTexture: {\n          value: new TextureLoader().load(earthUvMap),\n        },\n      },\n    }),\n  )"
+              "default": "new Mesh(\n    new SphereGeometry(5, 64, 64),\n    new ShaderMaterial({\n      vertexShader: sphereVert,\n      fragmentShader: sphereFrag,\n      uniforms: {\n        globeTexture: {\n          value: new TextureLoader().load(earthUvMap),\n        },\n      },\n    })\n  )"
             },
             {
               "kind": "field",
               "name": "atmosphere",
-              "default": "new Mesh(\n    new SphereGeometry(5, 64, 64),\n    new ShaderMaterial({\n      vertexShader: atmosphereVert,\n      fragmentShader: atmosphereFrag,\n      blending: AdditiveBlending,\n      side: BackSide,\n    }),\n  )"
+              "default": "new Mesh(\n    new SphereGeometry(5, 64, 64),\n    new ShaderMaterial({\n      vertexShader: atmosphereVert,\n      fragmentShader: atmosphereFrag,\n      blending: AdditiveBlending,\n      side: BackSide,\n    })\n  )"
             },
             {
               "kind": "field",
