@@ -13,7 +13,7 @@ services:
 
   auth:
     # https://github.com/supabase/gotrue
-    image: supabase/gotrue:v2.32.0
+    image: supabase/gotrue:v2.35.0
     depends_on:
       db:
         condition: service_healthy
@@ -88,7 +88,7 @@ services:
 
   storage:
     # https://github.com/supabase/storage-api
-    image: supabase/storage-api:v0.24.3
+    image: supabase/storage-api:v0.24.8
     depends_on:
       db: # Disable this if you are using an external Postgres database
         condition: service_healthy
