@@ -2,6 +2,10 @@
   "extends": "@vechro/eslint-config-etc/typescript",
   "include": ["src/**/*.ts"],
   "compilerOptions": {
-    "outDir": "./types"
+    "outDir": "./types",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    }
   }
 }

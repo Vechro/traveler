@@ -4,9 +4,9 @@ import { styles } from "./menu-list.styles";
 
 @customElement("menu-list")
 export class MenuList extends LitElement {
-  static styles = styles;
+  static override styles = styles;
 
-  render() {
+  override render = () => {
     return html`
       <slot></slot>
     `;

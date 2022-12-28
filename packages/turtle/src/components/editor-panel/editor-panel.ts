@@ -5,7 +5,7 @@ import { styles } from "./editor-panel.styles";
 
 @customElement("editor-panel")
 export class EditorPanel extends LitElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({ type: String })
   content = "";
@@ -52,7 +52,7 @@ export class EditorPanel extends LitElement {
     event.preventDefault();
   };
 
-  render() {
+  override render = () => {
     return html`
       <slot name="header"></slot>
       <section

@@ -24,13 +24,13 @@ import {
   WebGLRenderer,
 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
-import earthUvMap from "../../assets/earth-uv-map.jpg";
-import cross from "../../assets/icons/cross.svg?raw";
-import edit from "../../assets/icons/edit.svg?raw";
-import pin from "../../assets/icons/pin.svg?raw";
-import { MouseEventX } from "../../extension";
-import { GlobeRenderer } from "../../utilities/GlobeRenderer";
-import { DatabaseMixin, Marker } from "../database-mixin";
+import earthUvMap from "~/assets/earth-uv-map.jpg";
+import cross from "~/assets/icons/cross.svg?raw";
+import edit from "~/assets/icons/edit.svg?raw";
+import pin from "~/assets/icons/pin.svg?raw";
+import { DatabaseMixin, Marker } from "~/components/database-mixin";
+import { MouseEventX } from "~/extension";
+import { GlobeRenderer } from "~/utilities/GlobeRenderer";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
@@ -39,7 +39,7 @@ import sphereVert from "./shaders/sphere.vert?raw";
 
 @customElement("globe-viewer")
 export class GlobeViewer extends DatabaseMixin(LitElement) {
-  static styles = styles;
+  static override styles = styles;
 
   @query("canvas", true)
   canvas!: HTMLCanvasElement;
@@ -86,11 +86,11 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   @state()
   markerList: Marker[] = [];
 
-  firstUpdated() {
+  override firstUpdated = () => {
     this.renderer = new WebGLRenderer({
+      alpha: true,
       antialias: true,
       canvas: this.canvas,
-      alpha: true,
     });
 
     addEventListener("resize", this.onResize);
@@ -125,7 +125,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     });
   };
 
-  disconnectedCallback() {
+  override disconnectedCallback = () => {
     super.disconnectedCallback();
     removeEventListener("resize", this.onResize);
     this.renderer.dispose();
@@ -139,8 +139,8 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   private addPoint = (event: PointerEvent) => {
     if (event.button !== 0) return;
     this.raycaster.setFromCamera(this.clickPointer, this.camera);
-    const intersects = this.raycaster.intersectObjects([this.sphere], false);
-    const point = intersects.shift()?.point;
+    const intersects = this.raycaster.intersectObject(this.sphere, false);
+    const point = intersects[0]?.point;
     if (!point) return;
     const marker: Marker = {
       id: self.crypto.randomUUID(),
@@ -230,7 +230,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
         `
     );
 
-  render() {
+  override render = () => {
     return html`
       <context-menu @open=${this.handleClickPointer} @close=${this.resetClickPointer}>
         <menu-list class="context-menu" slot="context-menu">

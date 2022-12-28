@@ -4,7 +4,7 @@ export class MouseEventX extends MouseEvent {
   /**
    * @returns [clientX, clientY] normalized to -1..1 where top-left corner is [-1, 1].
    */
-  normalizedPosition = (): [number, number] => [
+  normalizedPosition = (): [x: number, y: number] => [
     (this.clientX / self.innerWidth) * 2 - 1,
     -(this.clientY / self.innerHeight) * 2 + 1,
   ];

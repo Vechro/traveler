@@ -4,9 +4,9 @@ import { styles } from "./menu-panel.styles";
 
 @customElement("menu-panel")
 export class MenuPanel extends LitElement {
-  static styles = styles;
+  static override styles = styles;
 
-  render() {
+  override render = () => {
     return html`
       <slot name="header"></slot>
       <slot></slot>

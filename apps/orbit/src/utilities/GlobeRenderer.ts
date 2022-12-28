@@ -2,6 +2,10 @@ import type { Camera, FramingInfo, RendererInterface } from "@google/model-viewe
 import type { PerspectiveCamera, Scene, WebGLRenderer } from "three";
 
 export class GlobeRenderer implements RendererInterface {
+  camera: PerspectiveCamera;
+  renderer: WebGLRenderer;
+  scene: Scene;
+
   constructor(renderer: WebGLRenderer, scene: Scene, camera: PerspectiveCamera) {
     this.renderer = renderer;
     this.scene = scene;
@@ -9,12 +13,9 @@ export class GlobeRenderer implements RendererInterface {
     this.camera.matrixAutoUpdate = false;
   }
 
-  camera: PerspectiveCamera;
-  renderer: WebGLRenderer;
-  scene: Scene;
-
-  load = (progressCallback: (progress: number) => void): Promise<FramingInfo> => {
-    return progressCallback(1.0), Promise.resolve({ framedRadius: 5, fieldOfViewAspect: innerWidth / innerHeight });
+  load = async (progressCallback: (progress: number) => void): Promise<FramingInfo> => {
+    progressCallback(1.0);
+    return { framedRadius: 5, fieldOfViewAspect: innerWidth / innerHeight };
   };
   render = ({ viewMatrix, projectionMatrix }: Camera): void => {
     this.camera.updateMatrix();
@@ -22,5 +23,5 @@ export class GlobeRenderer implements RendererInterface {
     this.camera.matrix.fromArray(viewMatrix);
     this.renderer.render(this.scene, this.camera);
   };
-  resize = (): void => undefined;
+  resize = (): void => {};
 }

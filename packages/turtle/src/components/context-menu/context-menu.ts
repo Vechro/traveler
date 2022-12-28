@@ -4,12 +4,12 @@ import { styles } from "./context-menu.styles";
 
 @customElement("context-menu")
 export class ContextMenu extends LitElement {
-  static styles = styles;
+  static override styles = styles;
 
   @property({ type: Boolean })
   open = false;
 
-  private location?: [number, number];
+  private location?: [x: number, y: number];
 
   private handleContextMenu = (event: MouseEvent) => {
     if (event.shiftKey) return;
@@ -28,19 +28,19 @@ export class ContextMenu extends LitElement {
     this.dispatchEvent(new UIEvent("close", event));
   };
 
-  connectedCallback() {
+  override connectedCallback = () => {
     super.connectedCallback();
     addEventListener("pointerdown", this.handleDismiss);
     addEventListener("keydown", this.handleDismiss);
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback = () => {
     super.disconnectedCallback();
     removeEventListener("pointerdown", this.handleDismiss);
     removeEventListener("keydown", this.handleDismiss);
   }
 
-  render() {
+  override render = () => {
     return html`
       <style>
         ::slotted([slot="context-menu"]) {
