@@ -1,4 +1,4 @@
-import { Constructor, dedupeMixin } from "@open-wc/dedupe-mixin";
+import { dedupeMixin, type Constructor } from "@open-wc/dedupe-mixin";
 import { DBSchema, IDBPDatabase, openDB } from "idb";
 import type { LitElement } from "lit";
 import type { Vector3 } from "three";
@@ -46,7 +46,7 @@ export const DatabaseMixin = dedupeMixin(<T extends Constructor<LitElement>>(sup
     override disconnectedCallback = () => {
       super.disconnectedCallback();
       this.database?.then((db) => db.close());
-    }
+    };
   }
 
   return Database as Constructor<DatabaseMixinInterface> & T;

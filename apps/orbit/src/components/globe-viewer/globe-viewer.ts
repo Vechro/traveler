@@ -29,6 +29,7 @@ import cross from "~/assets/icons/cross.svg?raw";
 import edit from "~/assets/icons/edit.svg?raw";
 import pin from "~/assets/icons/pin.svg?raw";
 import { DatabaseMixin, Marker } from "~/components/database-mixin";
+import { RestMixin } from "~/components/rest-mixin";
 import { MouseEventX } from "~/extension";
 import { GlobeRenderer } from "~/utilities/GlobeRenderer";
 import { styles } from "./globe-viewer.styles";
@@ -38,7 +39,7 @@ import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
 
 @customElement("globe-viewer")
-export class GlobeViewer extends DatabaseMixin(LitElement) {
+export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
   static override styles = styles;
 
   @query("canvas", true)
@@ -107,7 +108,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     this.modelViewer.registerRenderer(this.globeRenderer);
 
     this.readMarkersFromDatabase();
-  }
+  };
 
   private updateCameraFieldOfView = () => {
     this.camera.fov = this.modelViewer.getFieldOfView();
@@ -117,11 +118,12 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
   private readMarkersFromDatabase = async () => {
     return this.database?.then(async (db) => {
       const markers = await db.getAllFromIndex("markers", "id");
-      this.markerList = markers.map((marker) => ({
-        ...marker,
-        position: new Vector3().copy(marker.position),
-      }));
-      this.markerList.reverse();
+      this.markerList = markers
+        .map((marker) => ({
+          ...marker,
+          position: new Vector3().copy(marker.position),
+        }))
+        .reverse();
     });
   };
 
@@ -129,7 +131,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
     super.disconnectedCallback();
     removeEventListener("resize", this.onResize);
     this.renderer.dispose();
-  }
+  };
 
   private onResize = () => {
     this.renderer?.setSize(innerWidth, innerHeight);
@@ -255,7 +257,7 @@ export class GlobeViewer extends DatabaseMixin(LitElement) {
         </menu-panel>
       </context-menu>
     `;
-  }
+  };
 }
 
 declare global {

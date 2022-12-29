@@ -11,6 +11,7 @@
     "astro": "astro",
     "check": "astro check && tsc",
     "generate-metadata": "custom-elements-manifest analyze",
+    "generate-types": "curl http://localhost:9080/meta/v1/generators/typescript > src/database.d.ts",
     "lint": "eslint . --ext .ts,.js,.cjs,.mjs,.json,.astro"
   },
   "dependencies": {
