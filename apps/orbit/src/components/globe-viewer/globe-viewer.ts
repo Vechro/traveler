@@ -115,16 +115,27 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     this.camera.updateProjectionMatrix();
   };
 
-  private readMarkersFromDatabase = async () => {
-    return this.database?.then(async (db) => {
-      const markers = await db.getAllFromIndex("markers", "id");
-      this.markerList = markers
-        .map((marker) => ({
-          ...marker,
-          position: new Vector3().copy(marker.position),
-        }))
-        .reverse();
+  private saveToRest = async () => {
+    const { id } = await this.user;
+
+    const { error } = await (await this.rest).from("profiles").upsert({
+      id,
+      markers: this.markerList,
+      updated_at: new Date().toISOString(),
     });
+
+    if (error) {
+      throw new Error("Failed to save profile in database", { cause: error });
+    }
+  };
+
+  private readMarkersFromDatabase = async () => {
+    return this.database
+      ?.then(async (db) => {
+        const markers = await db.getAllFromIndex("markers", "id");
+        this.markerList = markers.reverse();
+      })
+      .then(this.saveToRest);
   };
 
   override disconnectedCallback = () => {
@@ -147,17 +158,17 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     const marker: Marker = {
       id: self.crypto.randomUUID(),
       name: `Point #${this.markerList.length}`,
-      position: point,
+      position: point.toArray(),
     };
-    this.database?.then((db) => db.add("markers", marker)).then(() => this.readMarkersFromDatabase());
+    this.database?.then((db) => db.add("markers", marker)).then(this.readMarkersFromDatabase);
   };
 
   private handleClickPointer = (event: MouseEvent) => {
-    this.clickPointer = new Vector2(...MouseEventX.from(event).normalizedPosition());
+    this.clickPointer.fromArray(MouseEventX.from(event).normalizedPosition());
   };
 
   private resetClickPointer = () => {
-    this.clickPointer = new Vector2();
+    this.clickPointer.set(0, 0);
   };
 
   orientCameraToPoint = (point: Vector3) => {
@@ -178,13 +189,13 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
             name: target.value,
           });
         })
-        .then(() => this.readMarkersFromDatabase());
+        .then(this.readMarkersFromDatabase);
     }
   };
 
   private handlePointClose = (event: PointerEvent, marker: Marker) => {
     event.stopPropagation();
-    this.database?.then((db) => db.delete("markers", marker.id)).then(() => this.readMarkersFromDatabase());
+    this.database?.then((db) => db.delete("markers", marker.id)).then(this.readMarkersFromDatabase);
   };
 
   pointListElements = () =>
@@ -203,7 +214,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
             />
             <div slot="interaction-bar">
               <span class="bar-item">${unsafeSVG(edit)}</span>
-              <span class="bar-item" @pointerup=${() => this.orientCameraToPoint(marker.position)}>
+              <span class="bar-item" @pointerup=${() => this.orientCameraToPoint(new Vector3(...marker.position))}>
                 ${unsafeSVG(pin)}
               </span>
               <span class="bar-item" @pointerup=${(event: PointerEvent) => this.handlePointClose(event, marker)}>
@@ -223,9 +234,9 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
           <button
             class="hotspot"
             slot="hotspot-${id}"
-            @click=${() => this.orientCameraToPoint(position)}
-            data-position=${toVector3D(position).toString()}
-            data-normal=${toVector3D(position).toString()}
+            @click=${() => this.orientCameraToPoint(new Vector3(...position))}
+            data-position=${toVector3D(new Vector3(...position)).toString()}
+            data-normal=${toVector3D(new Vector3(...position)).toString()}
           >
             <div class="annotation">${name}</div>
           </button>

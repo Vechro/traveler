@@ -1,13 +1,12 @@
 import { dedupeMixin, type Constructor } from "@open-wc/dedupe-mixin";
 import { DBSchema, IDBPDatabase, openDB } from "idb";
 import type { LitElement } from "lit";
-import type { Vector3 } from "three";
 
-export interface Marker {
+export type Marker = {
   id: string;
   name: string;
-  position: Vector3;
-}
+  position: [x: number, y: number, z: number];
+};
 
 export interface GlobeViewerSchema extends DBSchema {
   markers: {
@@ -30,7 +29,7 @@ export const DatabaseMixin = dedupeMixin(<T extends Constructor<LitElement>>(sup
     // https://github.com/microsoft/TypeScript/issues/37142
     constructor(..._: any[]) {
       super();
-      this.database = openDB<GlobeViewerSchema>("globe", 2, {
+      this.database = openDB<GlobeViewerSchema>("globe", 3, {
         upgrade(db) {
           const store = db.createObjectStore("markers", {
             // The 'id' property of the object will be the key.

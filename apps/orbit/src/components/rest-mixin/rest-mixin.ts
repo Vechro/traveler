@@ -7,30 +7,25 @@ import { getAuth, getPostgrestWithSession } from "~/utilities/api";
 
 export declare class RestMixinInterface {
   auth: GoTrueClient;
-  user: User;
-  rest: PostgrestClient<Database>;
+  user: Promise<User>;
+  rest: Promise<PostgrestClient<Database>>;
 }
 
 export const RestMixin = dedupeMixin(<T extends Constructor<LitElement>>(superClass: T) => {
   class Rest extends superClass {
-    auth: RestMixinInterface['auth'] = getAuth();
-    user!: RestMixinInterface['user'];
-    rest!: RestMixinInterface['rest'];
-
-    override connectedCallback = async () => {
-      super.connectedCallback();
-      const {
-        data: { user, session },
-        error,
-      } = await this.auth.refreshSession();
-
-      if (error || !user || !session) {
-        throw new Error("Failed to refresh session.");
+    auth: RestMixinInterface["auth"] = getAuth();
+    user: RestMixinInterface["user"] = this.auth.getUser().then(({ data, error }) => {
+      if (error) {
+        throw new Error("Failed to get user.");
       }
-
-      this.user = user;
-      this.rest = getPostgrestWithSession(session);
-    };
+      return data.user;
+    });
+    rest: RestMixinInterface["rest"] = this.auth.getSession().then(({ data, error }) => {
+      if (error || !data.session) {
+        throw new Error("Failed to get session.");
+      }
+      return getPostgrestWithSession(data.session);
+    });
   }
 
   return Rest as Constructor<RestMixinInterface> & T;
