@@ -29,19 +29,19 @@ export class ContextMenu extends LitElement {
     this.dispatchEvent(new UIEvent("close", event));
   };
 
-  override connectedCallback = () => {
+  override connectedCallback() {
     super.connectedCallback();
     window.addEventListener("pointerdown", this.handleDismiss);
     window.addEventListener("keydown", this.handleDismiss);
   }
 
-  override disconnectedCallback = () => {
+  override disconnectedCallback() {
     super.disconnectedCallback();
     window.removeEventListener("pointerdown", this.handleDismiss);
     window.removeEventListener("keydown", this.handleDismiss);
   }
 
-  override render = () => {
+  override render() {
     return html`
       <style>
         ::slotted([slot="context-menu"]) {

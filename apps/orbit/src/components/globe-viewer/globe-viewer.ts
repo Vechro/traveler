@@ -138,11 +138,11 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
       .then(this.saveToRest);
   };
 
-  override disconnectedCallback = () => {
+  override disconnectedCallback() {
     super.disconnectedCallback();
     removeEventListener("resize", this.onResize);
     this.renderer.dispose();
-  };
+  }
 
   private onResize = () => {
     this.renderer?.setSize(innerWidth, innerHeight);
@@ -243,7 +243,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
         `
     );
 
-  override render = () => {
+  override render() {
     return html`
       <context-menu @open=${this.handleClickPointer} @close=${this.resetClickPointer}>
         <menu-list class="context-menu" slot="context-menu">
@@ -268,7 +268,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
         </menu-panel>
       </context-menu>
     `;
-  };
+  }
 }
 
 declare global {

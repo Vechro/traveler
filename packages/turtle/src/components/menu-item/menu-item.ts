@@ -6,7 +6,7 @@ import { styles } from "./menu-item.styles";
 export class MenuItem extends LitElement {
   static override styles = styles;
 
-  override render = () => {
+  override render() {
     return html`
       <span class="title" part="title">
         <slot></slot>

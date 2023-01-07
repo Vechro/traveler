@@ -52,7 +52,7 @@ export class EditorPanel extends LitElement {
     event.preventDefault();
   };
 
-  override render = () => {
+  override render() {
     return html`
       <slot name="header"></slot>
       <section

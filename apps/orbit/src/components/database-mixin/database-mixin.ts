@@ -42,10 +42,10 @@ export const DatabaseMixin = dedupeMixin(<T extends Constructor<LitElement>>(sup
       });
     }
 
-    override disconnectedCallback = () => {
+    override disconnectedCallback() {
       super.disconnectedCallback();
       this.database?.then((db) => db.close());
-    };
+    }
   }
 
   return Database as Constructor<DatabaseMixinInterface> & T;

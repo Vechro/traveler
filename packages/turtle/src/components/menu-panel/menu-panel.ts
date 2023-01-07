@@ -6,7 +6,7 @@ import { styles } from "./menu-panel.styles";
 export class MenuPanel extends LitElement {
   static override styles = styles;
 
-  override render = () => {
+  override render() {
     return html`
       <slot name="header"></slot>
       <slot></slot>
