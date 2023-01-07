@@ -19,11 +19,10 @@ export const Default: StoryObj<EditorPanel> = {
       </style>
       <section class="container">
         <editor-panel
-          .content=${"...and this is the content"}
+          .header=${"This is the title"}
+          .content=${"...and this is the <b>content</b>"}
           @content-change=${(event: CustomEvent) => action("content-change")(event.detail)}
-        >
-          <input slot="header" maxlength="32" value="This is the title" />
-        </editor-panel>
+        ></editor-panel>
       </section>
     `,
 };

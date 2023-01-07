@@ -62,6 +62,13 @@
             },
             {
               "kind": "field",
+              "name": "dialog",
+              "type": {
+                "text": "HTMLDialogElement"
+              }
+            },
+            {
+              "kind": "field",
               "name": "modelViewer",
               "type": {
                 "text": "ModelViewerElement"
@@ -170,6 +177,11 @@
             {
               "kind": "field",
               "name": "resetClickPointer",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "openEditorPanel",
               "privacy": "private"
             },
             {

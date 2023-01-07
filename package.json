@@ -7,7 +7,6 @@
     "compose:up": "docker compose up",
     "compose:destroy": "docker compose down -v --remove-orphans",
     "format": "dprint fmt",
-    "lint": "turbo run lint --parallel",
     "orbit": "pnpm --filter=./apps/orbit",
     "turtle": "pnpm --filter=./packages/turtle",
     "config-etc": "pnpm --filter=./packages/eslint-config-etc"

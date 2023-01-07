@@ -11,7 +11,7 @@ export const styles = [
       box-shadow: var(--panel-shadow);
       border-radius: var(--border-radius);
     }
-    ::slotted(input[slot="header"]) {
+    .header {
       all: unset;
       font-size: 1.2rem;
       font-weight: 600;

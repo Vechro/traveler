@@ -1,6 +1,9 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { applyFormat } from "../../utilities";
+import { sanitizeHtml } from "../../utilities/sanitizeHtml";
+import { ContentChangeEvent } from "./ContentChangeEvent";
 import { styles } from "./editor-panel.styles";
 
 @customElement("editor-panel")
@@ -8,23 +11,40 @@ export class EditorPanel extends LitElement {
   static override styles = styles;
 
   @property({ type: String })
+  header = "";
+
+  @property({ type: String })
   content = "";
+
+  @query(".header")
+  headerElement!: HTMLInputElement;
 
   @query(".content")
   contentElement!: HTMLElement;
 
-  handleContentInput = () => {
+  private handleTitleInput = () => {
     this.dispatchEvent(
-      new CustomEvent("content-change", {
-        detail: {
-          text: this.contentElement.innerText,
-          rawHtml: this.contentElement.innerHTML,
-        },
+      new ContentChangeEvent({
+        headerText: this.headerElement.value,
       })
     );
   };
 
-  handleKeyDown = (event: KeyboardEvent) => {
+  private handleContentInput = () => {
+    // TODO: debounce this
+    this.dispatchEvent(
+      new ContentChangeEvent({
+        contentText: this.contentElement.innerText,
+        contentHtml: sanitizeHtml(this.contentElement.innerHTML),
+      })
+    );
+  };
+
+  private handleTitleKeyDown = (event: KeyboardEvent) => {
+    event.stopPropagation();
+  };
+
+  private handleContentKeyDown = (event: KeyboardEvent) => {
     if (event.ctrlKey) {
       switch (event.key) {
         case "b":
@@ -46,7 +66,7 @@ export class EditorPanel extends LitElement {
           return;
       }
     } else {
-      event.stopImmediatePropagation();
+      event.stopPropagation();
       return;
     }
     event.preventDefault();
@@ -54,15 +74,22 @@ export class EditorPanel extends LitElement {
 
   override render() {
     return html`
-      <slot name="header"></slot>
+      <input
+        class="header"
+        part="header"
+        maxlength="32"
+        value=${this.header}
+        @change=${this.handleTitleInput}
+        @keydown=${this.handleTitleKeyDown}
+      />
       <section
         class="content"
         part="content"
         contenteditable
         @input=${this.handleContentInput}
-        @keydown=${this.handleKeyDown}
+        @keydown=${this.handleContentKeyDown}
       >
-        ${this.content}
+        ${unsafeHTML(sanitizeHtml(this.content))}
       </section>
     `;
   }
