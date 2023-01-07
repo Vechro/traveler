@@ -10,7 +10,21 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:lit/recommended",
     "plugin:storybook/recommended",
+    "plugin:astro/recommended",
     "turbo"
+  ],
+  "overrides": [
+    {
+      "files": ["*.astro"],
+      "parser": "astro-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "extraFileExtensions": [".astro"]
+      },
+      "rules": {
+        "prettier/prettier": "off"
+      }
+    }
   ],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",

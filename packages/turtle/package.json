@@ -29,7 +29,7 @@
     "@storybook/web-components": "^7.0.0-beta.13",
     "@storybook/web-components-vite": "^7.0.0-beta.13",
     "@vechro/eslint-config-etc": "workspace:*",
-    "eslint": "^8.30.0",
+    "eslint": "^8.31.0",
     "lit": "^2.5.0",
     "lit-html": "^2.5.0",
     "react": "^18.2.0",
