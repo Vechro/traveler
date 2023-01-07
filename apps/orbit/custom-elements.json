@@ -144,6 +144,11 @@
             },
             {
               "kind": "field",
+              "name": "saveToRest",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
               "name": "readMarkersFromDatabase",
               "privacy": "private"
             },
@@ -192,8 +197,12 @@
           ],
           "mixins": [
             {
+              "name": "RestMixin",
+              "module": "/src/components/globe-viewer/~/components/rest-mixin"
+            },
+            {
               "name": "DatabaseMixin",
-              "module": "/src/components/database-mixin"
+              "module": "/src/components/globe-viewer/~/components/database-mixin"
             }
           ],
           "superclass": {
@@ -219,6 +228,62 @@
           "declaration": {
             "name": "GlobeViewer",
             "module": "src/components/globe-viewer/globe-viewer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/rest-mixin/rest-mixin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RestMixinInterface",
+          "members": [
+            {
+              "kind": "field",
+              "name": "auth",
+              "type": {
+                "text": "GoTrueClient"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "user",
+              "type": {
+                "text": "Promise<User>"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "rest",
+              "type": {
+                "text": "Promise<PostgrestClient<Database>>"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "RestMixin"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RestMixinInterface",
+          "declaration": {
+            "name": "RestMixinInterface",
+            "module": "src/components/rest-mixin/rest-mixin.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RestMixin",
+          "declaration": {
+            "name": "RestMixin",
+            "module": "src/components/rest-mixin/rest-mixin.ts"
           }
         }
       ]

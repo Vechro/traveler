@@ -1,14 +1,15 @@
 import { html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
 import { styles } from "./context-menu.styles";
 
 @customElement("context-menu")
 export class ContextMenu extends LitElement {
   static override styles = styles;
 
-  @property({ type: Boolean })
+  @state()
   open = false;
 
+  @state()
   private location?: [x: number, y: number];
 
   private handleContextMenu = (event: MouseEvent) => {
@@ -30,14 +31,14 @@ export class ContextMenu extends LitElement {
 
   override connectedCallback = () => {
     super.connectedCallback();
-    addEventListener("pointerdown", this.handleDismiss);
-    addEventListener("keydown", this.handleDismiss);
+    window.addEventListener("pointerdown", this.handleDismiss);
+    window.addEventListener("keydown", this.handleDismiss);
   }
 
   override disconnectedCallback = () => {
     super.disconnectedCallback();
-    removeEventListener("pointerdown", this.handleDismiss);
-    removeEventListener("keydown", this.handleDismiss);
+    window.removeEventListener("pointerdown", this.handleDismiss);
+    window.removeEventListener("keydown", this.handleDismiss);
   }
 
   override render = () => {

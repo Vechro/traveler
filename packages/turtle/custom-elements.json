@@ -17,14 +17,13 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
-              "attribute": "open"
+              "default": "false"
             },
             {
               "kind": "field",
               "name": "location",
               "type": {
-                "text": "[number, number] | undefined"
+                "text": "[x: number, y: number] | undefined"
               },
               "privacy": "private"
             },
@@ -37,16 +36,6 @@
               "kind": "field",
               "name": "handleDismiss",
               "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
             }
           ],
           "superclass": {
