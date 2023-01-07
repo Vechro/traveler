@@ -45,6 +45,9 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
   @query("canvas", true)
   canvas!: HTMLCanvasElement;
 
+  @query("dialog", true)
+  dialog!: HTMLDialogElement;
+
   @query("model-viewer", true)
   modelViewer!: ModelViewerElement;
 
@@ -87,7 +90,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
   @state()
   markerList: Marker[] = [];
 
-  override firstUpdated = () => {
+  override firstUpdated() {
     this.renderer = new WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -108,7 +111,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     this.modelViewer.registerRenderer(this.globeRenderer);
 
     this.readMarkersFromDatabase();
-  };
+  }
 
   private updateCameraFieldOfView = () => {
     this.camera.fov = this.modelViewer.getFieldOfView();
@@ -171,7 +174,12 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     this.clickPointer.set(0, 0);
   };
 
+  private openEditorPanel = async (id: Marker["id"]) => {
+    await this.rest;
+  };
+
   orientCameraToPoint = (point: Vector3) => {
+    this.dialog.showModal();
     const { theta, phi } = new Spherical().setFromVector3(point);
     this.modelViewer.cameraOrbit = `${theta}rad ${phi}rad 7m`;
   };
@@ -245,6 +253,11 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
 
   override render() {
     return html`
+      <dialog>
+        <editor-panel content="test">
+          <input slot="header" maxlength="32" value="This is the title" />
+        </editor-panel>
+      </dialog>
       <context-menu @open=${this.handleClickPointer} @close=${this.resetClickPointer}>
         <menu-list class="context-menu" slot="context-menu">
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>

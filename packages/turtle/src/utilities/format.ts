@@ -29,7 +29,6 @@ const isHeading = (command: FormatCommand): command is Heading => command in Hea
 export function applyFormat(format: "formatBlock", argument: `<${string}>`): void;
 export function applyFormat(format: Heading): void;
 export function applyFormat(format: "bold" | "italic" | "underline" | "removeFormat" | "strikeThrough"): void;
-
 export function applyFormat(format: FormatCommand, argument?: string): void {
   if (isHeading(format)) {
     const ancestor = takeIfSelectionInTag(format);

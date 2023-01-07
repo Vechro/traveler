@@ -22,6 +22,14 @@ export const styles = [
     .points-menu menu-list {
       max-height: 12rem;
     }
+    dialog {
+      background: none;
+      padding: 0;
+      border: none;
+    }
+    dialog::backdrop {
+      background: #0009;
+    }
     div[slot="interaction-bar"] {
       display: flex;
       flex-direction: row;
