@@ -2,8 +2,8 @@ import { dedupeMixin, type Constructor } from "@open-wc/dedupe-mixin";
 import type { GoTrueClient, User } from "@supabase/gotrue-js";
 import type { PostgrestClient } from "@supabase/postgrest-js";
 import type { LitElement } from "lit";
-import type { Database } from "~/database";
-import { getAuth, getPostgrestWithSession } from "~/utilities/api";
+import type { Database } from "&/database";
+import { getAuth, getPostgrestWithSession } from "&/utilities/api";
 
 export declare class RestMixinInterface {
   auth: GoTrueClient;

@@ -1,10 +1,10 @@
 ---
-import Layout from "~/layouts/Layout.astro";
+import Layout from "&/layouts/Layout.astro";
 ---
 
 <script>
   import "@vechro/turtle";
-  import { getAuth, getPostgrestWithSession } from "~/utilities/api";
+  import { getAuth, getPostgrestWithSession } from "&/utilities/api";
 
   interface FormShape {
     email: string;

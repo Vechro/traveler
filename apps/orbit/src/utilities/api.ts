@@ -1,6 +1,6 @@
 import { GoTrueClient, type Session } from "@supabase/gotrue-js";
 import { PostgrestClient } from "@supabase/postgrest-js";
-import type { Database } from "~/database";
+import type { Database } from "&/database";
 
 const API_URL = "http://localhost:9080";
 const API_ANON =

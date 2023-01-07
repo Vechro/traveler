@@ -198,11 +198,11 @@
           "mixins": [
             {
               "name": "RestMixin",
-              "module": "/src/components/globe-viewer/~/components/rest-mixin"
+              "module": "/src/components/globe-viewer/&/components/rest-mixin"
             },
             {
               "name": "DatabaseMixin",
-              "module": "/src/components/globe-viewer/~/components/database-mixin"
+              "module": "/src/components/globe-viewer/&/components/database-mixin"
             }
           ],
           "superclass": {
