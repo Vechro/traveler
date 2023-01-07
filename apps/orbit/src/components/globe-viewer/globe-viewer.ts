@@ -2,7 +2,7 @@ import "@google/model-viewer";
 import type { ModelViewerElement } from "@google/model-viewer/lib/model-viewer";
 import { toVector3D } from "@google/model-viewer/lib/model-viewer-base";
 import "@vechro/turtle";
-import type { MenuList } from "@vechro/turtle";
+import type { EditorPanel, MenuList } from "@vechro/turtle";
 import { html, LitElement } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
@@ -47,6 +47,9 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
 
   @query("dialog", true)
   dialog!: HTMLDialogElement;
+
+  @query("editor-panel", true)
+  editorPanel!: EditorPanel;
 
   @query("model-viewer", true)
   modelViewer!: ModelViewerElement;
@@ -162,6 +165,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
       id: self.crypto.randomUUID(),
       name: `Point #${this.markerList.length}`,
       position: point.toArray(),
+      content: "",
     };
     this.database?.then((db) => db.add("markers", marker)).then(this.readMarkersFromDatabase);
   };
@@ -174,12 +178,18 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     this.clickPointer.set(0, 0);
   };
 
-  private openEditorPanel = async (id: Marker["id"]) => {
-    await this.rest;
+  private handleEditorOpen = (marker: Marker) => {
+    this.orientCameraToPoint(new Vector3(...marker.position));
+    this.editorPanel.header = marker.name;
+    this.editorPanel.content = marker.content;
+    this.dialog.showModal();
+  };
+
+  private handleEditorClose = () => {
+    this.dialog.close();
   };
 
   orientCameraToPoint = (point: Vector3) => {
-    this.dialog.showModal();
     const { theta, phi } = new Spherical().setFromVector3(point);
     this.modelViewer.cameraOrbit = `${theta}rad ${phi}rad 7m`;
   };
@@ -192,8 +202,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
       this.database
         ?.then((db) => {
           db.put("markers", {
-            id: marker.id,
-            position: marker.position,
+            ...marker,
             name: target.value,
           });
         })
@@ -222,9 +231,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
             />
             <div slot="interaction-bar">
               <span class="bar-item">${unsafeSVG(edit)}</span>
-              <span class="bar-item" @pointerup=${() => this.orientCameraToPoint(new Vector3(...marker.position))}>
-                ${unsafeSVG(pin)}
-              </span>
+              <span class="bar-item" @pointerup=${() => this.handleEditorOpen(marker)}>${unsafeSVG(pin)}</span>
               <span class="bar-item" @pointerup=${(event: PointerEvent) => this.handlePointClose(event, marker)}>
                 ${unsafeSVG(cross)}
               </span>
@@ -237,24 +244,26 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     repeat(
       this.markerList,
       ({ id }) => id,
-      ({ id, name, position }) =>
-        html`
+      (marker) => {
+        const positionSerialized = toVector3D(new Vector3(...marker.position)).toString();
+        return html`
           <button
             class="hotspot"
-            slot="hotspot-${id}"
-            @click=${() => this.orientCameraToPoint(new Vector3(...position))}
-            data-position=${toVector3D(new Vector3(...position)).toString()}
-            data-normal=${toVector3D(new Vector3(...position)).toString()}
+            slot="hotspot-${marker.id}"
+            @click=${() => this.handleEditorOpen(marker)}
+            data-position=${positionSerialized}
+            data-normal=${positionSerialized}
           >
-            <div class="annotation">${name}</div>
+            <div class="annotation">${marker.name}</div>
           </button>
-        `
+        `;
+      }
     );
 
   override render() {
     return html`
       <dialog>
-        <editor-panel content="test">
+        <editor-panel @close=${this.handleEditorClose}>
           <input slot="header" maxlength="32" value="This is the title" />
         </editor-panel>
       </dialog>

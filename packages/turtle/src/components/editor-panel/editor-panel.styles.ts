@@ -12,16 +12,42 @@ export const styles = [
       border-radius: var(--border-radius);
     }
     .header {
-      all: unset;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 0;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      gap: 0.25rem;
       padding: 1rem;
       border-bottom: var(--outline-border);
     }
+    .header > input {
+      font-family: unset;
+      border: unset;
+      background: unset;
+      height: unset;
+      margin: unset;
+      padding: 0.5rem;
+      flex: 1;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .header > button {
+      border: unset;
+      background: unset;
+      display: block;
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+    }
+    .header svg {
+      display: block;
+    }
+    .header > button:hover {
+      background-color: var(--background-color-hover);
+    }
     .content {
-      padding: 1rem;
+      margin: 1rem;
       line-height: 1.7;
+      text-indent: 0.5rem;
     }
     .content h3 {
       margin-block: 0.25rem 0.5rem;

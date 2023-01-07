@@ -22,6 +22,7 @@ export const Default: StoryObj<EditorPanel> = {
           .header=${"This is the title"}
           .content=${"...and this is the <b>content</b>"}
           @content-change=${(event: CustomEvent) => action("content-change")(event.detail)}
+          @close=${action("close")}
         ></editor-panel>
       </section>
     `,

@@ -125,6 +125,11 @@
               "kind": "field",
               "name": "handleContentKeyDown",
               "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleDismiss",
+              "privacy": "private"
             }
           ],
           "attributes": [

@@ -69,6 +69,13 @@
             },
             {
               "kind": "field",
+              "name": "editorPanel",
+              "type": {
+                "text": "EditorPanel"
+              }
+            },
+            {
+              "kind": "field",
               "name": "modelViewer",
               "type": {
                 "text": "ModelViewerElement"
@@ -181,7 +188,12 @@
             },
             {
               "kind": "field",
-              "name": "openEditorPanel",
+              "name": "handleEditorOpen",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleEditorClose",
               "privacy": "private"
             },
             {

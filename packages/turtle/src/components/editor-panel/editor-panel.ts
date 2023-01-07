@@ -1,6 +1,8 @@
 import { html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { unsafeSVG } from "lit/directives/unsafe-svg.js";
+import cross from "../../assets/icons/cross.svg?raw";
 import { applyFormat } from "../../utilities";
 import { sanitizeHtml } from "../../utilities/sanitizeHtml";
 import { ContentChangeEvent } from "./ContentChangeEvent";
@@ -16,7 +18,7 @@ export class EditorPanel extends LitElement {
   @property({ type: String })
   content = "";
 
-  @query(".header")
+  @query(".header > input")
   headerElement!: HTMLInputElement;
 
   @query(".content")
@@ -72,16 +74,24 @@ export class EditorPanel extends LitElement {
     event.preventDefault();
   };
 
+  private handleDismiss = (event: MouseEvent | KeyboardEvent) => {
+    if (event instanceof KeyboardEvent && event.key !== "Escape") {
+      return;
+    }
+    this.dispatchEvent(new UIEvent("close", event));
+  };
+
   override render() {
     return html`
-      <input
-        class="header"
-        part="header"
-        maxlength="32"
-        value=${this.header}
-        @change=${this.handleTitleInput}
-        @keydown=${this.handleTitleKeyDown}
-      />
+      <div class="header" part="header">
+        <input
+          maxlength="32"
+          value=${this.header}
+          @change=${this.handleTitleInput}
+          @keydown=${this.handleTitleKeyDown}
+        />
+        <button @click=${this.handleDismiss}>${unsafeSVG(cross)}</button>
+      </div>
       <section
         class="content"
         part="content"
