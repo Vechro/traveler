@@ -68,15 +68,7 @@ export const styles = [
       margin-inline-end: 0.5rem;
       gap: 0.25rem;
     }
-    .bar-item {
-      padding: 0.5rem;
-      border-radius: var(--border-radius);
-      cursor: pointer;
-    }
-    .bar-item:hover {
-      background-color: var(--background-color-hover);
-    }
-    .bar-item svg {
+    light-button svg {
       transition: var(--color-transition);
       color: transparent;
     }

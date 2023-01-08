@@ -179,6 +179,42 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/light-button/light-button.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "LightButton",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "light-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LightButton",
+          "declaration": {
+            "name": "LightButton",
+            "module": "src/components/light-button/light-button.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "light-button",
+          "declaration": {
+            "name": "LightButton",
+            "module": "src/components/light-button/light-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/menu-item/menu-item.ts",
       "declarations": [
         {

@@ -30,20 +30,6 @@ export const styles = [
       font-size: 1.2rem;
       font-weight: 600;
     }
-    .header > button {
-      border: unset;
-      background: unset;
-      display: block;
-      padding: 0.5rem;
-      border-radius: var(--border-radius);
-      cursor: pointer;
-    }
-    .header svg {
-      display: block;
-    }
-    .header > button:hover {
-      background-color: var(--background-color-hover);
-    }
     .content {
       margin: 1rem;
       line-height: 1.7;

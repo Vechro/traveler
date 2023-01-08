@@ -255,11 +255,11 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
               @keydown=${(event: KeyboardEvent) => this.handleTitleRename(event, marker)}
             />
             <div slot="interaction-bar">
-              <span class="bar-item">${unsafeSVG(edit)}</span>
-              <span class="bar-item" @pointerup=${() => this.handleEditorOpen(marker)}>${unsafeSVG(pin)}</span>
-              <span class="bar-item" @pointerup=${(event: PointerEvent) => this.handlePointClose(event, marker)}>
+              <light-button>${unsafeSVG(edit)}</light-button>
+              <light-button @pointerup=${() => this.handleEditorOpen(marker)}>${unsafeSVG(pin)}</light-button>
+              <light-button @pointerup=${(event: PointerEvent) => this.handlePointClose(event, marker)}>
                 ${unsafeSVG(cross)}
-              </span>
+              </light-button>
             </div>
           </menu-item>
         `

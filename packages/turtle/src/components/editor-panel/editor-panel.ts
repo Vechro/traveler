@@ -5,6 +5,7 @@ import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import cross from "../../assets/icons/cross.svg?raw";
 import { applyFormat } from "../../utilities";
 import { sanitizeHtml } from "../../utilities/sanitizeHtml";
+import "../light-button";
 import { ContentChangeEvent } from "./ContentChangeEvent";
 import { styles } from "./editor-panel.styles";
 
@@ -90,7 +91,7 @@ export class EditorPanel extends LitElement {
           @change=${this.handleTitleInput}
           @keydown=${this.handleTitleKeyDown}
         />
-        <button @click=${this.handleDismiss}>${unsafeSVG(cross)}</button>
+        <light-button @click=${this.handleDismiss}>${unsafeSVG(cross)}</light-button>
       </div>
       <section
         class="content"
