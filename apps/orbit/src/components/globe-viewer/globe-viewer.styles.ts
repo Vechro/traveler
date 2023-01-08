@@ -1,12 +1,44 @@
 import { css } from "lit";
 
+const modelViewerStyles = css`
+  model-viewer {
+    width: 100%;
+    height: 100vh;
+    contain: size layout paint;
+  }
+  .hotspot {
+    display: block;
+    font: unset;
+    padding: unset;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    border-radius: 99px;
+    border: 4px solid var(--background-color);
+    background-color: #661fff;
+    --min-hotspot-opacity: 0;
+    --max-hotspot-opacity: 0.9;
+  }
+  .annotation {
+    background-color: var(--background-color);
+    position: absolute;
+    transform: translateX(2px);
+    border-radius: calc(var(--border-radius) / 2);
+    max-width: 8rem;
+    width: max-content;
+    height: max-content;
+    overflow-wrap: break-word;
+    padding: 0.5rem 0.75rem;
+  }
+  /* This keeps child nodes hidden while the element loads */
+  :not(:defined) > * {
+    display: none;
+  }
+`;
+
 export const styles = [
+  modelViewerStyles,
   css`
-    model-viewer {
-      width: 100%;
-      height: 100vh;
-      contain: size layout paint;
-    }
     .title {
       margin: 0;
     }
@@ -53,35 +85,6 @@ export const styles = [
     }
     .context-menu > menu-item {
       padding: 0.75rem 1rem;
-    }
-
-    .hotspot {
-      display: block;
-      font: unset;
-      padding: unset;
-      cursor: pointer;
-      width: 12px;
-      height: 12px;
-      border-radius: 99px;
-      border: 4px solid var(--background-color);
-      background-color: #661fff;
-      --min-hotspot-opacity: 0;
-      --max-hotspot-opacity: 0.9;
-    }
-    .annotation {
-      background-color: var(--background-color);
-      position: absolute;
-      transform: translateX(2px);
-      border-radius: calc(var(--border-radius) / 2);
-      max-width: 8rem;
-      width: max-content;
-      height: max-content;
-      overflow-wrap: break-word;
-      padding: 0.5rem 0.75rem;
-    }
-    /* This keeps child nodes hidden while the element loads */
-    :not(:defined) > * {
-      display: none;
     }
   `,
 ];

@@ -10,7 +10,12 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: /^lit/,
+      external: ["dompurify", /^lit/],
+      output: {
+        globals: {
+          dompurify: "DOMPurify",
+        },
+      },
     },
   },
   plugins: [minifyHTML()],

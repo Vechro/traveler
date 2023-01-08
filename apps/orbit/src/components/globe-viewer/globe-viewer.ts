@@ -205,7 +205,7 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
   private handleEditorClose = () => {
     const newMarkers = this.markers.get();
     for (const newMarker of newMarkers) {
-       if (newMarker.id === this.activeMarker!.id) {
+      if (newMarker.id === this.activeMarker!.id) {
         newMarker.name = this.activeMarker!.name;
         newMarker.content = this.activeMarker!.content;
       }
@@ -295,14 +295,14 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
           <menu-item @pointerdown=${this.addPoint}>Add point</menu-item>
         </menu-list>
         <model-viewer
+          src="."
           loading="eager"
           camera-controls
           disable-pan
-          src="."
           interaction-prompt="none"
-          @camera-change=${this.updateCameraFieldOfView}
           min-camera-orbit="auto 0deg 15m"
           max-camera-orbit="auto 180deg auto"
+          @camera-change=${this.updateCameraFieldOfView}
         >
           <canvas slot="canvas"></canvas>
           ${this.hotspotElements()}
