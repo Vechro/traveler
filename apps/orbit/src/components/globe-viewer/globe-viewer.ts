@@ -4,7 +4,7 @@ import { toVector3D } from "@google/model-viewer/lib/model-viewer-base";
 import "@vechro/turtle";
 import type { ContentChangeEvent, EditorPanel, MenuList } from "@vechro/turtle";
 import { html, LitElement } from "lit";
-import { customElement, query, state } from "lit/decorators.js";
+import { customElement, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
 import {
@@ -28,19 +28,19 @@ import earthUvMap from "&/assets/earth-uv-map.jpg";
 import cross from "&/assets/icons/cross.svg?raw";
 import edit from "&/assets/icons/edit.svg?raw";
 import pin from "&/assets/icons/pin.svg?raw";
-import { DatabaseMixin, Marker } from "&/components/database-mixin";
 import { RestMixin } from "&/components/rest-mixin";
+import { Marker, StoreMixin } from "&/components/store-mixin";
 import { MouseEventX } from "&/extension";
 import { GlobeRenderer } from "&/utilities/GlobeRenderer";
+import { debounce } from "@google/model-viewer/lib/utilities";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
 import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
-import { debounce } from "@google/model-viewer/lib/utilities";
 
 @customElement("globe-viewer")
-export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
+export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
   static override styles = styles;
 
   @query("canvas", true)
@@ -93,9 +93,6 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
   private clickPointer = new Vector2();
   private raycaster = new Raycaster();
 
-  @state()
-  markerList: Marker[] = [];
-
   override firstUpdated() {
     this.renderer = new WebGLRenderer({
       alpha: true,
@@ -103,7 +100,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
       canvas: this.canvas,
     });
 
-    addEventListener("resize", this.onResize);
+    window.addEventListener("resize", this.onResize);
     this.onResize();
 
     this.atmosphere.scale.set(1.1, 1.1, 1.1);
@@ -126,10 +123,9 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
 
   private saveToRest = async () => {
     const { id } = await this.user;
-
     const { error } = await (await this.rest).from("profiles").upsert({
       id,
-      markers: this.markerList,
+      markers: this.markers.get(),
       updated_at: new Date().toISOString(),
     });
 
@@ -139,17 +135,27 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
   };
 
   private readMarkersFromDatabase = async () => {
-    return this.database
-      ?.then(async (db) => {
-        const markers = await db.getAllFromIndex("markers", "id");
-        this.markerList = markers.reverse();
-      })
-      .then(this.saveToRest);
+    const { id } = await this.user;
+    const { data, error } = await (await this.rest).from("profiles").select("markers").eq("id", id);
+
+    if (error) {
+      throw new Error("Failed to read profile in database", { cause: error });
+    }
+
+    if (data.length > 0) {
+      this.markers.set(data[0]!.markers as Marker[]);
+    }
   };
+
+  override connectedCallback() {
+    super.connectedCallback();
+    // TODO: unsubscribe as well?
+    this.markers.subscribe(this.saveToRest);
+  }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    removeEventListener("resize", this.onResize);
+    window.removeEventListener("resize", this.onResize);
     this.renderer.dispose();
   }
 
@@ -166,11 +172,11 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     if (!point) return;
     const marker: Marker = {
       id: self.crypto.randomUUID(),
-      name: `Point #${this.markerList.length}`,
+      name: `Point #${this.markers.get().length}`,
       position: point.toArray(),
       content: "",
     };
-    this.database?.then((db) => db.add("markers", marker)).then(this.readMarkersFromDatabase);
+    this.markers.set([...this.markers.get(), marker]);
   };
 
   private handleClickPointer = (event: MouseEvent) => {
@@ -185,7 +191,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     const { headerText, contentHtml } = event.detail;
     if (headerText) this.activeMarker!.name = headerText;
     if (contentHtml) this.activeMarker!.content = contentHtml;
-  }, 400);
+  }, 300);
 
   private handleEditorOpen = (marker: Marker) => {
     this.activeMarker = marker;
@@ -197,7 +203,14 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
   };
 
   private handleEditorClose = () => {
-    this.saveToRest();
+    const newMarkers = this.markers.get();
+    for (const newMarker of newMarkers) {
+       if (newMarker.id === this.activeMarker!.id) {
+        newMarker.name = this.activeMarker!.name;
+        newMarker.content = this.activeMarker!.content;
+      }
+    }
+    this.markers.set(newMarkers);
     this.dialog.close();
     this.editorPanel.removeEventListener("content-change", this.handleContentChange);
   };
@@ -212,25 +225,24 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     const target = event.currentTarget as EventTarget & HTMLInputElement;
     if (event.key === "Enter" || event.key === "Escape") {
       target.blur();
-      this.database
-        ?.then((db) => {
-          db.put("markers", {
-            ...marker,
-            name: target.value,
-          });
-        })
-        .then(this.readMarkersFromDatabase);
+      const newMarkers = this.markers.get();
+      for (const newMarker of newMarkers) {
+        if (newMarker.id === marker.id) {
+          newMarker.name = target.value;
+        }
+      }
+      this.markers.set(newMarkers);
     }
   };
 
   private handlePointClose = (event: PointerEvent, marker: Marker) => {
     event.stopPropagation();
-    this.database?.then((db) => db.delete("markers", marker.id)).then(this.readMarkersFromDatabase);
+    this.markers.set(this.markers.get().filter(({ id }) => id !== marker.id));
   };
 
   pointListElements = () =>
     repeat(
-      this.markerList,
+      this.markers.get(),
       ({ id }) => id,
       (marker) =>
         html`
@@ -255,7 +267,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
 
   hotspotElements = () =>
     repeat(
-      this.markerList,
+      this.markers.get(),
       ({ id }) => id,
       (marker) => {
         const positionSerialized = toVector3D(new Vector3(...marker.position)).toString();

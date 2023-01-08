@@ -4,48 +4,6 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/components/database-mixin/database-mixin.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "DatabaseMixinInterface",
-          "members": [
-            {
-              "kind": "field",
-              "name": "database",
-              "type": {
-                "text": "Promise<IDBPDatabase<GlobeViewerSchema>> | undefined"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "variable",
-          "name": "DatabaseMixin"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "DatabaseMixinInterface",
-          "declaration": {
-            "name": "DatabaseMixinInterface",
-            "module": "src/components/database-mixin/database-mixin.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "DatabaseMixin",
-          "declaration": {
-            "name": "DatabaseMixin",
-            "module": "src/components/database-mixin/database-mixin.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/globe-viewer/globe-viewer.ts",
       "declarations": [
         {
@@ -153,14 +111,6 @@
             },
             {
               "kind": "field",
-              "name": "markerList",
-              "type": {
-                "text": "Marker[]"
-              },
-              "default": "[]"
-            },
-            {
-              "kind": "field",
               "name": "updateCameraFieldOfView",
               "privacy": "private"
             },
@@ -238,8 +188,8 @@
               "module": "/src/components/globe-viewer/&/components/rest-mixin"
             },
             {
-              "name": "DatabaseMixin",
-              "module": "/src/components/globe-viewer/&/components/database-mixin"
+              "name": "StoreMixin",
+              "module": "/src/components/globe-viewer/&/components/store-mixin"
             }
           ],
           "superclass": {
@@ -321,6 +271,48 @@
           "declaration": {
             "name": "RestMixin",
             "module": "src/components/rest-mixin/rest-mixin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/store-mixin/store-mixin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "StoreMixinInterface",
+          "members": [
+            {
+              "kind": "field",
+              "name": "markers",
+              "type": {
+                "text": "WritableAtom<Marker[]>"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "StoreMixin"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StoreMixinInterface",
+          "declaration": {
+            "name": "StoreMixinInterface",
+            "module": "src/components/store-mixin/store-mixin.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "StoreMixin",
+          "declaration": {
+            "name": "StoreMixin",
+            "module": "src/components/store-mixin/store-mixin.ts"
           }
         }
       ]
