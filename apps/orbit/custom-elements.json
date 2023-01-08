@@ -90,6 +90,14 @@
             },
             {
               "kind": "field",
+              "name": "activeMarker",
+              "type": {
+                "text": "Marker | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
               "name": "camera",
               "privacy": "private",
               "default": "new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000)"
@@ -184,6 +192,11 @@
             {
               "kind": "field",
               "name": "resetClickPointer",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleContentChange",
               "privacy": "private"
             },
             {

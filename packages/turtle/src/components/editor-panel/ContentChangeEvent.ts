@@ -9,3 +9,9 @@ export class ContentChangeEvent extends CustomEvent<ContentChangeDetail> {
     super("content-change", { detail });
   }
 }
+
+declare global {
+  interface HTMLElementEventMap {
+    "content-change": ContentChangeEvent;
+  }
+}

@@ -2,7 +2,7 @@ import "@google/model-viewer";
 import type { ModelViewerElement } from "@google/model-viewer/lib/model-viewer";
 import { toVector3D } from "@google/model-viewer/lib/model-viewer-base";
 import "@vechro/turtle";
-import type { EditorPanel, MenuList } from "@vechro/turtle";
+import type { ContentChangeEvent, EditorPanel, MenuList } from "@vechro/turtle";
 import { html, LitElement } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
@@ -37,6 +37,7 @@ import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
 import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
+import { debounce } from "@google/model-viewer/lib/utilities";
 
 @customElement("globe-viewer")
 export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
@@ -56,6 +57,8 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
 
   @query(".points-menu", true)
   pointsMenu!: MenuList;
+
+  private activeMarker?: Marker;
 
   private camera = new PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 1000);
   private scene = new Scene();
@@ -178,15 +181,25 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
     this.clickPointer.set(0, 0);
   };
 
+  private handleContentChange = debounce((event: ContentChangeEvent) => {
+    const { headerText, contentHtml } = event.detail;
+    if (headerText) this.activeMarker!.name = headerText;
+    if (contentHtml) this.activeMarker!.content = contentHtml;
+  }, 400);
+
   private handleEditorOpen = (marker: Marker) => {
+    this.activeMarker = marker;
     this.orientCameraToPoint(new Vector3(...marker.position));
     this.editorPanel.header = marker.name;
     this.editorPanel.content = marker.content;
     this.dialog.showModal();
+    this.editorPanel.addEventListener("content-change", this.handleContentChange);
   };
 
   private handleEditorClose = () => {
+    this.saveToRest();
     this.dialog.close();
+    this.editorPanel.removeEventListener("content-change", this.handleContentChange);
   };
 
   orientCameraToPoint = (point: Vector3) => {
@@ -263,9 +276,7 @@ export class GlobeViewer extends RestMixin(DatabaseMixin(LitElement)) {
   override render() {
     return html`
       <dialog>
-        <editor-panel @close=${this.handleEditorClose}>
-          <input slot="header" maxlength="32" value="This is the title" />
-        </editor-panel>
+        <editor-panel @close=${this.handleEditorClose}></editor-panel>
       </dialog>
       <context-menu @open=${this.handleClickPointer} @close=${this.resetClickPointer}>
         <menu-list class="context-menu" slot="context-menu">
