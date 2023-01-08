@@ -33,7 +33,6 @@ importers:
       astro: ^1.9.1
       dompurify: ^2.4.3
       eslint: ^8.31.0
-      idb: ^7.1.1
       lit: ^2.5.0
       nanostores: ^0.7.1
       rollup: ^3.9.1
@@ -53,7 +52,6 @@ importers:
       '@webcomponents/template-shadowroot': 0.1.0
       astro: 1.9.1
       dompurify: 2.4.3
-      idb: 7.1.1
       lit: 2.5.0
       nanostores: 0.7.1
       three: 0.148.0
@@ -6078,10 +6076,6 @@ packages:
     dependencies:
       safer-buffer: 2.1.2
     dev: true
-
-  /idb/7.1.1:
-    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
-    dev: false
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}

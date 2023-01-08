@@ -26,7 +26,6 @@
     "@webcomponents/template-shadowroot": "^0.1.0",
     "astro": "^1.9.1",
     "dompurify": "^2.4.3",
-    "idb": "^7.1.1",
     "lit": "^2.5.0",
     "nanostores": "^0.7.1",
     "three": "^0.148.0",
