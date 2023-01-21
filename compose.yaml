@@ -3,7 +3,8 @@ name: traveler
 # Based off https://github.com/supabase/supabase/tree/master/docker
 services:
   apisix:
-    image: apache/apisix:3.0.0-debian
+    # https://github.com/apache/apisix/blob/master/CHANGELOG.md
+    image: apache/apisix:3.1.0-debian
     restart: unless-stopped
     ports:
       - "9080:9080/tcp"
@@ -13,7 +14,7 @@ services:
 
   auth:
     # https://github.com/supabase/gotrue
-    image: supabase/gotrue:v2.35.0
+    image: supabase/gotrue:v2.41.4
     depends_on:
       db:
         condition: service_healthy
@@ -56,7 +57,7 @@ services:
 
   db:
     # https://github.com/supabase/postgres
-    image: supabase/postgres:14.1.0.89
+    image: supabase/postgres:15.1.0.26
     healthcheck:
       test: pg_isready -U postgres -h localhost
       interval: 5s
@@ -87,7 +88,7 @@ services:
       PGRST_DB_USE_LEGACY_GUCS: "false"
 
   meta:
-    image: supabase/postgres-meta:v0.55.2
+    image: supabase/postgres-meta:v0.60.0
     depends_on:
       db:
         condition: service_healthy
@@ -102,7 +103,7 @@ services:
 
   storage:
     # https://github.com/supabase/storage-api
-    image: supabase/storage-api:v0.24.8
+    image: supabase/storage-api:v0.28.2
     depends_on:
       db: # Disable this if you are using an external Postgres database
         condition: service_healthy

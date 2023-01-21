@@ -141,8 +141,8 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
       throw new Error("Failed to read profile in database", { cause: error });
     }
 
-    if (data.length > 0) {
-      this.markers.set(data[0]!.markers as Marker[]);
+    if (data[0]?.markers != null) {
+      this.markers.set(data[0].markers as Marker[]);
     }
   };
 
