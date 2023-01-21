@@ -175,7 +175,8 @@
             },
             {
               "kind": "field",
-              "name": "pointListElements"
+              "name": "pointListElements",
+              "privacy": "private"
             },
             {
               "kind": "field",

@@ -26,7 +26,6 @@ import {
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
 import earthUvMap from "&/assets/earth-uv-map.jpg";
 import cross from "&/assets/icons/cross.svg?raw";
-import edit from "&/assets/icons/edit.svg?raw";
 import pin from "&/assets/icons/pin.svg?raw";
 import { RestMixin } from "&/components/rest-mixin";
 import { Marker, StoreMixin } from "&/components/store-mixin";
@@ -150,7 +149,8 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
   override connectedCallback() {
     super.connectedCallback();
     // TODO: unsubscribe as well?
-    this.markers.subscribe(this.saveToRest);
+    this.markers.listen(() => this.requestUpdate());
+    this.markers.listen(() => this.saveToRest());
   }
 
   override disconnectedCallback() {
@@ -240,7 +240,7 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
     this.markers.set(this.markers.get().filter(({ id }) => id !== marker.id));
   };
 
-  pointListElements = () =>
+  private pointListElements = () =>
     repeat(
       this.markers.get(),
       ({ id }) => id,
@@ -255,7 +255,6 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
               @keydown=${(event: KeyboardEvent) => this.handleTitleRename(event, marker)}
             />
             <div slot="interaction-bar">
-              <light-button>${unsafeSVG(edit)}</light-button>
               <light-button @pointerup=${() => this.handleEditorOpen(marker)}>${unsafeSVG(pin)}</light-button>
               <light-button @pointerup=${(event: PointerEvent) => this.handlePointClose(event, marker)}>
                 ${unsafeSVG(cross)}
