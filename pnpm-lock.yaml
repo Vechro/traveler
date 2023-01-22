@@ -95,6 +95,7 @@ importers:
       '@custom-elements-manifest/analyzer': ^0.6.8
       '@size-limit/preset-small-lib': ^8.1.2
       '@storybook/addon-actions': ^7.0.0-beta.31
+      '@storybook/manager-api': ^7.0.0-beta.31
       '@storybook/web-components': ^7.0.0-beta.31
       '@storybook/web-components-vite': ^7.0.0-beta.31
       '@types/dompurify': ^2.4.0
@@ -118,6 +119,7 @@ importers:
       '@custom-elements-manifest/analyzer': 0.6.8
       '@size-limit/preset-small-lib': 8.1.2_size-limit@8.1.2
       '@storybook/addon-actions': 7.0.0-beta.31_biqbaboplfbrettd7655fr4n2y
+      '@storybook/manager-api': 7.0.0-beta.31_biqbaboplfbrettd7655fr4n2y
       '@storybook/web-components': 7.0.0-beta.31_7zfklryahohurxseda5523n5je
       '@storybook/web-components-vite': 7.0.0-beta.31_ehpciglzgtp5f3m2ia3vroghca
       '@types/dompurify': 2.4.0
