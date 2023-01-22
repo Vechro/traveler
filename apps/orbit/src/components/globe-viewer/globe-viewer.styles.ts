@@ -39,17 +39,21 @@ const modelViewerStyles = css`
 export const styles = [
   modelViewerStyles,
   css`
+    * {
+      box-sizing: border-box;
+    }
     .title {
       margin: 0;
     }
     .marker-title {
       padding-block: 0.25rem;
+      margin-inline: 0.25rem;
+      margin-block: 0.75rem;
     }
     .points-menu {
       position: absolute;
       top: 2rem;
       left: 2rem;
-      width: 20rem;
     }
     .points-menu menu-list {
       max-height: 12rem;

@@ -19,15 +19,15 @@ export const styles = [
     }
     :host(:first-child) {
       border-top-color: transparent;
-      border-radius: 0.5rem 0.5rem 0 0;
+      border-radius: var(--border-radius-first);
     }
     :host(:last-child) {
       border-bottom-color: transparent;
-      border-radius: 0 0 0.5rem 0.5rem;
+      border-radius: var(--border-radius-last);
     }
     :host(:only-child) {
       border-color: transparent;
-      border-radius: 0.5rem;
+      border-radius: var(--border-radius);
     }
     ::slotted(input) {
       border: unset;
@@ -35,8 +35,7 @@ export const styles = [
       background: unset;
       font: unset;
       font-size: unset;
-      margin: 0.75rem;
-      width: 10rem;
+      width: min-content;
     }
     .title {
       flex: 1;

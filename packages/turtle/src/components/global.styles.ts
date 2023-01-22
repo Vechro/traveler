@@ -17,4 +17,7 @@ export const globalStyles = css`
 
     color: var(--font-color);
   }
+  * {
+    box-sizing: border-box;
+  }
 `;

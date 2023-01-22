@@ -2,6 +2,7 @@ import { action } from "@storybook/addon-actions";
 import type { StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import "../menu-item";
+import "../menu-list";
 import "./context-menu";
 import type { ContextMenu } from "./context-menu";
 
