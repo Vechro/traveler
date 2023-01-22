@@ -24,7 +24,8 @@ const modelViewerStyles = css`
     position: absolute;
     transform: translateX(2px);
     border-radius: calc(var(--border-radius) / 2);
-    max-width: 8rem;
+    max-width: 10rem;
+    text-align: start;
     width: max-content;
     height: max-content;
     overflow-wrap: break-word;
