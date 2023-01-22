@@ -23,9 +23,10 @@
               "kind": "field",
               "name": "location",
               "type": {
-                "text": "[x: number, y: number] | undefined"
+                "text": "[x: number, y: number]"
               },
-              "privacy": "private"
+              "privacy": "private",
+              "default": "[0, 0]"
             },
             {
               "kind": "field",

@@ -10,7 +10,7 @@ export class ContextMenu extends LitElement {
   open = false;
 
   @state()
-  private location?: [x: number, y: number];
+  private location: [x: number, y: number] = [0, 0];
 
   private handleContextMenu = (event: MouseEvent) => {
     if (event.shiftKey) return;
@@ -45,8 +45,8 @@ export class ContextMenu extends LitElement {
     return html`
       <style>
         ::slotted([slot="context-menu"]) {
-          left: ${this.location?.[0] ?? 0}px;
-          top: ${this.location?.[1] ?? 0}px;
+          left: ${this.location[0]}px;
+          top: ${this.location[1]}px;
         }
       </style>
       <slot ?hidden=${!this.open} name="context-menu"></slot>
