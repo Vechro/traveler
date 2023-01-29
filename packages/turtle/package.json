@@ -32,7 +32,7 @@
     "@types/dompurify": "^2.4.0",
     "@vechro/eslint-config-etc": "workspace:*",
     "dompurify": "^2.4.3",
-    "eslint": "^8.32.0",
+    "eslint": "^8.33.0",
     "lit": "^2.6.1",
     "lit-html": "^2.6.1",
     "react": "^18.2.0",
