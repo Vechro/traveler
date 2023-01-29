@@ -111,7 +111,7 @@ services:
         condition: service_started
     restart: unless-stopped
     environment:
-      ANON_KEY: ${ANON_KEY}
+      ANON_KEY: ${PUBLIC_ANON_KEY}
       SERVICE_KEY: ${SERVICE_ROLE_KEY}
       POSTGREST_URL: http://rest:3000
       PGRST_JWT_SECRET: ${JWT_SECRET}

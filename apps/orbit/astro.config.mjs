@@ -6,11 +6,12 @@ import minifyHTML from "rollup-plugin-html-literals";
 export default defineConfig({
   integrations: [lit()],
   vite: {
+    envDir: "../../",
+    plugins: [minifyHTML()],
     resolve: {
       // <model-viewer> depends on three.js as well
       dedupe: ["three"],
     },
-    plugins: [minifyHTML()],
   },
   server: {
     host: true,
