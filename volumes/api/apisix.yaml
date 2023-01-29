@@ -1,3 +1,14 @@
+consumers:
+  - username: anon
+    plugins:
+      key-auth:
+        key: anon-key
+
+  - username: service_role
+    plugins:
+      key-auth:
+        key: service_role-key
+
 upstreams:
   - id: rest
     nodes:
@@ -24,30 +35,58 @@ upstreams:
       "auth:9999": 1
     type: roundrobin
 
+plugin_configs:
+  - id: strip-path
+    plugins:
+      proxy-rewrite:
+        regex_uri: ["^/\\w+/v\\d/(.*)", "/$1"]
+
 routes:
   - uri: /rest/v1/*
     upstream_id: rest
+    plugin_config_id: strip-path
     plugins:
-      proxy-rewrite:
-        regex_uri: ["^/rest/v1/(.*)", "/$1"]
+      cors: {}
+      key-auth:
+        hide_credentials: true
+      consumer-restriction:
+        whitelist:
+          - anon
+          - service_role
 
   - uri: /storage/v1/*
     upstream_id: storage
+    plugin_config_id: strip-path
     plugins:
-      proxy-rewrite:
-        regex_uri: ["^/storage/v1/(.*)", "/$1"]
+      cors: {}
 
-  - uri: /meta/v1/*
+  - uri: /pg/*
     upstream_id: meta
     plugins:
       proxy-rewrite:
-        regex_uri: ["^/meta/v1/(.*)", "/$1"]
+        regex_uri: ["^/pg/(.*)", "/$1"]
+      key-auth: {}
+      consumer-restriction:
+        whitelist:
+          - service_role
+
+  - uri: /auth/v1/(verify|callback|authorize)
+    upstream_id: auth
+    plugin_config_id: strip-path
+    plugins:
+      cors: {}
 
   - uri: /auth/v1/*
     upstream_id: auth
+    plugin_config_id: strip-path
     plugins:
-      proxy-rewrite:
-        regex_uri: ["^/auth/v1/(.*)", "/$1"]
+      cors: {}
+      key-auth:
+        hide_credentials: true
+      consumer-restriction:
+        whitelist:
+          - anon
+          - service_role
 
   - uri: /*
     upstream_id: orbit
