@@ -1,4 +1,5 @@
 import lit from "@astrojs/lit";
+import node from "@astrojs/node";
 import { defineConfig } from "astro/config";
 import minifyHTML from "rollup-plugin-html-literals";
 
@@ -17,4 +18,8 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
+  output: "server",
+  adapter: node({
+    mode: "standalone",
+  }),
 });
