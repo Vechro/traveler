@@ -9,10 +9,6 @@ export default defineConfig({
   vite: {
     envDir: "../../",
     plugins: [minifyHTML()],
-    resolve: {
-      // <model-viewer> depends on three.js as well
-      dedupe: ["three"],
-    },
   },
   server: {
     host: true,
