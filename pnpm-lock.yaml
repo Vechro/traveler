@@ -38,14 +38,11 @@ importers:
         specifier: ^1.3.1
         version: 1.3.1
       '@supabase/gotrue-js':
-        specifier: ^2.10.0
-        version: 2.10.0
+        specifier: ^2.24.0
+        version: 2.24.0
       '@supabase/postgrest-js':
-        specifier: ^1.3.0
-        version: 1.3.0
-      '@supabase/storage-js':
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^1.6.0
+        version: 1.6.0
       '@vechro/turtle':
         specifier: workspace:*
         version: link:../../packages/turtle
@@ -2842,24 +2839,16 @@ packages:
       - supports-color
     dev: true
 
-  /@supabase/gotrue-js@2.10.0:
-    resolution: {integrity: sha512-3k9zg+TN4rJFVbAWoX1KnOpKthb21HxYu87mBG8ccCXSl3fxnFBJNs898+pksj4fw5E6aM/dVtHHHAfV3MwVRQ==}
+  /@supabase/gotrue-js@2.24.0:
+    resolution: {integrity: sha512-ZsH4K5cbMTjfMytXaDYVYs9l9igmlZFxiwXn7J2IP/CklWR5qmLCma+dvat5rccPLITVkN6oAZbKxDzW+pEgCg==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@supabase/postgrest-js@1.3.0:
-    resolution: {integrity: sha512-XVX0XaWTyT06mtj67gKb0OasP9hUNIYpypgdKnIqBSib5fXD3aRb6U5rt9y9gG1UMi7pCCgv2qulKRIQlHbb9w==}
-    dependencies:
-      cross-fetch: 3.1.5
-    transitivePeerDependencies:
-      - encoding
-    dev: false
-
-  /@supabase/storage-js@2.3.0:
-    resolution: {integrity: sha512-YGWVCEYYYF3+UiyL8O4xC78N9n9paLbT0hHl8dmYAtd3DqyWtu5Eph9JTu0PWm+/29Zhns5TbhUZW4xpWjJfPQ==}
+  /@supabase/postgrest-js@1.6.0:
+    resolution: {integrity: sha512-HCphMC6KjtoaGcowSlkKRVKBOlNpmKWE2CwoumMwwsfhnRxplIy1zBiIYIL3zIYo/Bm20H/1C6enqjBeTvSwXg==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
