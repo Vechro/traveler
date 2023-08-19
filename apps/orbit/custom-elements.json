@@ -231,13 +231,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "auth",
-              "type": {
-                "text": "GoTrueClient"
-              }
-            },
-            {
-              "kind": "field",
               "name": "user",
               "type": {
                 "text": "Promise<User>"

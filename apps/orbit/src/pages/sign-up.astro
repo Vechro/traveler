@@ -4,15 +4,13 @@ import Layout from "&/layouts/Layout.astro";
 
 <script>
   import "@vechro/turtle";
-  import { getAuth, getPostgrestWithSession } from "&/utilities/api";
+  import { Api } from "&/utilities/api";
 
   interface FormShape {
     email: string;
     password: string;
     confirmPassword: string;
   }
-
-  const auth = getAuth();
 
   const form = document.querySelector("form")!;
 
@@ -32,7 +30,7 @@ import Layout from "&/layouts/Layout.astro";
     const {
       data: { user, session },
       error,
-    } = await auth.signUp({
+    } = await Api.auth.signUp({
       email: formResult.email,
       password: formResult.password,
     });
@@ -41,9 +39,8 @@ import Layout from "&/layouts/Layout.astro";
       console.error(`Sign-up failed: ${error}`);
     } else {
       console.log(`Sign-up successful: ${session}`);
-      const rest = getPostgrestWithSession(session);
 
-      await rest.from("profiles").insert({
+      await (await Api.rest).from("profiles").insert({
         id: user.id,
         updated_at: new Date().toISOString(),
       });

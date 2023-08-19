@@ -3,15 +3,13 @@ import Layout from "&/layouts/Layout.astro";
 ---
 
 <script>
-  import { getAuth, getPostgrestWithSession } from "&/utilities/api";
+  import { Api } from "&/utilities/api";
   import { UnreachableError } from "&/utilities/UnreachableError";
-
-  const auth = getAuth();
 
   const {
     data: { user, session },
     error,
-  } = await auth.refreshSession();
+  } = await Api.auth.refreshSession();
   if (!user || !session || error) {
     console.error(error);
     window.location.pathname = "/sign-in";
@@ -19,8 +17,7 @@ import Layout from "&/layouts/Layout.astro";
   } else {
     import("&/components/globe-viewer");
 
-    const rest = getPostgrestWithSession(session);
-    rest
+    (await Api.rest)
       .from("profiles")
       .select("*")
       .match({ id: user.id })
@@ -28,5 +25,5 @@ import Layout from "&/layouts/Layout.astro";
   }
 </script>
 <Layout title="Globe">
-  <globe-viewer />
+  <globe-viewer></globe-viewer>
 </Layout>

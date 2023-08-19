@@ -4,14 +4,12 @@ import Layout from "&/layouts/Layout.astro";
 
 <script>
   import "@vechro/turtle";
-  import { getAuth } from "&/utilities/api";
+  import { Api } from "&/utilities/api";
 
   interface FormShape {
     email: string;
     password: string;
   }
-
-  const auth = getAuth();
 
   const form = document.querySelector("form")!;
 
@@ -23,7 +21,7 @@ import Layout from "&/layouts/Layout.astro";
       formData.entries()
     ) as unknown as FormShape;
 
-    const { data, error } = await auth.signInWithPassword({
+    const { data, error } = await Api.auth.signInWithPassword({
       email: formResult.email,
       password: formResult.password,
     });
