@@ -24,13 +24,13 @@ import {
   WebGLRenderer,
 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
-import earthUvMap from "&/assets/earth-uv-map.jpg";
-import cross from "&/assets/icons/cross.svg?raw";
-import pin from "&/assets/icons/pin.svg?raw";
-import { RestMixin } from "&/components/rest-mixin";
-import { StoreMixin, type Marker } from "&/components/store-mixin";
-import { MouseEventX } from "&/extension";
-import { GlobeRenderer } from "&/utilities/GlobeRenderer";
+import earthUvMap from "#src/assets/earth-uv-map.jpg";
+import cross from "#src/assets/icons/cross.svg?raw";
+import pin from "#src/assets/icons/pin.svg?raw";
+import { RestMixin } from "#src/components/rest-mixin";
+import { StoreMixin, type Marker } from "#src/components/store-mixin";
+import { MouseEventX } from "#src/extension";
+import { GlobeRenderer } from "#src/utilities/GlobeRenderer";
 import { debounce } from "@google/model-viewer/lib/utilities";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";

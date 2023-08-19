@@ -1,4 +1,4 @@
-import type { Database } from "&/database";
+import type { Database } from "#src/database";
 import { GoTrueClient } from "@supabase/gotrue-js";
 import { PostgrestClient } from "@supabase/postgrest-js";
 

@@ -1,5 +1,5 @@
-import type { Database } from "&/database";
-import { Api } from "&/utilities/api";
+import type { Database } from "#src/database";
+import { Api } from "#src/utilities/api";
 import { dedupeMixin, type Constructor } from "@open-wc/dedupe-mixin";
 import type { User } from "@supabase/gotrue-js";
 import type { PostgrestClient } from "@supabase/postgrest-js";

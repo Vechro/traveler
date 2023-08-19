@@ -1,10 +1,10 @@
 ---
-import Layout from "&/layouts/Layout.astro";
+import Layout from "#src/layouts/Layout.astro";
 ---
 
 <script>
-  import { Api } from "&/utilities/api";
-  import { UnreachableError } from "&/utilities/UnreachableError";
+  import { Api } from "#src/utilities/api";
+  import { UnreachableError } from "#src/utilities/UnreachableError";
 
   const {
     data: { user, session },
@@ -15,7 +15,7 @@ import Layout from "&/layouts/Layout.astro";
     window.location.pathname = "/sign-in";
     throw new UnreachableError();
   } else {
-    import("&/components/globe-viewer");
+    import("#src/components/globe-viewer");
 
     (await Api.rest)
       .from("profiles")

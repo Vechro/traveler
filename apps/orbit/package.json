@@ -14,6 +14,9 @@
     "generate-types": "curl http://localhost:9080/pg/generators/typescript > src/database.d.ts",
     "lint": "eslint . --ext .ts,.js,.cjs,.mjs,.json,.astro"
   },
+  "imports": {
+    "#src": "./src/*.ts"
+  },
   "dependencies": {
     "@astrojs/lit": "^2.1.1",
     "@astrojs/node": "^5.3.5",
