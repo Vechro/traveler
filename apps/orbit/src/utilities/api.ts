@@ -2,7 +2,7 @@ import { GoTrueClient, type Session } from "@supabase/gotrue-js";
 import { PostgrestClient } from "@supabase/postgrest-js";
 import type { Database } from "&/database";
 
-const host = location.protocol + '//' + location.host
+const host = location.protocol + "//" + location.host;
 
 export const getAuth = () =>
   new GoTrueClient({
