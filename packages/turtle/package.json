@@ -21,32 +21,32 @@
     "size": "size-limit"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.8",
-    "@babel/preset-typescript": "^7.21.5",
-    "@custom-elements-manifest/analyzer": "^0.8.1",
-    "@size-limit/preset-small-lib": "^8.2.4",
-    "@storybook/addon-actions": "^7.0.9",
-    "@storybook/manager-api": "^7.0.9",
-    "@storybook/web-components": "^7.0.9",
-    "@storybook/web-components-vite": "^7.0.9",
+    "@babel/core": "^7.22.10",
+    "@babel/preset-typescript": "^7.22.5",
+    "@custom-elements-manifest/analyzer": "^0.8.4",
+    "@size-limit/preset-small-lib": "^8.2.6",
+    "@storybook/addon-actions": "^7.3.2",
+    "@storybook/manager-api": "^7.3.2",
+    "@storybook/web-components": "^7.3.2",
+    "@storybook/web-components-vite": "^7.3.2",
     "@types/dompurify": "^3.0.2",
     "@vechro/eslint-config-etc": "workspace:*",
-    "dompurify": "^3.0.2",
-    "eslint": "^8.40.0",
-    "lit": "^2.7.4",
-    "lit-html": "^2.7.3",
+    "dompurify": "^3.0.5",
+    "eslint": "^8.47.0",
+    "lit": "^2.8.0",
+    "lit-html": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup": "^3.21.5",
+    "rollup": "^3.28.0",
     "rollup-plugin-html-literals": "^1.1.6",
-    "size-limit": "^8.2.4",
-    "storybook": "^7.0.9",
-    "typescript": "~5.0.4",
-    "vite": "^4.3.5"
+    "size-limit": "^8.2.6",
+    "storybook": "^7.3.2",
+    "typescript": "~5.1.6",
+    "vite": "^4.4.9"
   },
   "peerDependencies": {
-    "dompurify": "^3.0.2",
-    "lit": "^2.7.4"
+    "dompurify": "^3.0.5",
+    "lit": "^2.8.0"
   },
   "size-limit": [
     {
