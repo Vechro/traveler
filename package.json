@@ -1,6 +1,7 @@
 {
   "name": "traveler",
   "private": true,
+  "packageManager": "pnpm@8.6.12",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -19,5 +20,10 @@
     "turbo": "^1.10.13",
     "typescript": "~5.1.6"
   },
-  "packageManager": "pnpm@8.6.12"
+  "pnpm": {
+    "overrides": {
+      "semver@<5.7.2": "^5.7.2",
+      "semver@>=7.0.0 <7.5.2": "^7.5.2"
+    }
+  }
 }
