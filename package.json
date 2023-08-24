@@ -15,7 +15,8 @@
     "@vechro/eslint-config-etc": "workspace:*",
     "dprint": "^0.40.2",
     "eslint": "^8.47.0",
-    "turbo": "~1.10.12",
+    "syncpack": "^11.2.1",
+    "turbo": "^1.10.13",
     "typescript": "~5.1.6"
   },
   "packageManager": "pnpm@8.6.12"

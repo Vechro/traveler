@@ -1,0 +1,12 @@
+{
+  "$schema": "https://unpkg.com/syncpack@11.2.1/dist/schema.json",
+  "dependencyTypes": ["!local"],
+  "semverGroups": [
+    {
+      "range": "~",
+      "dependencies": ["typescript"],
+      "packages": ["**"]
+    }
+  ],
+  "semverRange": "^"
+}
