@@ -186,11 +186,11 @@
           "mixins": [
             {
               "name": "RestMixin",
-              "module": "/src/components/globe-viewer/globe-viewer.ts"
+              "package": "src/components/rest-mixin"
             },
             {
               "name": "StoreMixin",
-              "module": "/src/components/globe-viewer/globe-viewer.ts"
+              "package": "src/components/store-mixin"
             }
           ],
           "superclass": {

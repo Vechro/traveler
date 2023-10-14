@@ -216,42 +216,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/menu-item/menu-item.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MenuItem",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "menu-item",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MenuItem",
-          "declaration": {
-            "name": "MenuItem",
-            "module": "src/components/menu-item/menu-item.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "menu-item",
-          "declaration": {
-            "name": "MenuItem",
-            "module": "src/components/menu-item/menu-item.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/menu-list/menu-list.ts",
       "declarations": [
         {
@@ -282,6 +246,42 @@
           "declaration": {
             "name": "MenuList",
             "module": "src/components/menu-list/menu-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/menu-item/menu-item.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MenuItem",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MenuItem",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "menu-item",
+          "declaration": {
+            "name": "MenuItem",
+            "module": "src/components/menu-item/menu-item.ts"
           }
         }
       ]
