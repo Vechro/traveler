@@ -24,14 +24,15 @@ import {
   WebGLRenderer,
 } from "three";
 // https://visibleearth.nasa.gov/images/73909/december-blue-marble-next-generation-w-topography-and-bathymetry/73912l
+import { debounce } from "@google/model-viewer/lib/utilities";
+import { useStores } from "@nanostores/lit";
 import earthUvMap from "src/assets/earth-uv-map.jpg?inline";
 import cross from "src/assets/icons/cross.svg?raw";
 import pin from "src/assets/icons/pin.svg?raw";
 import { RestMixin } from "src/components/rest-mixin";
-import { StoreMixin, type Marker } from "src/components/store-mixin";
 import { MouseEventX } from "src/extension";
+import { $markers, type Marker } from "src/stores/markers";
 import { GlobeRenderer } from "src/utilities/GlobeRenderer";
-import { debounce } from "@google/model-viewer/lib/utilities";
 import { styles } from "./globe-viewer.styles";
 import atmosphereFrag from "./shaders/atmosphere.frag?raw";
 import atmosphereVert from "./shaders/atmosphere.vert?raw";
@@ -39,7 +40,8 @@ import sphereFrag from "./shaders/sphere.frag?raw";
 import sphereVert from "./shaders/sphere.vert?raw";
 
 @customElement("globe-viewer")
-export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
+@useStores($markers)
+export class GlobeViewer extends RestMixin(LitElement) {
   static override styles = styles;
 
   @query("canvas", true)
@@ -120,11 +122,11 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
     this.camera.updateProjectionMatrix();
   };
 
-  private saveToRest = async () => {
+  private saveToRest = async (markers: Marker[]) => {
     const { id } = await this.user;
     const { error } = await (await this.rest).from("profiles").upsert({
       id,
-      markers: this.markers.get(),
+      markers: markers,
       updated_at: new Date().toISOString(),
     });
 
@@ -142,15 +144,15 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
     }
 
     if (data[0]?.markers != null) {
-      this.markers.set(data[0].markers as Marker[]);
+      $markers.set(data[0].markers as Marker[]);
     }
   };
 
   override connectedCallback() {
     super.connectedCallback();
     // TODO: unsubscribe as well?
-    this.markers.listen(() => this.requestUpdate());
-    this.markers.listen(() => this.saveToRest());
+    $markers.listen(() => this.requestUpdate());
+    $markers.listen(([...markers]) => this.saveToRest(markers));
   }
 
   override disconnectedCallback() {
@@ -172,11 +174,11 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
     if (!point) return;
     const marker: Marker = {
       id: self.crypto.randomUUID(),
-      name: `Point #${this.markers.get().length}`,
+      name: `Point #${$markers.get().length}`,
       position: point.toArray(),
       content: "",
     };
-    this.markers.set([...this.markers.get(), marker]);
+    $markers.set([...$markers.get(), marker]);
   };
 
   private handleClickPointer = (event: MouseEvent) => {
@@ -203,14 +205,14 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
   };
 
   private handleEditorClose = () => {
-    const newMarkers = this.markers.get();
+    const newMarkers = $markers.get();
     for (const newMarker of newMarkers) {
       if (newMarker.id === this.activeMarker!.id) {
         newMarker.name = this.activeMarker!.name;
         newMarker.content = this.activeMarker!.content;
       }
     }
-    this.markers.set(newMarkers);
+    $markers.set([...newMarkers]);
     this.dialog.close();
     this.editorPanel.removeEventListener("content-change", this.handleContentChange);
   };
@@ -220,29 +222,29 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
     this.modelViewer.cameraOrbit = `${theta}rad ${phi}rad 7m`;
   };
 
-  private handleTitleRename = (event: KeyboardEvent, marker: Marker) => {
+  private handleTitleRename = (event: KeyboardEvent | FocusEvent, marker: Marker) => {
     if (!event.currentTarget) return;
     const target = event.currentTarget as EventTarget & HTMLInputElement;
-    if (event.key === "Enter" || event.key === "Escape") {
+    if (("key" in event && (event.key === "Enter" || event.key === "Escape")) || event.type === "blur") {
       target.blur();
-      const newMarkers = this.markers.get();
+      const newMarkers = $markers.get();
       for (const newMarker of newMarkers) {
         if (newMarker.id === marker.id) {
           newMarker.name = target.value;
         }
       }
-      this.markers.set(newMarkers);
+      $markers.set([...newMarkers]);
     }
   };
 
   private handlePointClose = (event: PointerEvent, marker: Marker) => {
     event.stopPropagation();
-    this.markers.set(this.markers.get().filter(({ id }) => id !== marker.id));
+    $markers.set($markers.get().filter(({ id }) => id !== marker.id));
   };
 
   private pointListElements = () =>
     repeat(
-      this.markers.get(),
+      $markers.get(),
       ({ id }) => id,
       (marker) =>
         html`
@@ -253,6 +255,7 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
               maxlength="32"
               value=${marker.name}
               @keydown=${(event: KeyboardEvent) => this.handleTitleRename(event, marker)}
+              @blur=${(event: FocusEvent) => this.handleTitleRename(event, marker)}
             />
             <div slot="interaction-bar">
               <light-button @pointerup=${() => this.handleEditorOpen(marker)}>${unsafeSVG(pin)}</light-button>
@@ -266,7 +269,7 @@ export class GlobeViewer extends RestMixin(StoreMixin(LitElement)) {
 
   hotspotElements = () =>
     repeat(
-      this.markers.get(),
+      $markers.get(),
       ({ id }) => id,
       (marker) => {
         const positionSerialized = toVector3D(new Vector3(...marker.position)).toString();
