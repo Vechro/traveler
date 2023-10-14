@@ -21,6 +21,7 @@
     "@astrojs/lit": "^3.0.1",
     "@astrojs/node": "^6.0.3",
     "@google/model-viewer": "^3.3.0",
+    "@nanostores/lit": "^0.1.5",
     "@nanostores/persistent": "^0.9.1",
     "@open-wc/dedupe-mixin": "^1.4.0",
     "@supabase/gotrue-js": "^2.55.0",

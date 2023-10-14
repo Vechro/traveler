@@ -42,6 +42,9 @@ importers:
       '@google/model-viewer':
         specifier: ^3.3.0
         version: 3.3.0(three@0.157.0)
+      '@nanostores/lit':
+        specifier: ^0.1.5
+        version: 0.1.5(lit@2.8.0)(nanostores@0.9.3)
       '@nanostores/persistent':
         specifier: ^0.9.1
         version: 0.9.1(nanostores@0.9.3)
@@ -2342,6 +2345,16 @@ packages:
     resolution: {integrity: sha512-va15kYZr7KZNNPZdxONGQzpUr+4sxVu7V/VG7a8mRfPPXUyhEYj5RzXCQmGrlP3tAh0L3HHm5AjBMFYRqlM9SA==}
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.1.1
+
+  /@nanostores/lit@0.1.5(lit@2.8.0)(nanostores@0.9.3):
+    resolution: {integrity: sha512-xpnsXK1tTuaPotGNtyRR/6G2RCZHSNztZNo/UHxrzLnq6EfhuhC0ZTw2zj3WZaL9d1sbYXgzNftnUwDclSyU4Q==}
+    peerDependencies:
+      lit: ^2.6.0 || ^3.0.0
+      nanostores: ^0.7 || ^0.8 || ^0.9
+    dependencies:
+      lit: 2.8.0
+      nanostores: 0.9.3
+    dev: false
 
   /@nanostores/persistent@0.9.1(nanostores@0.9.3):
     resolution: {integrity: sha512-ow57Hxm5VMaI5GHET/cVk8hX/iKMmbhcGrB9owfN8p8OHiiJgUlYxe1giacwlAALJXAh2t8bxXh42hHb64BCEA==}
