@@ -1,4 +1,5 @@
 import { persistentAtom } from "@nanostores/persistent";
+import type { WritableAtom } from "nanostores";
 
 export type Marker = {
   id: string;
@@ -7,7 +8,7 @@ export type Marker = {
   content: string;
 };
 
-export const $markers = persistentAtom<Marker[]>("markers", [], {
+export const $markers: WritableAtom<Marker[]> = persistentAtom<Marker[]>("markers", [], {
   encode: JSON.stringify,
   decode: JSON.parse,
 });

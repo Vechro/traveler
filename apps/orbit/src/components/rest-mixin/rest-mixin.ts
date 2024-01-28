@@ -1,9 +1,11 @@
 import type { Database } from "src/database";
 import { Api } from "src/utilities/api";
-import { dedupeMixin, type Constructor } from "@open-wc/dedupe-mixin";
+import { dedupeMixin } from "@open-wc/dedupe-mixin";
 import type { User } from "@supabase/gotrue-js";
 import type { PostgrestClient } from "@supabase/postgrest-js";
 import type { LitElement } from "lit";
+
+export type Constructor<T> = new (...args: any[]) => T;
 
 export declare class RestMixinInterface {
   user: Promise<User>;

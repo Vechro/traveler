@@ -3,7 +3,7 @@ name: traveler
 services:
   apisix:
     # https://github.com/apache/apisix/blob/master/CHANGELOG.md
-    image: apache/apisix:3.6.0-debian
+    image: apache/apisix:3.8.0-debian
     restart: unless-stopped
     ports:
       - "9080:9080/tcp"
@@ -13,7 +13,7 @@ services:
 
   auth:
     # https://github.com/supabase/gotrue
-    image: supabase/gotrue:v2.101.2
+    image: supabase/gotrue:v2.139.0
     depends_on:
       db:
         condition: service_healthy
@@ -56,7 +56,7 @@ services:
 
   db:
     # https://github.com/supabase/postgres
-    image: supabase/postgres:15.1.0.123
+    image: supabase/postgres:15.1.1.8
     healthcheck:
       test: pg_isready -U postgres -h localhost
       interval: 5s
@@ -74,7 +74,7 @@ services:
       - db-data:/var/lib/postgresql/data
 
   rest:
-    image: postgrest/postgrest:v11.2.1
+    image: postgrest/postgrest:v12.0.2
     depends_on:
       db:
         condition: service_healthy
@@ -87,7 +87,7 @@ services:
       PGRST_DB_USE_LEGACY_GUCS: "false"
 
   meta:
-    image: supabase/postgres-meta:v0.72.0
+    image: supabase/postgres-meta:v0.75.0
     depends_on:
       db:
         condition: service_healthy

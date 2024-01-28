@@ -1,7 +1,7 @@
 {
   "name": "traveler",
   "private": true,
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "pnpm@8.15.0",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -14,16 +14,17 @@
   },
   "devDependencies": {
     "@vechro/eslint-config-etc": "workspace:*",
-    "dprint": "^0.41.0",
-    "eslint": "^8.51.0",
-    "syncpack": "^11.2.1",
-    "turbo": "^1.10.15",
-    "typescript": "~5.2.2"
+    "dprint": "^0.45.0",
+    "eslint": "^8.56.0",
+    "syncpack": "^12.3.0",
+    "turbo": "^1.11.3",
+    "typescript": "~5.3.3"
   },
   "pnpm": {
     "overrides": {
       "semver@<5.7.2": "^5.7.2",
-      "semver@>=7.0.0 <7.5.2": "^7.5.2"
+      "semver@>=7.0.0 <7.5.2": "^7.5.2",
+      "postcss@<8.4.31": ">=8.4.31"
     },
     "peerDependencyRules": {
       "allowedVersions": {

@@ -5,20 +5,20 @@
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
-    "@rushstack/eslint-patch": "^1.5.1",
-    "@typescript-eslint/eslint-plugin": "^6.7.5",
-    "@typescript-eslint/parser": "^6.7.5",
-    "eslint-config-turbo": "^1.10.15",
-    "eslint-plugin-astro": "^0.29.1",
-    "eslint-plugin-lit": "^1.9.1",
+    "@rushstack/eslint-patch": "^1.7.2",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "eslint-config-turbo": "^1.11.3",
+    "eslint-plugin-astro": "^0.31.3",
+    "eslint-plugin-lit": "^1.11.0",
     "eslint-plugin-storybook": "^0.6.15"
   },
   "devDependencies": {
-    "eslint": "^8.51.0",
-    "typescript": "~5.2.2"
+    "eslint": "^8.56.0",
+    "typescript": "~5.3.3"
   },
   "peerDependencies": {
-    "eslint": "^8.51.0",
-    "typescript": "~5.2.2"
+    "eslint": "^8.56.0",
+    "typescript": "~5.3.3"
   }
 }
