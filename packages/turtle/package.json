@@ -16,7 +16,7 @@
     "types"
   ],
   "scripts": {
-    "dev": "storybook dev -p 6006",
+    "dev": "storybook dev",
     "build": "vite build",
     "check": "tsc",
     "generate-metadata": "custom-elements-manifest analyze",
@@ -28,10 +28,10 @@
     "@babel/preset-typescript": "^7.23.3",
     "@custom-elements-manifest/analyzer": "^0.9.0",
     "@size-limit/preset-small-lib": "^11.0.2",
-    "@storybook/addon-actions": "^7.6.10",
-    "@storybook/manager-api": "^7.6.10",
-    "@storybook/web-components": "^7.6.10",
-    "@storybook/web-components-vite": "^7.6.10",
+    "@storybook/addon-actions": "^7.6.17",
+    "@storybook/manager-api": "^7.6.17",
+    "@storybook/web-components": "^7.6.17",
+    "@storybook/web-components-vite": "^7.6.17",
     "@types/dompurify": "^3.0.5",
     "@vechro/eslint-config-etc": "workspace:*",
     "dompurify": "^3.0.8",
@@ -43,7 +43,7 @@
     "rollup": "^4.9.6",
     "rollup-plugin-html-literals": "^1.1.8",
     "size-limit": "^11.0.2",
-    "storybook": "^7.6.10",
+    "storybook": "^7.6.17",
     "typescript": "~5.3.3",
     "vite": "^5.0.12"
   },
